@@ -20,7 +20,8 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 
 - Aufgaben sind GitHub Issues (siehe unten „Agent skills“). Immer nur EIN Issue pro Sitzung bearbeiten.
 - Ungeklärte Punkte nicht selbst entscheiden: als Issue mit Label `needs-triage` anlegen und bis dahin einen Platzhalter verwenden.
-- Übergangsweise liegen noch `docs/TICKETS.md` und `docs/OFFENE-FRAGEN.md` vor; sie werden in Issues überführt und dann gelöscht.
+- Abhängigkeiten sind als GitHub-Abhängigkeiten („blocked by“) eingetragen. Nur Issues beginnen, deren Blocker alle geschlossen sind.
+- Am Ende der Sitzung kurz zusammenfassen, was geändert wurde.
 
 ## Regeln
 
@@ -36,7 +37,7 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
   Request nur nach ausdrücklichem OK des Betreibers.** Keine Co-Autor-Zeile.
 - Token sparen: nur die Dateien lesen, die das Issue braucht.
 
-## Befehle (nach Ticket T01 gültig)
+## Befehle (gültig nach Issue #1 „Projekt aufsetzen“)
 
 - `npm install` – Abhängigkeiten
 - `npm run dev` – Entwicklungsserver
