@@ -1,11 +1,15 @@
 """Prüft Konfiguration und Inhalte, ohne etwas zu schreiben.
 
-Spätere Issues ergänzen hier Content-Schema und Querverweise. Fehler werden als
-Exception gemeldet; build.py --check und der Build brechen dann ab.
+Fehler werden als Exception gemeldet (Inhalte: ContentError); build.py --check und
+der Build brechen dann ab. Spätere Issues ergänzen hier die Querverweise.
 """
 
+from generator import paths
 from generator.config import SiteConfig, load_config
+from generator.content import load_methoden
 
 
 def check() -> SiteConfig:
-    return load_config()
+    config = load_config()
+    load_methoden(paths.CONTENT_DIR)
+    return config

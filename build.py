@@ -6,6 +6,7 @@ from pathlib import Path
 
 from generator.build import build
 from generator.check import check
+from generator.content import ContentError
 from generator.paths import DIST_DIR
 from generator.serve import serve
 
@@ -21,6 +22,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--port", type=int, default=8000, help="Port für --serve")
     args = parser.parse_args(argv)
 
+    try:
+        return _run(args)
+    except ContentError as fehler:
+        print(f"Fehler in content/:\n{fehler}", file=sys.stderr)
+        return 1
+
+
+def _run(args: argparse.Namespace) -> int:
     if args.check:
         check()
         print("Prüfung ok.")
