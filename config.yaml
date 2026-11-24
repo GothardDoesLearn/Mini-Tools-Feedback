@@ -1,0 +1,10 @@
+# Zentrale Konfiguration der Website (PRD §4). Nur hier ändern.
+
+# Name der Website (entschieden).
+website_name: "Feedback-Tools"
+
+# Domain der Website – noch offen (Issue #43), bis dahin Platzhalter.
+domain: "https://example.org"
+
+# Werbeplätze einblenden? Standard: aus (siehe docs/adr/ zu Datenschutz/Werbung).
+werbung_aktiv: false
