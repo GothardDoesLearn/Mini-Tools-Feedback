@@ -1,0 +1,43 @@
+# Kategorien der Mini-Tools. Farbe = Akzent (nie alleiniger Bedeutungsträger).
+- id: A
+  slug: handzeichen-karten
+  titel: Handzeichen & Karten
+  kurz: Sekunden-Feedback aus dem Platz
+  beschreibung: Alle SuS antworten gleichzeitig vom Platz aus; die Lehrkraft sieht das Ergebnis in Sekunden.
+  farbe: "#2E7D32"
+- id: B
+  slug: positionieren-im-raum
+  titel: Positionieren im Raum
+  kurz: Einschätzung mit dem Körper zeigen
+  beschreibung: SuS zeigen ihre Einschätzung durch ihren Standort – bringt Bewegung in die Stunde und ist für alle sichtbar.
+  farbe: "#1565C0"
+- id: C
+  slug: skalieren-visualisieren
+  titel: Skalieren & Visualisieren
+  kurz: Einschätzung sichtbar auf Plakat oder Blatt
+  beschreibung: Einschätzungen werden auf Plakat oder Blatt festgehalten und bleiben so für die Auswertung sichtbar.
+  farbe: "#6A1B9A"
+- id: D
+  slug: lernstand-pruefen
+  titel: Lernstand prüfen
+  kurz: Haben alle das Ziel erreicht?
+  beschreibung: Zeigt, ob das Stundenziel erreicht wurde – Grundlage für die Planung der nächsten Stunde.
+  farbe: "#C62828"
+- id: E
+  slug: reflexion-gespraech
+  titel: Reflexion & Gesprächsrunden
+  kurz: Ausführlichere Rückmeldung, oft mündlich
+  beschreibung: Ausführlichere Rückmeldungen zu Unterricht, Lernweg oder Zusammenarbeit – eher am Ende einer Stunde oder Einheit.
+  farbe: "#EF6C00"
+- id: F
+  slug: peer-feedback
+  titel: Peer-Feedback-Formeln
+  kurz: SuS geben sich gegenseitig Feedback
+  beschreibung: Feste Satzmuster, mit denen SuS sich gegenseitig wertschätzend Rückmeldung zu Präsentationen, Texten oder Gruppenarbeit geben.
+  farbe: "#00838F"
+- id: G
+  slug: klassenklima
+  titel: Verhalten & Klassenklima
+  kurz: Rückmeldung zu Verhalten und Lautstärke
+  beschreibung: Rückmeldung an die Klasse zu Verhalten und Arbeitsatmosphäre – eher Werkzeuge der Klassenführung als Lernfeedback.
+  farbe: "#5D4037"

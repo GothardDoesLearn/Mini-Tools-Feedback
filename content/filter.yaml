@@ -1,0 +1,32 @@
+# Filtergruppen der Übersicht. Reihenfolge = Anzeigereihenfolge.
+# Logik: ODER innerhalb einer Gruppe, UND zwischen Gruppen.
+- feld: kategorie
+  titel: Kategorie
+  quelle: kategorien.yaml
+- feld: richtung
+  titel: Feedbackrichtung
+  werte:
+    - { id: sus-an-lehrkraft, label: "SuS → Lehrkraft", erklaerung: Feedback an die Lehrkraft }
+    - { id: peer, label: "SuS ↔ SuS", erklaerung: Peer-Feedback }
+    - { id: selbst, label: Selbsteinschätzung, erklaerung: SuS schätzen sich selbst ein }
+    - { id: lehrkraft-an-klasse, label: "Lehrkraft → Klasse", erklaerung: Rückmeldung an die Klasse }
+- feld: zeitpunkt
+  titel: Zeitpunkt
+  werte:
+    - { id: einstieg, label: Einstieg }
+    - { id: zwischendurch, label: Zwischendurch }
+    - { id: stundenende, label: Stundenende }
+    - { id: einheitsende, label: Ende einer Einheit }
+    - { id: nach-praesentation, label: Nach Präsentation/Gruppenarbeit }
+    - { id: dauerhaft, label: Dauerhaft }
+- feld: form
+  titel: Form
+  werte:
+    - { id: analog, label: Analog }
+    - { id: digital, label: Digital }
+- feld: druckvorlage
+  titel: Druckvorlage
+  abgeleitet: "true wenn druckvorlagen nicht leer"
+  werte:
+    - { id: ja, label: Mit Druckvorlage }
+    - { id: nein, label: Ohne Material }

@@ -1,0 +1,39 @@
+# Digitale Tools (Kategorie H). Kosten/Funktionen vor Veröffentlichung prüfen.
+- id: oncoo
+  titel: Oncoo
+  url: https://www.oncoo.de
+  zweck: Zielscheibe, Kartenabfrage, Umfrage, Placemat
+  ablauf: Lehrkraft erstellt eine Abfrage, SuS öffnen sie per Code im Browser; Ergebnis am Beamer.
+  sus_geraete: "ja, ohne Login"
+  methoden: [zielscheibe, wortwolke]
+- id: mentimeter
+  titel: Mentimeter
+  url: https://www.mentimeter.com
+  zweck: Wortwolke, Skalen, Umfragen, Quiz
+  ablauf: Präsentation anlegen, SuS geben auf menti.com den Code ein; Ergebnisse erscheinen live.
+  sus_geraete: "ja"
+  methoden: [wortwolke]
+- id: plickers
+  titel: Plickers
+  url: https://www.plickers.com
+  zweck: Multiple-Choice-Abfragen
+  ablauf: Jede:r hat eine gedruckte Karte; die Drehung zeigt A–D; die Lehrkraft scannt die Klasse mit dem Handy.
+  sus_geraete: "nein (Druckkarten)"
+  methoden: [mini-whiteboards, 4-ecken-methode]
+- id: kahoot
+  titel: Kahoot
+  url: https://kahoot.com
+  zweck: Quiz zur Lernstandskontrolle
+  ablauf: Quiz mit eigenen Fragen erstellen, SuS treten per PIN bei, Punkte nach Tempo und Richtigkeit.
+  sus_geraete: "ja"
+  hinweis: Eigene Fragen verwenden statt fremder Quizze.
+  methoden: [exit-ticket]
+- id: edkimo
+  titel: edkimo
+  url: https://edkimo.com
+  zweck: Feedback-Fragebögen zum Unterricht
+  ablauf: Fragebogen aus Vorlagen wählen, SuS antworten anonym per Code, Auswertung als Diagramm.
+  sus_geraete: "ja"
+  methoden: [fragebogen]
+# Allgemeiner Hinweis für die Toolseite:
+# Vor dem Einsatz klären, welche Tools an der Schule datenschutzrechtlich freigegeben sind.

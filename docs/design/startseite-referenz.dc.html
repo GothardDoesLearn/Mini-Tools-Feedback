@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Startseite – Pinnwand und Klar umschaltbar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;family=Nunito:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0F5B63}a:hover{color:#0A4047}
+.p-note{transition:transform .15s}
+.p-note:hover{transform:rotate(0deg) translateY(-3px) !important}
+.p-tag{border:0;font:inherit;cursor:pointer;transition:transform .18s, box-shadow .18s}
+.p-tag:hover{transform:rotate(0deg) translateY(-4px) !important}
+.k-card{transition:box-shadow .15s, border-color .15s}
+.k-card:hover{border-color:#B9C2CE;box-shadow:0 4px 16px rgba(20,30,50,.08)}
+.k-chk{display:flex;align-items:center;gap:10px;min-height:36px;font-size:15px;color:#1B1F24;cursor:pointer}
+.k-chk input{width:18px;height:18px;accent-color:#1F5FBF;margin:0}
+.k-kat{border:0;background:none;font:inherit;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:38px;padding:0 10px;border-radius:8px;font-size:15px;text-align:left;width:100%}
+.k-kat:hover{background:#F1F4F8}
+</style>
+</helmet>
+
+<sc-if value="{{ pinnwand }}" hint-placeholder-val="{{ true }}">
+<div style="font-family: Nunito, system-ui, sans-serif; color: #22262B; min-height: 100vh; background: #8F8B8E">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 32px 24px 72px; display: flex; flex-direction: column; gap: 36px">
+    <header style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap">
+      <div style="background: #FFFFFF; padding: 20px 40px 24px; box-shadow: 0 6px 14px rgba(0,0,0,.25); transform: rotate(-1.5deg); position: relative">
+        <span aria-hidden="true" style="position: absolute; top: 10px; left: 18px; width: 14px; height: 14px; border-radius: 50%; background: #2B4C9B"></span>
+        <span aria-hidden="true" style="position: absolute; top: 10px; right: 18px; width: 14px; height: 14px; border-radius: 50%; background: #2B4C9B"></span>
+        <h1 style="margin: 0; font-family: Caveat, cursive; font-size: 76px; line-height: 1; color: #0E7C7B; font-weight: 700">Mini Tools</h1>
+        <p style="margin: 6px 0 0; font-size: 15px; color: #3C434B">Feedbackmethoden · [Schulname]</p>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 16px; margin-top: 8px">
+        <div role="group" aria-label="Ansicht wählen" style="display: flex; gap: 4px; background: #FFFFFF; padding: 4px; box-shadow: 0 3px 8px rgba(0,0,0,.22); transform: rotate(1deg)">
+          <button type="button" aria-pressed="true" style="border: 0; font: inherit; cursor: pointer; min-height: 40px; padding: 0 14px; background: #0E7C7B; color: #FFFFFF; font-weight: 700; font-size: 14px">Pinnwand</button>
+          <button type="button" aria-pressed="false" onClick="{{ zuKlar }}" style="border: 0; font: inherit; cursor: pointer; min-height: 40px; padding: 0 14px; background: #FFFFFF; color: #22262B; font-weight: 600; font-size: 14px">Klare Ansicht</button>
+        </div>
+        <nav aria-label="Hauptnavigation" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end">
+          <a href="#" style="background: #FFF6C7; color: #22262B; text-decoration: none; padding: 12px 18px; font-weight: 700; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2); transform: rotate(1deg)">Methoden</a>
+          <a href="#" style="background: #FFFFFF; color: #22262B; text-decoration: none; padding: 12px 18px; font-weight: 600; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2); transform: rotate(-1deg)">Druckvorlagen</a>
+          <a href="#" style="background: #FFFFFF; color: #22262B; text-decoration: none; padding: 12px 18px; font-weight: 600; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2); transform: rotate(1.5deg)">Digitale Tools</a>
+          <a href="#" style="background: #FFFFFF; color: #22262B; text-decoration: none; padding: 12px 18px; font-weight: 600; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2); transform: rotate(-.5deg)">Über</a>
+        </nav>
+      </div>
+    </header>
+
+    <section aria-label="Kategorien" style="display: flex; flex-direction: column; gap: 6px">
+      <p style="margin: 0; font-family: Caveat, cursive; font-size: 26px; color: #FFFFFF; font-weight: 700">Nach Kategorie filtern – antippen zum Auswählen</p>
+      <div role="group" aria-label="Kategorie-Filter" style="display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto; padding: 16px 6px 20px">
+        <sc-for list="{{ kats }}" as="c" hint-placeholder-count="8">
+          <button type="button" class="p-tag" aria-pressed="{{ c.an }}" onClick="{{ c.pick }}" style="flex: 0 0 132px; height: 84px; border-radius: 50%; background: {{ c.papier }}; color: #22262B; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 10px 4px; text-align: center; {{ c.stil }}">
+            <span aria-hidden="true" style="position: absolute; top: 7px; width: 11px; height: 11px; border-radius: 50%; background: {{ c.pin }}; border: 1px solid rgba(0,0,0,.25)"></span>
+            <span style="font-family: Caveat, cursive; font-size: 24px; line-height: 1; font-weight: 700">{{ c.titel }}</span>
+            <span style="font-size: 12px; font-weight: 700; color: #3C434B">{{ c.anzahlText }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <div style="background: #FFFFFF; padding: 18px 20px; box-shadow: 0 4px 10px rgba(0,0,0,.2); display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center">
+      <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 14px; flex: 1 1 260px">Suchen
+        <input type="search" placeholder="z. B. Ampel, Zielscheibe …" style="height: 46px; border: 2px solid #22262B; border-radius: 4px; padding: 0 14px; font: inherit; font-weight: 400; font-size: 16px">
+      </label>
+      <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px">
+        <legend style="font-weight: 700; font-size: 14px; padding: 0; margin-bottom: 6px">Wann?</legend>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Einstieg</button>
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Zwischendurch</button>
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Stundenende</button>
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Ende der Einheit</button>
+        </div>
+      </fieldset>
+      <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px">
+        <legend style="font-weight: 700; font-size: 14px; padding: 0; margin-bottom: 6px">Wie?</legend>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Analog</button>
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Digital</button>
+          <button type="button" style="border: 0; font: inherit; cursor: pointer; min-height: 44px; padding: 0 14px; background: #F2F2F2; color: #22262B; font-weight: 600">Mit Vorlage</button>
+        </div>
+      </fieldset>
+    </div>
+
+    <section aria-label="Methoden" aria-live="polite" style="display: flex; flex-direction: column; gap: 18px">
+      <p style="margin: 0; font-family: Caveat, cursive; font-size: 30px; color: #FFFFFF; font-weight: 700">{{ trefferText }}</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 34px 28px; padding-top: 6px">
+        <sc-for list="{{ karten }}" as="k" hint-placeholder-count="9">
+          <a href="#" class="p-note" style="text-decoration: none; color: #22262B; background: {{ k.papier }}; padding: 30px 22px 20px; min-height: 180px; box-sizing: border-box; box-shadow: 0 6px 14px rgba(0,0,0,.25); position: relative; display: flex; flex-direction: column; gap: 10px; transform: rotate({{ k.dreh }}deg)">
+            <span aria-hidden="true" style="position: absolute; top: 10px; left: calc(50% - 7px); width: 14px; height: 14px; border-radius: 50%; background: {{ k.pin }}; box-shadow: 0 2px 3px rgba(0,0,0,.35); border: 1px solid rgba(0,0,0,.25)"></span>
+            <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #3C434B">{{ k.kurzKat }}</span>
+            <h2 style="margin: 0; font-family: Caveat, cursive; font-size: 36px; line-height: 1; font-weight: 700">{{ k.titel }}</h2>
+            <p style="margin: 0; font-size: 15px; line-height: 1.45; flex-grow: 1">{{ k.kurz }}</p>
+            <p style="margin: 0; font-size: 14px; font-weight: 700; color: #3C434B">{{ k.info }}</p>
+            <sc-if value="{{ k.pruefen }}" hint-placeholder-val="{{ false }}">
+              <span style="align-self: flex-start; font-family: Caveat, cursive; font-size: 22px; color: #9B1C1C; font-weight: 700; border: 2px solid #9B1C1C; padding: 0 8px; transform: rotate(-4deg)">wird geprüft!</span>
+            </sc-if>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ klar }}" hint-placeholder-val="{{ false }}">
+<div style="font-family: Inter, system-ui, sans-serif; color: #1B1F24; min-height: 100vh; background: #F6F7F9">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #E3E6EA">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px; min-height: 64px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap">
+      <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1B1F24; font-weight: 700; font-size: 18px">
+        <span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: #1F5FBF; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px">MT</span>
+        Mini-Tools <span style="font-weight: 400; color: #5A6370; font-size: 15px">· [Schulname]</span>
+      </a>
+      <nav aria-label="Hauptnavigation" style="display: flex; gap: 24px; font-size: 15px; font-weight: 500; flex-wrap: wrap">
+        <a href="#" style="color: #1F5FBF; text-decoration: none">Methoden</a>
+        <a href="#" style="color: #39414B; text-decoration: none">Druckvorlagen</a>
+        <a href="#" style="color: #39414B; text-decoration: none">Digitale Tools</a>
+        <a href="#" style="color: #39414B; text-decoration: none">Über</a>
+      </nav>
+      <div role="group" aria-label="Ansicht wählen" style="display: flex; gap: 2px; background: #EEF1F4; padding: 3px; border-radius: 10px">
+        <button type="button" aria-pressed="false" onClick="{{ zuPinnwand }}" style="border: 0; font: inherit; cursor: pointer; min-height: 38px; padding: 0 14px; border-radius: 8px; background: transparent; color: #39414B; font-weight: 500; font-size: 14px">Pinnwand</button>
+        <button type="button" aria-pressed="true" style="border: 0; font: inherit; cursor: pointer; min-height: 38px; padding: 0 14px; border-radius: 8px; background: #FFFFFF; color: #1B1F24; font-weight: 600; font-size: 14px; box-shadow: 0 1px 3px rgba(20,30,50,.15)">Klare Ansicht</button>
+      </div>
+    </div>
+  </header>
+
+  <section style="background: #FFFFFF; border-bottom: 1px solid #E3E6EA">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 48px 24px 40px; display: flex; flex-direction: column; gap: 16px">
+      <h1 style="margin: 0; font-size: 40px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em">Schnelles Feedback im Unterricht</h1>
+      <p style="margin: 0; font-size: 18px; line-height: 1.55; color: #4A525C; max-width: 680px">31 erprobte Mini-Tools, mit denen ihr in 1–10 Minuten Rückmeldungen von euren Schülerinnen und Schülern einholt – analog oder digital, mit Druckvorlagen zum Sofort-Ausdrucken.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px">
+        <label for="k-suche" style="position: absolute; left: -9999px">Methoden durchsuchen</label>
+        <input id="k-suche" type="search" placeholder="Methode suchen, z. B. Daumenprobe" style="flex: 1 1 360px; max-width: 560px; height: 48px; border: 1px solid #C9D0D8; border-radius: 8px; padding: 0 16px; font: inherit; font-size: 16px; color: #1B1F24; background: #FFFFFF">
+        <button type="button" style="height: 48px; padding: 0 20px; border-radius: 8px; border: 1px solid #C9D0D8; background: #FFFFFF; font: inherit; font-size: 15px; font-weight: 600; color: #1B1F24; cursor: pointer">Zufällige Methode</button>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+    <aside aria-label="Filter" style="flex: 1 1 240px; max-width: 280px; background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <h2 style="margin: 0; font-size: 16px; font-weight: 700">Filter</h2>
+        <button type="button" onClick="{{ zuruecksetzen }}" style="border: 0; background: none; padding: 8px 0; font: inherit; font-size: 14px; color: #1F5FBF; cursor: pointer">Zurücksetzen</button>
+      </div>
+      <div role="group" aria-labelledby="k-kat-titel" style="display: flex; flex-direction: column; gap: 2px">
+        <span id="k-kat-titel" style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #5A6370; margin-bottom: 6px">Kategorie</span>
+        <sc-for list="{{ kats }}" as="c" hint-placeholder-count="8">
+          <button type="button" class="k-kat" aria-pressed="{{ c.an }}" onClick="{{ c.pick }}" style="background: {{ c.kBg }}; color: #1B1F24; font-weight: {{ c.kGewicht }}">
+            <span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{ c.farbe }}; flex: 0 0 10px"></span>
+            <span style="flex: 1">{{ c.titel }}</span>
+            <span style="font-size: 13px; color: #5A6370">{{ c.n }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-for list="{{ gruppen }}" as="g" hint-placeholder-count="3">
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px">
+          <legend style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #5A6370; margin-bottom: 6px">{{ g.titel }}</legend>
+          <sc-for list="{{ g.werte }}" as="w" hint-placeholder-count="3">
+            <label class="k-chk"><input type="checkbox"> {{ w }}</label>
+          </sc-for>
+        </fieldset>
+      </sc-for>
+    </aside>
+
+    <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <p style="margin: 0; font-size: 15px; color: #4A525C" aria-live="polite"><strong style="color: #1B1F24">{{ trefferText }}</strong></p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px">
+        <sc-for list="{{ karten }}" as="k" hint-placeholder-count="9">
+          <a href="#" class="k-card" style="text-decoration: none; color: #1B1F24; background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-height: 168px; box-sizing: border-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+              <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #4A525C">
+                <span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{ k.farbe }}"></span>{{ k.kurzKat }}
+              </span>
+              <sc-if value="{{ k.pruefen }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size: 12px; font-weight: 600; color: #7A4B00; background: #FFF1D6; padding: 3px 8px; border-radius: 999px">wird geprüft</span>
+              </sc-if>
+            </div>
+            <h3 style="margin: 0; font-size: 19px; font-weight: 600; line-height: 1.3">{{ k.titel }}</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #4A525C; flex-grow: 1">{{ k.kurz }}</p>
+            <p style="margin: 0; font-size: 13px; color: #39414B">{{ k.info }}</p>
+          </a>
+        </sc-for>
+      </div>
+    </main>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { ansicht: 'pinnwand', sel: null };
+  }
+  renderVals() {
+    const s = this.state;
+    const K = [
+      { id: null, titel: 'Alle', papier: '#FFFFFF', pin: '#8A8A8A', farbe: '#8A939E', n: 31 },
+      { id: 'A', titel: 'Handzeichen', papier: '#FFF6C7', pin: '#D62F2F', farbe: '#2E7D32', n: 6 },
+      { id: 'B', titel: 'Im Raum', papier: '#CDE7EE', pin: '#2B4C9B', farbe: '#1565C0', n: 3 },
+      { id: 'C', titel: 'Skalieren', papier: '#E3D9F2', pin: '#E8B21E', farbe: '#6A1B9A', n: 5 },
+      { id: 'D', titel: 'Lernstand', papier: '#FADBD8', pin: '#2E8B57', farbe: '#C62828', n: 3 },
+      { id: 'E', titel: 'Reflexion', papier: '#FDE3C8', pin: '#26282C', farbe: '#EF6C00', n: 8 },
+      { id: 'F', titel: 'Peer-Feedback', papier: '#CDEEE6', pin: '#F4F4F4', farbe: '#00838F', n: 5 },
+      { id: 'G', titel: 'Klassenklima', papier: '#E8E0D8', pin: '#E07B1A', farbe: '#5D4037', n: 1 }
+    ];
+    const dreh = [-3, 2, -1.5, 3, -2.5, 1.5, -2, 2.5];
+    const selStyle = 'transform: rotate(0deg) translateY(-6px) scale(1.07); box-shadow: 0 12px 20px rgba(0,0,0,.38); outline: 3px solid #22262B; outline-offset: 3px; z-index: 2';
+    const kats = K.map((c, i) => {
+      const an = s.sel === c.id;
+      return Object.assign({}, c, {
+        an,
+        anzahlText: c.n === 1 ? '1 Methode' : c.n + ' Methoden',
+        stil: an ? selStyle : 'transform: rotate(' + dreh[i] + 'deg); box-shadow: 0 4px 10px rgba(0,0,0,.24)',
+        kBg: an ? '#E8F0FC' : 'transparent',
+        kGewicht: an ? '600' : '400',
+        pick: () => this.setState({ sel: c.id })
+      });
+    });
+    const KM = {}; K.forEach(c => { if (c.id) KM[c.id] = c; });
+    const raw = [
+      ['A','Daumenprobe','Alle zeigen gleichzeitig per Daumen, wie gut sie mitkommen.','1 Min · analog',false],
+      ['A','Ampel','Rote, gelbe oder grüne Karte hochhalten.','1 Min · analog · Vorlage',false],
+      ['B','4-Ecken-Methode','In die Raumecke gehen, die zur eigenen Antwort passt.','5–10 Min · analog · Vorlage',false],
+      ['B','Fahrstuhlmethode','Von der Hocke bis zum Strecken zeigen, wie viel man verstanden hat.','2 Min · analog',true],
+      ['C','Zielscheibe','Punkte zu mehreren Kriterien auf eine Zielscheibe setzen.','5 Min · analog/digital · Vorlage',false],
+      ['D','Exit-Ticket','Kurzer Zettel: Was habe ich gelernt, was ist unklar?','3–5 Min · analog/digital · Vorlage',false],
+      ['E','Blitzlicht','Reihum ein Satz zur Stunde – ohne Kommentar.','5–10 Min · analog',false],
+      ['E','Secret Star','Ein geheim gezogener SuS gibt am Ende Feedback zur Stunde und zu sich selbst.','3–5 Min · analog',false],
+      ['F','2 Sterne + ein Wunsch','Zwei Stärken und ein Tipp für die Präsentation.','3–5 Min · analog · Vorlage',false],
+      ['G','Lärmampel','Zeigt der Klasse, wenn es zu laut wird.','dauerhaft · digital/analog',false]
+    ];
+    const karten = raw.filter(r => !s.sel || r[0] === s.sel).map((r, i) => ({
+      kurzKat: KM[r[0]].titel, papier: KM[r[0]].papier, pin: KM[r[0]].pin, farbe: KM[r[0]].farbe,
+      dreh: dreh[(i + 3) % dreh.length] * 0.7, titel: r[1], kurz: r[2], info: r[3], pruefen: r[4]
+    }));
+    const trefferText = s.sel ? (KM[s.sel].titel + ' · ' + KM[s.sel].n + ' Methoden (Auswahl)') : 'Alle Methoden (Auswahl)';
+    const gruppen = [
+      { titel: 'Zeitpunkt', werte: ['Einstieg', 'Zwischendurch', 'Stundenende', 'Ende einer Einheit'] },
+      { titel: 'Form', werte: ['Analog', 'Digital'] },
+      { titel: 'Material', werte: ['Mit Druckvorlage', 'Ohne Material'] }
+    ];
+    return {
+      pinnwand: s.ansicht === 'pinnwand', klar: s.ansicht === 'klar',
+      zuKlar: () => this.setState({ ansicht: 'klar' }), zuPinnwand: () => this.setState({ ansicht: 'pinnwand' }),
+      zuruecksetzen: () => this.setState({ sel: null }),
+      kats, karten, trefferText, gruppen
+    };
+  }
+}
+</script>
+</body>
+</html>

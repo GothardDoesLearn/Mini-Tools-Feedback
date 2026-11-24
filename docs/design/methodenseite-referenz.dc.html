@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Methodenseite – Exit-Ticket</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;family=Nunito:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0F5B63}a:hover{color:#0A4047}
+.p-note{transition:transform .15s}
+.p-note:hover{transform:rotate(0deg) translateY(-3px) !important}
+.k-card{transition:box-shadow .15s, border-color .15s}
+.k-card:hover{border-color:#B9C2CE;box-shadow:0 4px 16px rgba(20,30,50,.08)}
+</style>
+</helmet>
+
+<sc-if value="{{ pinnwand }}" hint-placeholder-val="{{ true }}">
+<div style="font-family: Nunito, system-ui, sans-serif; color: #22262B; min-height: 100vh; background: #8F8B8E">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 80px; display: flex; flex-direction: column; gap: 32px">
+
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap">
+      <a href="#" style="background: #FFFFFF; padding: 10px 24px 12px; box-shadow: 0 4px 10px rgba(0,0,0,.25); transform: rotate(-1.5deg); text-decoration: none; display: block">
+        <span style="font-family: Caveat, cursive; font-size: 44px; line-height: 1; color: #0E7C7B; font-weight: 700">Mini Tools</span>
+      </a>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
+        <nav aria-label="Hauptnavigation" style="display: flex; gap: 8px; flex-wrap: wrap">
+          <a href="#" style="background: #FFF6C7; color: #22262B; text-decoration: none; padding: 10px 16px; font-weight: 700; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2); transform: rotate(1deg)">Methoden</a>
+          <a href="#" style="background: #FFFFFF; color: #22262B; text-decoration: none; padding: 10px 16px; font-weight: 600; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2); transform: rotate(-1deg)">Druckvorlagen</a>
+          <a href="#" style="background: #FFFFFF; color: #22262B; text-decoration: none; padding: 10px 16px; font-weight: 600; font-size: 15px; box-shadow: 0 3px 8px rgba(0,0,0,.2)">Digitale Tools</a>
+        </nav>
+        <div role="group" aria-label="Ansicht wählen" style="display: flex; gap: 4px; background: #FFFFFF; padding: 4px; box-shadow: 0 3px 8px rgba(0,0,0,.22); transform: rotate(1deg)">
+          <button type="button" aria-pressed="true" style="border: 0; font: inherit; cursor: pointer; min-height: 40px; padding: 0 14px; background: #0E7C7B; color: #FFFFFF; font-weight: 700; font-size: 14px">Pinnwand</button>
+          <button type="button" aria-pressed="false" onClick="{{ zuKlar }}" style="border: 0; font: inherit; cursor: pointer; min-height: 40px; padding: 0 14px; background: #FFFFFF; color: #22262B; font-weight: 600; font-size: 14px">Klare Ansicht</button>
+        </div>
+      </div>
+    </header>
+
+    <a href="#" style="align-self: flex-start; color: #FFFFFF; font-family: Caveat, cursive; font-size: 28px; font-weight: 700; text-decoration: none; min-height: 44px; display: flex; align-items: center">← zurück zu allen Methoden</a>
+
+    <section style="background: #FADBD8; padding: 44px 40px 32px; box-shadow: 0 8px 18px rgba(0,0,0,.28); position: relative; transform: rotate(-0.6deg); display: flex; flex-direction: column; gap: 18px">
+      <span aria-hidden="true" style="position: absolute; top: 14px; left: calc(50% - 10px); width: 20px; height: 20px; border-radius: 50%; background: #2E8B57; border: 1px solid rgba(0,0,0,.25); box-shadow: 0 3px 4px rgba(0,0,0,.35)"></span>
+      <span style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #3C434B">Kategorie: Lernstand prüfen</span>
+      <h1 style="margin: 0; font-family: Caveat, cursive; font-size: 80px; line-height: .95; font-weight: 700">Exit-Ticket</h1>
+      <p style="margin: 0; font-size: 19px; line-height: 1.5; max-width: 720px">Ein kurzer Zettel am Stundenende zeigt dir, ob das Ziel der Stunde bei allen angekommen ist – und wer morgen noch Hilfe braucht.</p>
+      <sc-if value="{{ hinweis }}" hint-placeholder-val="{{ false }}">
+        <p style="margin: 0; align-self: flex-start; font-family: Caveat, cursive; font-size: 26px; color: #9B1C1C; font-weight: 700; border: 2px solid #9B1C1C; padding: 2px 12px; transform: rotate(-2deg)">wird geprüft! Ablauf ist noch eine Vermutung.</p>
+      </sc-if>
+      <ul aria-label="Kurzinfos" style="list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px">
+        <sc-for list="{{ infos }}" as="i" hint-placeholder-count="5">
+          <li style="background: #FFFFFF; padding: 8px 14px 10px; box-shadow: 0 3px 6px rgba(0,0,0,.18); transform: rotate({{ i.dreh }}deg); display: flex; flex-direction: column; gap: 2px; min-width: 120px">
+            <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #3C434B">{{ i.label }}</span>
+            <span style="font-size: 16px; font-weight: 700">{{ i.wert }}</span>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+      <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+        <section style="background: #FFFFFF; padding: 32px 36px; box-shadow: 0 6px 14px rgba(0,0,0,.25); position: relative; transform: rotate(0.4deg)">
+          <span aria-hidden="true" style="position: absolute; top: 12px; left: 22px; width: 14px; height: 14px; border-radius: 50%; background: #D62F2F; border: 1px solid rgba(0,0,0,.25)"></span>
+          <h2 style="margin: 0 0 20px; font-family: Caveat, cursive; font-size: 46px; line-height: 1; font-weight: 700; color: #0E7C7B">So geht's</h2>
+          <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px">
+            <sc-for list="{{ schritte }}" as="s" hint-placeholder-count="3">
+              <li style="display: flex; gap: 16px; align-items: flex-start">
+                <span aria-hidden="true" style="flex: 0 0 40px; height: 40px; border-radius: 50%; border: 2.5px solid #22262B; font-family: Caveat, cursive; font-size: 28px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-sizing: border-box">{{ s.nr }}</span>
+                <span style="font-size: 18px; line-height: 1.55; padding-top: 6px">{{ s.text }}</span>
+              </li>
+            </sc-for>
+          </ol>
+        </section>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 28px">
+          <section style="flex: 1 1 260px; background: #FFF6C7; padding: 30px 26px 24px; box-shadow: 0 6px 14px rgba(0,0,0,.25); position: relative; transform: rotate(-1.5deg)">
+            <span aria-hidden="true" style="position: absolute; top: 10px; left: calc(50% - 7px); width: 14px; height: 14px; border-radius: 50%; background: #2B4C9B; border: 1px solid rgba(0,0,0,.25)"></span>
+            <h2 style="margin: 0 0 10px; font-family: Caveat, cursive; font-size: 36px; line-height: 1; font-weight: 700">Tipp</h2>
+            <p style="margin: 0; font-size: 16px; line-height: 1.55">Sortiere die Tickets direkt nach der Stunde in drei Stapel: kann es – teilweise – noch nicht. So planst du die nächste Stunde in zwei Minuten.</p>
+          </section>
+          <section style="flex: 1 1 260px; background: #CDEEE6; padding: 30px 26px 24px; box-shadow: 0 6px 14px rgba(0,0,0,.25); position: relative; transform: rotate(1.2deg)">
+            <span aria-hidden="true" style="position: absolute; top: 10px; left: calc(50% - 7px); width: 14px; height: 14px; border-radius: 50%; background: #E8B21E; border: 1px solid rgba(0,0,0,.25)"></span>
+            <h2 style="margin: 0 0 10px; font-family: Caveat, cursive; font-size: 36px; line-height: 1; font-weight: 700">Variante: 3-2-1</h2>
+            <p style="margin: 0; font-size: 16px; line-height: 1.55">3 Dinge, die ich gelernt habe · 2 Dinge, die ich interessant fand · 1 Frage, die ich noch habe.</p>
+          </section>
+        </div>
+      </div>
+
+      <aside style="flex: 1 1 300px; max-width: 380px; display: flex; flex-direction: column; gap: 30px">
+        <section style="background: #FFFFFF; padding: 30px 24px 24px; box-shadow: 0 6px 14px rgba(0,0,0,.25); position: relative; transform: rotate(1deg); display: flex; flex-direction: column; gap: 14px">
+          <span aria-hidden="true" style="position: absolute; top: 10px; left: calc(50% - 7px); width: 14px; height: 14px; border-radius: 50%; background: #2E8B57; border: 1px solid rgba(0,0,0,.25)"></span>
+          <h2 style="margin: 0; font-family: Caveat, cursive; font-size: 36px; line-height: 1; font-weight: 700">Druckvorlage</h2>
+          <div aria-hidden="true" style="background: #F4F4F4; padding: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border: 1px solid #DDDDDD">
+            <sc-for list="{{ tickets }}" as="t" hint-placeholder-count="4">
+              <div style="background: #FFFFFF; border: 1.5px dashed #9A9A9A; height: 70px; padding: 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px">
+                <span style="height: 5px; width: 60%; background: #22262B"></span>
+                <span style="height: 3px; width: 90%; background: #C4C4C4"></span>
+                <span style="height: 3px; width: 80%; background: #C4C4C4"></span>
+                <span style="height: 3px; width: 85%; background: #C4C4C4"></span>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin: 0; font-size: 15px; color: #3C434B">4 Tickets pro A4-Seite · 2 Seiten (Standard + 3-2-1)</p>
+          <a href="#" style="min-height: 48px; display: flex; align-items: center; justify-content: center; background: #0E7C7B; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 3px 6px rgba(0,0,0,.2)">Vorlage drucken</a>
+          <a href="#" style="min-height: 44px; display: flex; align-items: center; justify-content: center; color: #22262B; font-weight: 600; font-size: 15px">Diese Anleitung drucken</a>
+        </section>
+
+        <section style="background: #E2EDFA; padding: 28px 24px 22px; box-shadow: 0 6px 14px rgba(0,0,0,.25); position: relative; transform: rotate(-1deg); display: flex; flex-direction: column; gap: 10px">
+          <span aria-hidden="true" style="position: absolute; top: 10px; left: calc(50% - 7px); width: 14px; height: 14px; border-radius: 50%; background: #D62F2F; border: 1px solid rgba(0,0,0,.25)"></span>
+          <h2 style="margin: 0; font-family: Caveat, cursive; font-size: 34px; line-height: 1; font-weight: 700">Digital</h2>
+          <p style="margin: 0; font-size: 15px; line-height: 1.5">Als Quiz mit eigenen Fragen über <a href="#" style="font-weight: 700">Kahoot</a> – vorher klären, ob das Tool an der Schule freigegeben ist.</p>
+        </section>
+
+        <section style="display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-family: Caveat, cursive; font-size: 34px; color: #FFFFFF; font-weight: 700">Passt auch dazu</h2>
+          <sc-for list="{{ aehnlich }}" as="a" hint-placeholder-count="2">
+            <a href="#" class="p-note" style="text-decoration: none; color: #22262B; background: {{ a.papier }}; padding: 14px 18px; box-shadow: 0 4px 10px rgba(0,0,0,.22); transform: rotate({{ a.dreh }}deg); display: flex; justify-content: space-between; align-items: center; gap: 10px">
+              <span style="font-family: Caveat, cursive; font-size: 28px; font-weight: 700; line-height: 1">{{ a.titel }}</span>
+              <span style="font-size: 13px; font-weight: 700; color: #3C434B">{{ a.dauer }}</span>
+            </a>
+          </sc-for>
+        </section>
+      </aside>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ klar }}" hint-placeholder-val="{{ false }}">
+<div style="font-family: Inter, system-ui, sans-serif; color: #1B1F24; min-height: 100vh; background: #F6F7F9">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #E3E6EA">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px; min-height: 64px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap">
+      <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1B1F24; font-weight: 700; font-size: 18px">
+        <span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: #1F5FBF; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px">MT</span>
+        Mini-Tools
+      </a>
+      <nav aria-label="Hauptnavigation" style="display: flex; gap: 24px; font-size: 15px; font-weight: 500; flex-wrap: wrap">
+        <a href="#" style="color: #1F5FBF; text-decoration: none">Methoden</a>
+        <a href="#" style="color: #39414B; text-decoration: none">Druckvorlagen</a>
+        <a href="#" style="color: #39414B; text-decoration: none">Digitale Tools</a>
+        <a href="#" style="color: #39414B; text-decoration: none">Über</a>
+      </nav>
+      <div role="group" aria-label="Ansicht wählen" style="display: flex; gap: 2px; background: #EEF1F4; padding: 3px; border-radius: 10px">
+        <button type="button" aria-pressed="false" onClick="{{ zuPinnwand }}" style="border: 0; font: inherit; cursor: pointer; min-height: 38px; padding: 0 14px; border-radius: 8px; background: transparent; color: #39414B; font-weight: 500; font-size: 14px">Pinnwand</button>
+        <button type="button" aria-pressed="true" style="border: 0; font: inherit; cursor: pointer; min-height: 38px; padding: 0 14px; border-radius: 8px; background: #FFFFFF; color: #1B1F24; font-weight: 600; font-size: 14px; box-shadow: 0 1px 3px rgba(20,30,50,.15)">Klare Ansicht</button>
+      </div>
+    </div>
+  </header>
+
+  <section style="background: #FFFFFF; border-bottom: 1px solid #E3E6EA">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 36px; display: flex; flex-direction: column; gap: 14px">
+      <nav aria-label="Brotkrumen" style="font-size: 14px; color: #5A6370; display: flex; gap: 8px; flex-wrap: wrap">
+        <a href="#" style="color: #1F5FBF; text-decoration: none">Methoden</a><span aria-hidden="true">/</span>
+        <a href="#" style="color: #1F5FBF; text-decoration: none">Lernstand prüfen</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Exit-Ticket</span>
+      </nav>
+      <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #4A525C">
+        <span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #C62828"></span>Lernstand prüfen
+      </span>
+      <h1 style="margin: 0; font-size: 44px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em">Exit-Ticket</h1>
+      <p style="margin: 0; font-size: 18px; line-height: 1.55; color: #4A525C; max-width: 720px">Ein kurzer Zettel am Stundenende zeigt dir, ob das Ziel der Stunde bei allen angekommen ist – und wer morgen noch Hilfe braucht.</p>
+      <sc-if value="{{ hinweis }}" hint-placeholder-val="{{ false }}">
+        <p role="note" style="margin: 0; background: #FFF1D6; color: #7A4B00; padding: 12px 16px; border-radius: 8px; font-size: 15px; max-width: 720px"><strong>Wird noch geprüft:</strong> Der Ablauf ist eine Vermutung und wird mit dem Kollegium abgestimmt.</p>
+      </sc-if>
+      <dl style="margin: 10px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: #E3E6EA; border: 1px solid #E3E6EA; border-radius: 12px; overflow: hidden">
+        <sc-for list="{{ infos }}" as="i" hint-placeholder-count="5">
+          <div style="background: #FFFFFF; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+            <dt style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #5A6370">{{ i.label }}</dt>
+            <dd style="margin: 0; font-size: 15px; font-weight: 600">{{ i.wert }}</dd>
+          </div>
+        </sc-for>
+      </dl>
+    </div>
+  </section>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 32px 24px 72px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+    <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+      <section style="background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 28px 32px">
+        <h2 style="margin: 0 0 20px; font-size: 22px; font-weight: 700">Ablauf</h2>
+        <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px">
+          <sc-for list="{{ schritte }}" as="s" hint-placeholder-count="3">
+            <li style="display: flex; gap: 14px; align-items: flex-start">
+              <span aria-hidden="true" style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: #E8F0FC; color: #1F5FBF; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center">{{ s.nr }}</span>
+              <span style="font-size: 17px; line-height: 1.6; padding-top: 3px">{{ s.text }}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </section>
+      <div style="display: flex; flex-wrap: wrap; gap: 24px">
+        <section style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 22px 24px">
+          <h2 style="margin: 0 0 8px; font-size: 17px; font-weight: 700">Tipp</h2>
+          <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #39414B">Sortiere die Tickets direkt nach der Stunde in drei Stapel: kann es – teilweise – noch nicht. So planst du die nächste Stunde in zwei Minuten.</p>
+        </section>
+        <section style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 22px 24px">
+          <h2 style="margin: 0 0 8px; font-size: 17px; font-weight: 700">Variante: 3-2-1</h2>
+          <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #39414B">3 Dinge, die ich gelernt habe · 2 Dinge, die ich interessant fand · 1 Frage, die ich noch habe.</p>
+        </section>
+      </div>
+    </main>
+
+    <aside style="flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column; gap: 20px">
+      <section style="background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 700">Druckvorlage</h2>
+        <div aria-hidden="true" style="background: #F1F3F6; padding: 14px; border-radius: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+          <sc-for list="{{ tickets }}" as="t" hint-placeholder-count="4">
+            <div style="background: #FFFFFF; border: 1.5px dashed #A3ACB8; border-radius: 4px; height: 70px; padding: 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px">
+              <span style="height: 5px; width: 60%; background: #1B1F24"></span>
+              <span style="height: 3px; width: 90%; background: #D3D8DF"></span>
+              <span style="height: 3px; width: 80%; background: #D3D8DF"></span>
+              <span style="height: 3px; width: 85%; background: #D3D8DF"></span>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin: 0; font-size: 14px; color: #4A525C">4 Tickets pro A4-Seite · 2 Seiten (Standard + 3-2-1)</p>
+        <a href="#" style="min-height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #1F5FBF; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 15px">Vorlage drucken</a>
+        <a href="#" style="min-height: 44px; border-radius: 8px; border: 1px solid #C9D0D8; display: flex; align-items: center; justify-content: center; color: #1B1F24; text-decoration: none; font-weight: 500; font-size: 15px">Anleitung drucken</a>
+      </section>
+      <section style="background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 700">Digital</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #39414B">Als Quiz mit eigenen Fragen über <a href="#" style="color: #1F5FBF; font-weight: 600">Kahoot</a> – vorher klären, ob das Tool an der Schule freigegeben ist.</p>
+      </section>
+      <section style="display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 700">Passt auch dazu</h2>
+        <sc-for list="{{ aehnlich }}" as="a" hint-placeholder-count="2">
+          <a href="#" class="k-card" style="text-decoration: none; color: #1B1F24; background: #FFFFFF; border: 1px solid #E3E6EA; border-radius: 10px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px">
+            <span style="display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{ a.farbe }}"></span>{{ a.titel }}</span>
+            <span style="font-size: 13px; color: #5A6370">{{ a.dauer }}</span>
+          </a>
+        </sc-for>
+      </section>
+    </aside>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"zeigeHinweis":{"editor":"boolean","default":false,"section":"Vorschau"},"$preview":{"width":1280,"height":1700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { ansicht: 'pinnwand' };
+  }
+  renderVals() {
+    const s = this.state;
+    const infos = [
+      { label: 'Dauer', wert: '3–5 Min', dreh: -2 },
+      { label: 'Wann', wert: 'Stundenende', dreh: 1.5 },
+      { label: 'Form', wert: 'analog · digital', dreh: -1 },
+      { label: 'Richtung', wert: 'SuS → Lehrkraft, Selbst', dreh: 2 },
+      { label: 'Material', wert: 'Ticket-Zettel', dreh: -1.5 }
+    ];
+    const schritte = [
+      'In den letzten Minuten erhält jede:r einen Zettel mit 1–3 Fragen, z. B. eine Kontrollaufgabe, „Das habe ich heute gelernt“ und „Das ist mir noch unklar“.',
+      'Die SuS füllen ihn aus und geben ihn beim Verlassen des Raums ab.',
+      'Du sortierst die Tickets nach drei Stapeln (kann es / teilweise / noch nicht) und planst danach die nächste Stunde.'
+    ].map((text, i) => ({ nr: i + 1, text }));
+    const aehnlich = [
+      { titel: 'Was würdest du deinen Eltern erzählen?', dauer: '2–5 Min', papier: '#FADBD8', farbe: '#C62828', dreh: -1.5 },
+      { titel: 'Checkliste', dauer: '3–5 Min', papier: '#E3D9F2', farbe: '#6A1B9A', dreh: 1.2 },
+      { titel: 'Mini-Whiteboards', dauer: '1–3 Min', papier: '#FFF6C7', farbe: '#2E7D32', dreh: -0.8 }
+    ];
+    return {
+      pinnwand: s.ansicht === 'pinnwand', klar: s.ansicht === 'klar',
+      zuKlar: () => this.setState({ ansicht: 'klar' }), zuPinnwand: () => this.setState({ ansicht: 'pinnwand' }),
+      hinweis: this.props.zeigeHinweis ?? false,
+      infos, schritte, aehnlich, tickets: [1, 2, 3, 4]
+    };
+  }
+}
+</script>
+</body>
+</html>
