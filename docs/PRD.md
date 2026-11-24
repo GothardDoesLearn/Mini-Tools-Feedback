@@ -23,16 +23,18 @@ Alle Inhalte liegen fertig in `content/`.
 - Wenig Zeit → schnelle Filter, kurze Anleitungen, Druck mit einem Klick.
 - Teils wenig technikaffin → keine Anmeldung, keine Installation.
 
-## 4. Technik (Entscheidung, siehe Begründung)
+## 4. Technik (Entscheidung, siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md`)
 
-- **Astro** (statischer Site-Generator) mit **Content Collections** für `content/methoden/*.md`.
-  Begründung: Inhalte bleiben als Markdown editierbar, Schema-Prüfung per Zod, Ausgabe = reines HTML.
-- Clientseitiges Filtern mit wenig Vanilla-JS (kein Framework nötig).
+- **Eigenes Python-Build-Skript** (Jinja2-Vorlagen, Pydantic-Schema, python-markdown, PyYAML) erzeugt aus `content/`
+  reines HTML nach `dist/`. Inhalte bleiben als Markdown editierbar, der Build bricht bei Schemafehlern ab.
+- JavaScript sparsam: einfaches JavaScript ohne TypeScript, Framework oder Bibliotheken, nur wo es klaren Mehrwert
+  bringt (Filter, Suche, teilbare Links, Zufall, Ansichts-Umschalter, Zwei-Klick-Video, Drucken-Button).
+  Ohne JavaScript bleiben alle Inhalte erreichbar.
 - Styling: plain CSS mit CSS-Variablen; kein Tailwind nötig.
 - Druckvorlagen als eigene HTML-Seiten mit Druck-CSS (A4, `@page`) → "Drucken / als PDF speichern" im Browser.
   Kein PDF-Build-Schritt. (Optional später: PDFs per Playwright beim Build erzeugen – siehe Offene Fragen.)
 - Hosting: beliebiger statischer Webserver; betrieben auf dem eigenen Server des Betreibers.
-- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei (`src/config.ts`), Name „Feedback-Tools“ (entschieden), Domain noch offen.
+- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei, Name „Feedback-Tools“ (entschieden), Domain noch offen.
 - Werbeplätze sind als Komponenten im Layout vorbereitet und per Konfiguration ausgeschaltet (Standard: aus).
 
 ## 5. Seiten
@@ -86,7 +88,7 @@ Alle Inhalte liegen fertig in `content/`.
 
 ## 6. Datenmodell
 
-Frontmatter jeder Datei in `content/methoden/` (Schema in Astro mit Zod abbilden, Build bricht bei Fehlern ab):
+Frontmatter jeder Datei in `content/methoden/` (Schema mit Pydantic abbilden, Build bricht bei Fehlern ab):
 
 | Feld | Typ | Pflicht | Beschreibung |
 | --- | --- | --- | --- |
@@ -133,7 +135,7 @@ Touch-Ziele mind. 44 px, Druck immer in der klaren Ansicht.
 Lizenz: Inhalte CC BY-NC-SA 4.0, Code MIT (siehe `docs/adr/0002-lizenz-inhalte-cc-by-nc-sa-code-mit.md`).
 
 
-1. Alle 31 Methoden und 5 Tools werden aus `content/` gerendert; `npm run build` ohne Fehler/Warnungen.
+1. Alle 31 Methoden und 5 Tools werden aus `content/` gerendert; `python build.py` ohne Fehler/Warnungen.
 2. Filterkombination z. B. "Stundenende + analog + Druckvorlage" liefert korrekte Treffer, URL ist teilbar.
 3. Jede referenzierte Druckvorlage existiert und druckt auf genau die angegebene Seitenzahl A4.
    Ausgenommen sind Druckvorlagen im Status `platzhalter`: Sie erscheinen als Seite „Vorlage folgt“ und zählen

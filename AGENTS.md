@@ -33,16 +33,19 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 - Werbeplätze nur über die vorbereitete Komponente; nie auf Druckvorlagen oder in der Druckansicht.
 - Statische Seite ohne Server-Backend; Ausgabe muss auf jedem einfachen Webserver laufen.
 - Barrierearm: semantisches HTML, Tastaturbedienung, Kontrast WCAG AA.
-- Git: pro Issue ein Branch. Claude committet selbst, sobald `npm run build` fehlerfrei läuft. **Push und Pull
+- Git: pro Issue ein Branch. Claude committet selbst, sobald `python build.py` und `pytest` fehlerfrei laufen. **Push und Pull
   Request nur nach ausdrücklichem OK des Betreibers.** Keine Co-Autor-Zeile.
 - Token sparen: nur die Dateien lesen, die das Issue braucht.
 
 ## Befehle (gültig nach Issue #1 „Projekt aufsetzen“)
 
-- `npm install` – Abhängigkeiten
-- `npm run dev` – Entwicklungsserver
-- `npm run build` – statischer Build nach `dist/`
-- `npm run check` – Typ- und Content-Schema-Prüfung
+Technik siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md` (Python-Build, plain CSS, sparsames JavaScript).
+
+- `python -m venv .venv` und `pip install -r requirements.txt -r requirements-dev.txt` – Umgebung und Abhängigkeiten
+- `python build.py --serve` – lokale Vorschau, baut bei Änderungen neu
+- `python build.py` – statischer Build nach `dist/`
+- `python build.py --check` – nur Content-Schema und Querverweise prüfen
+- `pytest` – Tests; `ruff check` und `ruff format` – Lint und Formatierung
 
 ## Agent skills
 
