@@ -1,4 +1,4 @@
-# PRD – Mini-Tools-Website
+# PRD – Feedback-Tools-Website
 
 Stand: 2026-11-25 · Betreiber: Daniel Handrik (Lehrkraft), privat
 
@@ -9,7 +9,7 @@ Ablauf ohne Vorwissen und können benötigtes Material sofort drucken.
 
 ## 2. Ausgangslage
 
-Mini-Tools ist eine **öffentliche Website**, die der Betreiber privat hostet und betreibt – kein Angebot einer
+Feedback-Tools ist eine **öffentliche Website**, die der Betreiber privat hostet und betreibt – kein Angebot einer
 Schule. Sie richtet sich an Lehrkräfte aller Schulen. Eine spätere Finanzierung über Werbung soll möglich bleiben
 (siehe `docs/adr/0001-keine-drittanfragen-ohne-einwilligung.md`).
 
@@ -32,13 +32,13 @@ Alle Inhalte liegen fertig in `content/`.
 - Druckvorlagen als eigene HTML-Seiten mit Druck-CSS (A4, `@page`) → "Drucken / als PDF speichern" im Browser.
   Kein PDF-Build-Schritt. (Optional später: PDFs per Playwright beim Build erzeugen – siehe Offene Fragen.)
 - Hosting: beliebiger statischer Webserver; betrieben auf dem eigenen Server des Betreibers.
-- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei (`src/config.ts`), Arbeitsname „Mini-Tools“.
+- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei (`src/config.ts`), Name „Feedback-Tools“ (entschieden), Domain noch offen.
 - Werbeplätze sind als Komponenten im Layout vorbereitet und per Konfiguration ausgeschaltet (Standard: aus).
 
 ## 5. Seiten
 
 ### 5.1 Startseite `/`
-- Kurze Erklärung, was Mini-Tools sind (2–3 Sätze).
+- Kurze Erklärung, was Feedback-Tools sind (2–3 Sätze).
 - Suchfeld + Filterleiste + Ergebnisliste aller Methoden als Karten (siehe 5.2) – Startseite IST die Übersicht.
 - Kachel-Links zu den Kategorien.
 
@@ -51,7 +51,8 @@ Alle Inhalte liegen fertig in `content/`.
   - Zeitpunkt (`zeitpunkt`)
   - Form (analog / digital)
   - Druckvorlage vorhanden (ja/nein)
-  - optional: max. Dauer (Schieberegler, Minuten) – nutzt `dauer_min`/`dauer_max`
+  - optional: max. Dauer (Schieberegler, Minuten) – nutzt `dauer_min`/`dauer_max`; Methoden mit Zeitpunkt
+    `dauerhaft` (0/0) erscheinen immer, da sie keine Unterrichtszeit kosten
 - Volltextsuche über Titel, Aliase und Anleitung.
 - Trefferanzahl anzeigen, "Filter zurücksetzen".
 - Filterzustand in der URL (Query-Parameter), damit Links teilbar sind.
@@ -65,7 +66,7 @@ Alle Inhalte liegen fertig in `content/`.
 - Video-Bereich, nur wenn `videos` gefüllt: Zwei-Klick-Einbettung (eigenes Vorschaubild mit Hinweis
   „Beim Abspielen werden Daten an YouTube übertragen“; das Video lädt erst nach Klick) plus direkter Link.
 - Bei digitalen Methoden: Links zu passenden Tools aus `tools.yaml`.
-- "Ähnliche Methoden": gleiche Kategorie, max. 3.
+- „Passt auch dazu“: zuerst Methoden aus dem Feld `verwandt`, aufgefüllt mit Methoden der gleichen Kategorie, max. 3.
 - Druckansicht der Anleitung selbst (Druck-CSS, ohne Navigation).
 
 ### 5.4 Kategorieseite `/kategorien/<id>/`

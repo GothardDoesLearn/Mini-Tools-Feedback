@@ -1,12 +1,12 @@
-# Mini-Tools
+# Feedback-Tools
 
 Eine öffentliche Website mit einer Sammlung kurzer Feedbackmethoden, mit denen Lehrkräfte aller Schulen im Unterricht Rückmeldungen von Schülerinnen und Schülern einholen.
 
 ## Sammlung
 
-**Mini-Tools**:
-Der Name der Sammlung und der Website als Ganzes (Arbeitsname). Kein Begriff für eine einzelne Methode.
-_Vermeiden_: Mini-Tool (im Singular für eine Methode)
+**Feedback-Tools**:
+Der Name der Sammlung und der Website als Ganzes (entschieden 2026-11-25; früherer Arbeitsname „Mini-Tools“). Kein Begriff für eine einzelne Methode und nicht zu verwechseln mit **Tool** (digitales Tool).
+_Vermeiden_: Feedback-Tool oder Mini-Tool (im Singular für eine Methode)
 
 **Methode**:
 Eine einzelne Feedbackmethode der Sammlung, zum Beispiel die Daumenprobe.

@@ -1,4 +1,4 @@
-# Mini-Tools – Feedbackmethoden-Website
+# Feedback-Tools – Feedbackmethoden-Website
 
 Öffentliche Website, die der Betreiber privat hostet. Sie stellt kurze Feedbackmethoden vor (1–10 Min, analog oder
 digital), mit denen Lehrkräfte Rückmeldungen von Schülerinnen und Schülern (SuS) einholen. Zu Methoden mit Material
