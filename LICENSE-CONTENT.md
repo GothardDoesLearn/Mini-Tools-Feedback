@@ -4,7 +4,7 @@ Die Inhalte dieses Repositorys – alle Dateien unter `content/` sowie die Druck
 **Creative Commons Namensnennung – Nicht kommerziell – Weitergabe unter gleichen Bedingungen 4.0 International**
 (CC BY-NC-SA 4.0).
 
-© 2026 Daniel Handrik – Mini-Tools
+© 2026 Daniel Handrik – Feedback-Tools
 
 Kurzfassung: Du darfst die Inhalte teilen, drucken und bearbeiten, wenn du die Quelle nennst, sie nicht
 kommerziell nutzt und Bearbeitungen unter derselben Lizenz weitergibst.

@@ -1,4 +1,4 @@
-# Mini-Tools – Feedbackmethoden-Website
+# Feedback-Tools – Feedbackmethoden-Website
 
 Öffentliche Website, die der Betreiber privat hostet. Sie stellt kurze Feedbackmethoden vor (1–10 Min, analog oder
 digital), mit denen Lehrkräfte Rückmeldungen von Schülerinnen und Schülern (SuS) einholen. Zu Methoden mit Material
@@ -20,7 +20,8 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 
 - Aufgaben sind GitHub Issues (siehe unten „Agent skills“). Immer nur EIN Issue pro Sitzung bearbeiten.
 - Ungeklärte Punkte nicht selbst entscheiden: als Issue mit Label `needs-triage` anlegen und bis dahin einen Platzhalter verwenden.
-- Übergangsweise liegen noch `docs/TICKETS.md` und `docs/OFFENE-FRAGEN.md` vor; sie werden in Issues überführt und dann gelöscht.
+- Abhängigkeiten sind als GitHub-Abhängigkeiten („blocked by“) eingetragen. Nur Issues beginnen, deren Blocker alle geschlossen sind.
+- Am Ende der Sitzung kurz zusammenfassen, was geändert wurde.
 
 ## Regeln
 
@@ -32,16 +33,19 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 - Werbeplätze nur über die vorbereitete Komponente; nie auf Druckvorlagen oder in der Druckansicht.
 - Statische Seite ohne Server-Backend; Ausgabe muss auf jedem einfachen Webserver laufen.
 - Barrierearm: semantisches HTML, Tastaturbedienung, Kontrast WCAG AA.
-- Git: pro Issue ein Branch. Claude committet selbst, sobald `npm run build` fehlerfrei läuft. **Push und Pull
+- Git: pro Issue ein Branch. Claude committet selbst, sobald `python build.py` und `pytest` fehlerfrei laufen. **Push und Pull
   Request nur nach ausdrücklichem OK des Betreibers.** Keine Co-Autor-Zeile.
 - Token sparen: nur die Dateien lesen, die das Issue braucht.
 
-## Befehle (nach Ticket T01 gültig)
+## Befehle (gültig nach Issue #1 „Projekt aufsetzen“)
 
-- `npm install` – Abhängigkeiten
-- `npm run dev` – Entwicklungsserver
-- `npm run build` – statischer Build nach `dist/`
-- `npm run check` – Typ- und Content-Schema-Prüfung
+Technik siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md` (Python-Build, plain CSS, sparsames JavaScript).
+
+- `python -m venv .venv` und `pip install -r requirements.txt -r requirements-dev.txt` – Umgebung und Abhängigkeiten
+- `python build.py --serve` – lokale Vorschau, baut bei Änderungen neu
+- `python build.py` – statischer Build nach `dist/`
+- `python build.py --check` – nur Content-Schema und Querverweise prüfen
+- `pytest` – Tests; `ruff check` und `ruff format` – Lint und Formatierung
 
 ## Agent skills
 

@@ -1,7 +1,7 @@
 # Druckvorlagen
 
 Alle Vorlagen: A4, Schwarz-Weiß-tauglich (Farbe nur als Zusatz), Schneidelinien gestrichelt, kleiner Fußtext
-"Mini-Tools · <Domain>" (Name und Domain aus der Konfiguration). Keine fremden Bilder/Cliparts – nur selbst gezeichnete SVG-Formen. Nie Werbung.
+"Feedback-Tools · <Domain>" (Name und Domain aus der Konfiguration). Keine fremden Bilder/Cliparts – nur selbst gezeichnete SVG-Formen. Nie Werbung.
 
 Druckvorlagen haben einen Status wie Methoden. `platzhalter` (derzeit `wimmelbild`): Seite „Vorlage folgt“, zählt
 nicht als vorhanden. `annahme` (derzeit `lernrad`): wird nach aktueller Spezifikation gebaut und trägt den Hinweis

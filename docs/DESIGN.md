@@ -26,7 +26,9 @@ Die Seite hat zwei Ansichten (Themes) mit identischem HTML-Inhalt und identische
   Anzahl („6 Methoden“). Leicht schräg (−3° bis +3°). Ausgewählt: gerade, angehoben (translateY −6px, scale 1.07),
   stärkerer Schatten, 3 px dunkler Rand (`outline`). Auf schmalen Bildschirmen seitlich wischbar (`overflow-x: auto`).
 - **Klar:** Liste in der Filterspalte mit Farbpunkt, Kurzname und Anzahl; ausgewählt = hellblauer Hintergrund, fett.
-- Einfachauswahl (eine Kategorie oder „Alle“), gleiche URL-Parameter in beiden Ansichten.
+- Mehrfachauswahl (ODER zwischen den gewählten Kategorien, entschieden 2026-11-25, wie PRD 5.2). Der Auswahlzustand
+  gilt für jede gewählte Kategorie; Umsetzung als `<button aria-pressed>`. „Alle“ ist ausgewählt, wenn keine Kategorie
+  gewählt ist, und hebt die Auswahl auf. Gleiche URL-Parameter in beiden Ansichten.
 
 ## Methodenseite
 
@@ -37,7 +39,7 @@ Aufbau (beide Ansichten gleich, siehe `methodenseite-referenz.dc.html`, Beispiel
 3. Kurzinfos: Dauer, Wann, Form, Richtung, Material (Pinnwand: weiße Schildchen, leicht gedreht; Klar: Infoleiste als `<dl>`).
 4. Zwei Spalten (mobil untereinander): links „So geht's“ (nummerierte Schritte), darunter Tipp und Variante als
    Zettel/Karten nebeneinander; rechts Druckvorlage mit Mini-Vorschau + „Vorlage drucken“ / „Anleitung drucken“,
-   Hinweis auf digitale Tools, „Passt auch dazu“ (Feld `verwandt`, max. 3).
+   Hinweis auf digitale Tools, „Passt auch dazu“ (zuerst Feld `verwandt`, aufgefüllt mit gleicher Kategorie, max. 3).
 - Pinnwand: Titelzettel in Papierfarbe der Kategorie mit großem Pin in Pinfarbe; „So geht's“ auf weißem Zettel,
   Schrittnummern als handgeschriebene Kreise; Tipp gelb (#FFF6C7), Variante mint (#CDEEE6), Digital hellblau (#E2EDFA).
 - Neues Frontmatter-Feld `kurz` (ein Satz Nutzen) für Kopf und Karten – bis es gefüllt ist, ersten Ablaufschritt kürzen.
@@ -72,7 +74,7 @@ Aufbau (beide Ansichten gleich, siehe `methodenseite-referenz.dc.html`, Beispiel
 
 - Hintergrund #8F8B8E · Text #22262B · Nebentext #3C434B · Akzent (Titel, aktive Buttons) #0E7C7B
 - Schrift Überschriften/Kartentitel: **Caveat** 700 · Fließtext: **Nunito** 400/600/700
-- Logo-Zettel: weiß, −1,5° gedreht, zwei blaue Pins, „Mini Tools“ 76 px
+- Logo-Zettel: weiß, −1,5° gedreht, zwei blaue Pins, „Feedback Tools“ (Name aus der Konfiguration) 76 px
 - Methodenkarte: Papierfarbe der Kategorie, Pin oben mittig (14 px, Pinfarbe der Kategorie), Schatten
   `0 6px 14px rgba(0,0,0,.25)`, Drehung −2° bis +2°, Hover: gerade + 3 px hoch
 - Filterleiste: weißer Zettel, Buttons #F2F2F2, aktiv #0E7C7B mit weißer Schrift

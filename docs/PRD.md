@@ -1,4 +1,4 @@
-# PRD – Mini-Tools-Website
+# PRD – Feedback-Tools-Website
 
 Stand: 2026-11-25 · Betreiber: Daniel Handrik (Lehrkraft), privat
 
@@ -9,7 +9,7 @@ Ablauf ohne Vorwissen und können benötigtes Material sofort drucken.
 
 ## 2. Ausgangslage
 
-Mini-Tools ist eine **öffentliche Website**, die der Betreiber privat hostet und betreibt – kein Angebot einer
+Feedback-Tools ist eine **öffentliche Website**, die der Betreiber privat hostet und betreibt – kein Angebot einer
 Schule. Sie richtet sich an Lehrkräfte aller Schulen. Eine spätere Finanzierung über Werbung soll möglich bleiben
 (siehe `docs/adr/0001-keine-drittanfragen-ohne-einwilligung.md`).
 
@@ -23,22 +23,24 @@ Alle Inhalte liegen fertig in `content/`.
 - Wenig Zeit → schnelle Filter, kurze Anleitungen, Druck mit einem Klick.
 - Teils wenig technikaffin → keine Anmeldung, keine Installation.
 
-## 4. Technik (Entscheidung, siehe Begründung)
+## 4. Technik (Entscheidung, siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md`)
 
-- **Astro** (statischer Site-Generator) mit **Content Collections** für `content/methoden/*.md`.
-  Begründung: Inhalte bleiben als Markdown editierbar, Schema-Prüfung per Zod, Ausgabe = reines HTML.
-- Clientseitiges Filtern mit wenig Vanilla-JS (kein Framework nötig).
+- **Eigenes Python-Build-Skript** (Jinja2-Vorlagen, Pydantic-Schema, python-markdown, PyYAML) erzeugt aus `content/`
+  reines HTML nach `dist/`. Inhalte bleiben als Markdown editierbar, der Build bricht bei Schemafehlern ab.
+- JavaScript sparsam: einfaches JavaScript ohne TypeScript, Framework oder Bibliotheken, nur wo es klaren Mehrwert
+  bringt (Filter, Suche, teilbare Links, Zufall, Ansichts-Umschalter, Zwei-Klick-Video, Drucken-Button).
+  Ohne JavaScript bleiben alle Inhalte erreichbar.
 - Styling: plain CSS mit CSS-Variablen; kein Tailwind nötig.
 - Druckvorlagen als eigene HTML-Seiten mit Druck-CSS (A4, `@page`) → "Drucken / als PDF speichern" im Browser.
   Kein PDF-Build-Schritt. (Optional später: PDFs per Playwright beim Build erzeugen – siehe Offene Fragen.)
 - Hosting: beliebiger statischer Webserver; betrieben auf dem eigenen Server des Betreibers.
-- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei (`src/config.ts`), Arbeitsname „Mini-Tools“.
+- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei, Name „Feedback-Tools“ (entschieden), Domain noch offen.
 - Werbeplätze sind als Komponenten im Layout vorbereitet und per Konfiguration ausgeschaltet (Standard: aus).
 
 ## 5. Seiten
 
 ### 5.1 Startseite `/`
-- Kurze Erklärung, was Mini-Tools sind (2–3 Sätze).
+- Kurze Erklärung, was Feedback-Tools sind (2–3 Sätze).
 - Suchfeld + Filterleiste + Ergebnisliste aller Methoden als Karten (siehe 5.2) – Startseite IST die Übersicht.
 - Kachel-Links zu den Kategorien.
 
@@ -51,7 +53,8 @@ Alle Inhalte liegen fertig in `content/`.
   - Zeitpunkt (`zeitpunkt`)
   - Form (analog / digital)
   - Druckvorlage vorhanden (ja/nein)
-  - optional: max. Dauer (Schieberegler, Minuten) – nutzt `dauer_min`/`dauer_max`
+  - optional: max. Dauer (Schieberegler, Minuten) – nutzt `dauer_min`/`dauer_max`; Methoden mit Zeitpunkt
+    `dauerhaft` (0/0) erscheinen immer, da sie keine Unterrichtszeit kosten
 - Volltextsuche über Titel, Aliase und Anleitung.
 - Trefferanzahl anzeigen, "Filter zurücksetzen".
 - Filterzustand in der URL (Query-Parameter), damit Links teilbar sind.
@@ -65,7 +68,7 @@ Alle Inhalte liegen fertig in `content/`.
 - Video-Bereich, nur wenn `videos` gefüllt: Zwei-Klick-Einbettung (eigenes Vorschaubild mit Hinweis
   „Beim Abspielen werden Daten an YouTube übertragen“; das Video lädt erst nach Klick) plus direkter Link.
 - Bei digitalen Methoden: Links zu passenden Tools aus `tools.yaml`.
-- "Ähnliche Methoden": gleiche Kategorie, max. 3.
+- „Passt auch dazu“: zuerst Methoden aus dem Feld `verwandt`, aufgefüllt mit Methoden der gleichen Kategorie, max. 3.
 - Druckansicht der Anleitung selbst (Druck-CSS, ohne Navigation).
 
 ### 5.4 Kategorieseite `/kategorien/<id>/`
@@ -85,7 +88,7 @@ Alle Inhalte liegen fertig in `content/`.
 
 ## 6. Datenmodell
 
-Frontmatter jeder Datei in `content/methoden/` (Schema in Astro mit Zod abbilden, Build bricht bei Fehlern ab):
+Frontmatter jeder Datei in `content/methoden/` (Schema mit Pydantic abbilden, Build bricht bei Fehlern ab):
 
 | Feld | Typ | Pflicht | Beschreibung |
 | --- | --- | --- | --- |
@@ -132,7 +135,7 @@ Touch-Ziele mind. 44 px, Druck immer in der klaren Ansicht.
 Lizenz: Inhalte CC BY-NC-SA 4.0, Code MIT (siehe `docs/adr/0002-lizenz-inhalte-cc-by-nc-sa-code-mit.md`).
 
 
-1. Alle 31 Methoden und 5 Tools werden aus `content/` gerendert; `npm run build` ohne Fehler/Warnungen.
+1. Alle 31 Methoden und 5 Tools werden aus `content/` gerendert; `python build.py` ohne Fehler/Warnungen.
 2. Filterkombination z. B. "Stundenende + analog + Druckvorlage" liefert korrekte Treffer, URL ist teilbar.
 3. Jede referenzierte Druckvorlage existiert und druckt auf genau die angegebene Seitenzahl A4.
    Ausgenommen sind Druckvorlagen im Status `platzhalter`: Sie erscheinen als Seite „Vorlage folgt“ und zählen
