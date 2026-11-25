@@ -624,3 +624,120 @@
     break-after: auto;
   }
 }
+
+/* 2 Sterne + ein Wunsch, WWW-Karte, Burger, Beobachtungsbogen (Issue #28) -- */
+
+.satzanfang {
+  margin: 1mm 0 0;
+  font-style: italic;
+}
+
+.plakat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  text-align: center;
+}
+
+.plakat p {
+  margin: 0;
+}
+
+.plakat__titel {
+  font-size: 72pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.plakat__block {
+  padding-top: 8mm;
+  border-top: var(--blatt-linie);
+}
+
+.plakat__wort {
+  font-size: 40pt;
+  font-weight: 700;
+}
+
+.plakat__satz {
+  margin-top: 3mm !important;
+  font-size: 26pt;
+}
+
+.plakat__hinweis {
+  margin-top: 2mm !important;
+  font-size: 16pt;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.burger__ebene {
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  padding: 6mm 14mm 2mm;
+  border: 0.6mm solid #000000;
+}
+
+.burger__ebene--oben {
+  padding: 4mm 24mm 2mm;
+  border-radius: 50% 50% 6mm 6mm / 40% 40% 6mm 6mm;
+}
+
+.burger__ebene--mitte {
+  margin: 1mm 4mm 3mm;
+  border-width: 1.2mm;
+  border-style: double;
+  border-radius: 8mm;
+}
+
+.burger__ebene--unten {
+  border-radius: 6mm 6mm 40% 40% / 6mm 6mm 35% 35%;
+}
+
+.burger__sesam {
+  display: block;
+  width: 50%;
+  height: 6mm;
+  margin: 0 auto 2mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 0.8;
+}
+
+.burger__salat {
+  display: block;
+  width: 100%;
+  height: 4mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 0.8;
+}
+
+.bogen {
+  width: 100%;
+  margin-bottom: 6mm;
+  border-collapse: collapse;
+}
+
+.bogen th,
+.bogen td {
+  padding: 2mm 3mm;
+  border: var(--blatt-linie);
+  text-align: left;
+  vertical-align: top;
+}
+
+.bogen td {
+  height: 22mm;
+}
+
+.bogen th:first-child,
+.bogen td:first-child {
+  width: 45%;
+}

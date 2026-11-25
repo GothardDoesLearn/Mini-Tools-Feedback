@@ -1,0 +1,25 @@
+{#- Burger-Methode nach docs/DRUCKVORLAGEN.md: Burger aus 3 Ebenen mit Schreibfeldern (Lob – Tipp – Lob). -#}
+{% from "vorlagen/_blatt.html" import blatt, feld %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<div class="burger">
+  <p class="ticket__titel">{{ vorlage.titel }}</p>
+  <div class="burger__ebene burger__ebene--oben">
+    <svg class="burger__sesam" viewBox="0 0 120 8" aria-hidden="true">
+      <ellipse cx="22" cy="5" rx="3" ry="1.5"/><ellipse cx="42" cy="3" rx="3" ry="1.5"/>
+      <ellipse cx="60" cy="5.5" rx="3" ry="1.5"/><ellipse cx="78" cy="3" rx="3" ry="1.5"/>
+      <ellipse cx="98" cy="5" rx="3" ry="1.5"/>
+    </svg>
+    {{ feld("Lob", 5) }}
+  </div>
+  <svg class="burger__salat" viewBox="0 0 120 6" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 3q5-4 10 0t10 0 10 0 10 0 10 0 10 0 10 0 10 0 10 0 10 0 10 0 10 0"/>
+  </svg>
+  <div class="burger__ebene burger__ebene--mitte">
+    {{ feld("Tipp", 5) }}
+  </div>
+  <div class="burger__ebene burger__ebene--unten">
+    {{ feld("Lob", 5) }}
+  </div>
+</div>
+{% endcall %}
