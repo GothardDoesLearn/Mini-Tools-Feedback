@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from generator import paths
-from generator.build import build
+from generator.build import build, markdown_zu_html
 from generator.content import ContentError, load_seiten
 
 SEITEN = ("ueber", "impressum", "datenschutz")
@@ -82,6 +82,15 @@ def test_ueber_seite_nennt_lizenzen_nach_adr_0002(dist: Path):
     assert "CC BY-NC-SA 4.0" in html
     assert "MIT" in html
     assert "creativecommons.org/licenses/by-nc-sa/4.0/" in html
+
+
+def test_markdown_kennzeichnet_externe_links():
+    html = markdown_zu_html("[Lizenz](https://example.org/x) und [intern](/ueber/)")
+    assert (
+        '<a class="extern-link" href="https://example.org/x" rel="noopener noreferrer">'
+        'Lizenz<span class="nur-screenreader"> (externer Link)</span></a>'
+    ) in html
+    assert '<a href="/ueber/">intern</a>' in html
 
 
 def test_ueber_seite_markiert_aktiven_menuepunkt(dist: Path):
