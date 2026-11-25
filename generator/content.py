@@ -111,6 +111,15 @@ class Druckvorlage(BaseModel):
     status: Literal["fertig", "annahme", "platzhalter"]
 
 
+class StartseitenTexte(BaseModel):
+    """Texte der Startseite aus content/startseite.yaml (PRD §5.1)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    titel: str = Field(min_length=1)
+    intro: str = Field(min_length=1)
+
+
 class Seite(BaseModel):
     """Eine Textseite aus content/seiten/ (z. B. Über, Impressum, Datenschutz)."""
 
@@ -151,6 +160,18 @@ def _load_liste[T: BaseModel](path: Path, modell: type[T]) -> list[T]:
         raise ContentError(f"{path.name}: kein gültiges YAML: {e}") from e
     try:
         return TypeAdapter(list[modell]).validate_python(data)
+    except ValidationError as e:
+        raise _schemafehler(f"{path.name}:", e) from e
+
+
+def load_startseite(content_dir: Path = CONTENT_DIR) -> StartseitenTexte:
+    path = content_dir / "startseite.yaml"
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError) as e:
+        raise ContentError(f"{path.name}: nicht lesbar: {e}") from e
+    try:
+        return StartseitenTexte.model_validate(data)
     except ValidationError as e:
         raise _schemafehler(f"{path.name}:", e) from e
 

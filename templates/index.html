@@ -5,9 +5,26 @@
   <script src="/static/js/filter.js" defer></script>
 {% endblock %}
 {% block content %}
-    <h1>{{ site.website_name }}</h1>
+    <section class="intro">
+      <h1 class="intro__titel">{{ texte.titel }}</h1>
+      <p class="intro__text">{{ texte.intro }}</p>
+    </section>
     <section class="uebersicht" aria-labelledby="uebersicht-titel">
+      <div class="filterspalte">
+        {# Kategorie-Auswahl (Issue #11), Filterfunktion folgt; DESIGN.md › Kategorie-Auswahl #}
+        <section class="kategorie-auswahl" aria-labelledby="kategorie-auswahl-titel">
+          <h2 id="kategorie-auswahl-titel" class="kategorie-auswahl__titel"><span class="nur-filz">Nach </span>Kategorie<span class="nur-filz"> filtern – antippen zum Auswählen</span></h2>
+          <div class="kategorie-auswahl__liste" role="group" aria-labelledby="kategorie-auswahl-titel">
+{% for k in kategorien %}
+            <button type="button" class="kategorie-auswahl__eintrag" data-kategorie="{{ k.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}" style="--kategorie-papier: {{ k.papier }}; --kategorie-pin: {{ k.pin }}; --kategorie-farbe: {{ k.farbe }}">
+              <span class="kategorie-auswahl__name">{{ k.kurzname }}</span>
+              <span class="kategorie-auswahl__anzahl">{{ k.anzahl }} {{ "Methode" if k.anzahl == 1 else "Methoden" }}</span>
+            </button>
+{% endfor %}
+          </div>
+        </section>
 {% include "_filterleiste.html" %}
+      </div>
       <div class="uebersicht__ergebnis">
         <p id="uebersicht-titel" class="uebersicht__anzahl" aria-live="polite" data-trefferzahl>{{ karten | length }} Methoden</p>
         <p class="uebersicht__leer" data-keine-treffer hidden>Keine Methode passt zu diesen Filtern.</p>

@@ -13,9 +13,10 @@ from markupsafe import Markup
 
 from generator import methodenseite, paths
 from generator.config import SiteConfig, load_config
-from generator.content import SiteData, load_seiten, load_site
+from generator.content import SiteData, load_seiten, load_site, load_startseite
 from generator.karten import karten
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
+from generator.startseite import kategorie_auswahl
 
 # Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
 VORLAGEN_LAYOUT_DIR = "vorlagen"
@@ -166,8 +167,10 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         "",
         "index.html",
         aktiver_bereich="methoden",
+        texte=load_startseite(paths.CONTENT_DIR),
+        kategorien=kategorie_auswahl(site_data),
         karten=karten(site_data),
-        # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#15)
+        # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#11)
         filtergruppen=[g for g in site_data.filter if g.werte],
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
