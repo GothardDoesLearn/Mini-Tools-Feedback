@@ -3,17 +3,25 @@
 import re
 import shutil
 from pathlib import Path
+from xml.etree.ElementTree import SubElement
 
+import markdown
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
+from markdown.extensions import Extension
+from markdown.treeprocessors import Treeprocessor
+from markupsafe import Markup
 
 from generator import paths
 from generator.config import SiteConfig, load_config
-from generator.content import SiteData, load_site
+from generator.content import SiteData, load_seiten, load_site
 from generator.karten import karten
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 
 # Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
 VORLAGEN_LAYOUT_DIR = "vorlagen"
+
+# Textseiten mit eigenem Menüpunkt in der Hauptnavigation (die übrigen nur im Fuß verlinkt).
+SEITEN_MIT_MENUEPUNKT = {"ueber"}
 
 
 def kurzbeschreibung(text: str, max_laenge: int = 160) -> str:
@@ -29,6 +37,32 @@ def kurzbeschreibung(text: str, max_laenge: int = 160) -> str:
     return gekuerzt.rstrip(" ,;:.–-") + "…"
 
 
+class _ExterneLinks(Treeprocessor):
+    """Kennzeichnet Links nach außen wie auf der Toolseite (Klasse, rel, Screenreader-Hinweis)."""
+
+    def run(self, root):
+        for link in root.iter("a"):
+            href = link.get("href", "")
+            if not re.match(r"(?:https?:)?//", href):
+                continue
+            link.attrib.clear()
+            link.set("class", "extern-link")
+            link.set("href", href)
+            link.set("rel", "noopener noreferrer")
+            hinweis = SubElement(link, "span", {"class": "nur-screenreader"})
+            hinweis.text = " (externer Link)"
+
+
+class _ExterneLinksExtension(Extension):
+    def extendMarkdown(self, md):  # noqa: N802 (Name von Python-Markdown vorgegeben)
+        md.treeprocessors.register(_ExterneLinks(md), "externe_links", 0)
+
+
+def markdown_zu_html(text: str) -> Markup:
+    """Rendert Markdown aus content/ zu HTML; externe Links werden gekennzeichnet."""
+    return Markup(markdown.markdown(text, extensions=[_ExterneLinksExtension()]))
+
+
 def make_env(config: SiteConfig) -> Environment:
     env = Environment(
         loader=FileSystemLoader(TEMPLATES_DIR),
@@ -39,6 +73,7 @@ def make_env(config: SiteConfig) -> Environment:
     )
     env.globals["site"] = config
     env.filters["kurzbeschreibung"] = kurzbeschreibung
+    env.filters["markdown"] = markdown_zu_html
     return env
 
 
@@ -130,6 +165,9 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         methoden_titel={m.id: m.titel for m in site_data.methoden},
     )
     write_vorlagen(env, output_dir, site_data)
+    for seite in load_seiten(paths.CONTENT_DIR):
+        bereich = seite.id if seite.id in SEITEN_MIT_MENUEPUNKT else ""
+        write_page(env, output_dir, seite.id, "seite.html", seite=seite, aktiver_bereich=bereich)
 
     if STATIC_DIR.exists():
         shutil.copytree(STATIC_DIR, output_dir / "static")
