@@ -14,7 +14,7 @@ from markupsafe import Markup
 from generator import methodenseite, paths
 from generator.config import SiteConfig, load_config
 from generator.content import SiteData, load_seiten, load_site, load_startseite
-from generator.karten import karten
+from generator.karten import dauer_bereich, karten
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 from generator.startseite import kategorie_auswahl
 
@@ -172,6 +172,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         karten=karten(site_data),
         # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#11)
         filtergruppen=[g for g in site_data.filter if g.werte],
+        dauer_bereich=dauer_bereich(site_data),
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
 

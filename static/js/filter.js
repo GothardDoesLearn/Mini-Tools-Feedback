@@ -87,7 +87,9 @@
     boxen.forEach(function (box) {
       if (box.checked) (auswahl[box.name] = auswahl[box.name] || []).push(box.value);
     });
-    return { auswahl: auswahl, kategorien: gewaehlteKategorien() };
+    var zustand = { auswahl: auswahl, kategorien: gewaehlteKategorien() };
+    zustand.dauer = dauerLesen(); // Issue #19
+    return zustand;
   }
 
   // ODER innerhalb einer Gruppe, UND zwischen Gruppen.
@@ -108,8 +110,46 @@
 
   var PRUEFUNGEN = [passtZuFiltergruppen, passtZuKategorien];
 
+  // Dauer-Filter (Issue #19): Schieberegler „max. Minuten“ (input type=range). Eine Methode
+  // passt, wenn ihre längste Dauer (data-dauer-max) hineinpasst; „dauerhaft“ (0/0) passt also
+  // immer. Regler ganz rechts = keine Einschränkung (zustand.dauer = null, nicht in der URL).
+  // Beim Ziehen nur filtern; die URL schreibt das change-Ereignis des Formulars (bedient()).
+  var dauerRegler = document.querySelector("[data-dauer-regler]");
+  var dauerAnzeige = document.querySelector("[data-dauer-anzeige]");
+
+  function dauerLesen() {
+    if (!dauerRegler) return null;
+    var wert = Number(dauerRegler.value);
+    return wert < Number(dauerRegler.max) ? wert : null;
+  }
+
+  function passtZurDauer(karte, zustand) {
+    return zustand.dauer === null ||
+      Number(karte.element.getAttribute("data-dauer-max")) <= zustand.dauer;
+  }
+
+  function dauerAnzeigen(zustand) {
+    if (!dauerRegler) return;
+    var kurz = zustand.dauer === null ? "beliebig" : "bis " + zustand.dauer + " Min";
+    var lang = zustand.dauer === null ? "beliebig" : "bis " + zustand.dauer + " Minuten";
+    if (dauerAnzeige) dauerAnzeige.textContent = kurz;
+    dauerRegler.setAttribute("aria-valuetext", lang);
+  }
+
+  // Nur ganze Minuten innerhalb der Reglerspanne; sonst Grundzustand.
+  function dauerAusUrl(werte) {
+    if (!dauerRegler) return;
+    var wert = werte.length === 1 && /^\d+$/.test(werte[0]) ? Number(werte[0]) : NaN;
+    var gueltig = wert >= Number(dauerRegler.min) && wert <= Number(dauerRegler.max);
+    dauerRegler.value = String(gueltig ? wert : dauerRegler.max);
+  }
+
+  PRUEFUNGEN.push(passtZurDauer);
+  if (dauerRegler) dauerRegler.addEventListener("input", function () { aktualisieren(); });
+
   function istGefiltert(zustand) {
-    return Object.keys(zustand.auswahl).length > 0 || zustand.kategorien.length > 0;
+    return Object.keys(zustand.auswahl).length > 0 || zustand.kategorien.length > 0 ||
+      zustand.dauer !== null;
   }
 
   function aktualisieren() {
@@ -127,6 +167,7 @@
     }
     if (keineTreffer) keineTreffer.hidden = anzahl > 0;
     if (zufallKnopf) zufallKnopf.disabled = anzahl === 0;
+    dauerAnzeigen(zustand);
   }
 
   // Nach einer Bedienung neu filtern und den Zustand als Verlaufseintrag in die URL schreiben.
@@ -189,6 +230,8 @@
   felder.forEach(function (feld) {
     urlParameter(feld, function (z) { return z.auswahl[feld] || []; }, filtergruppeAusUrl(feld));
   });
+  urlParameter("dauer", function (z) { return z.dauer === null ? [] : [String(z.dauer)]; },
+    dauerAusUrl);
 
   function dekodieren(text) {
     try {

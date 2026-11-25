@@ -18,4 +18,14 @@
     </div>
   </fieldset>
 {% endfor %}
+{# Dauer-Filter (Issue #19): max. Minuten; Spanne aus dauer_max aller Methoden. Ganz rechts =
+   keine Einschränkung. Methoden mit Zeitpunkt „dauerhaft“ (0/0) erscheinen immer. #}
+{% set dauer_von, dauer_bis = dauer_bereich %}
+  <div class="filtergruppe filterdauer">
+    <label class="filtergruppe__titel" for="filter-dauer">Max. Dauer</label>
+    <div class="filterdauer__zeile">
+      <input class="filterdauer__regler" type="range" id="filter-dauer" name="dauer" min="{{ dauer_von }}" max="{{ dauer_bis }}" step="1" value="{{ dauer_bis }}" aria-valuetext="beliebig" data-dauer-regler>
+      <output class="filterdauer__wert" for="filter-dauer" data-dauer-anzeige>beliebig</output>
+    </div>
+  </div>
 </form>

@@ -1080,6 +1080,39 @@ html:not([data-js]) .filterleiste {
   accent-color: var(--farbe-akzent);
 }
 
+/* Dauer-Filter (Issue #19): Schieberegler „max. Minuten“ */
+label.filtergruppe__titel {
+  display: block;
+}
+
+.filterdauer__zeile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--ziel-min);
+}
+
+.filterdauer__regler {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--ziel-min);
+  margin: 0;
+  accent-color: var(--farbe-akzent);
+}
+
+.filterdauer__regler:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.filterdauer__wert {
+  min-width: 6.5em;
+  color: var(--farbe-text);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+}
+
 .uebersicht__leer {
   margin: 0 0 var(--abstand-m);
 }

@@ -1,5 +1,6 @@
 """Methodenkarten für Übersichten (Startseite, Kategorieseiten): Anzeigedaten und Sortierung."""
 
+import math
 import re
 from dataclasses import dataclass, field
 
@@ -22,6 +23,9 @@ class Karte:
     status: str
     # Filterwerte je Feld aus filter.yaml (Issue #14), z. B. {"zeitpunkt": ["stundenende"]}
     filterwerte: dict[str, list[str]] = field(default_factory=dict)
+    # Minuten für den Dauer-Filter (Issue #19); `dauerhaft` = 0/0
+    dauer_min: int | float = 0
+    dauer_max: int | float = 0
 
     @property
     def url(self) -> str:
@@ -66,6 +70,18 @@ def filterwerte(methode: Methode, site: SiteData) -> dict[str, list[str]]:
     return werte
 
 
+def _minuten(wert: float) -> int | float:
+    """Ganze Minuten ohne Nachkomma (für data-Attribute und Regler)."""
+    return int(wert) if float(wert).is_integer() else wert
+
+
+def dauer_bereich(site: SiteData) -> tuple[int, int]:
+    """Spanne des Dauer-Reglers (Issue #19) in ganzen Minuten: von der kürzesten bis zur
+    längsten Methode; `dauerhaft` (0/0) zählt nicht mit, solche Methoden passen immer."""
+    werte = [m.dauer_max for m in site.methoden if m.dauer_max > 0] or [1]
+    return max(1, math.floor(min(werte))), math.ceil(max(werte))
+
+
 def karten(site: SiteData) -> list[Karte]:
     """Alle Methoden als Karten, nach Kategorie (Reihenfolge in kategorien.yaml), dann Titel."""
     kategorien = {k.id: k for k in site.kategorien}
@@ -89,6 +105,8 @@ def karten(site: SiteData) -> list[Karte]:
             druckvorlage_optional=m.druckvorlage_optional,
             status=m.status,
             filterwerte=filterwerte(m, site),
+            dauer_min=_minuten(m.dauer_min),
+            dauer_max=_minuten(m.dauer_max),
         )
         for m in methoden
     ]
