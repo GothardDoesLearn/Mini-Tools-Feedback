@@ -8,7 +8,7 @@
 {% set seitentitel = seitentitel | default("") %}
 {% set beschreibung = beschreibung | default(site.beschreibung) %}
 <!doctype html>
-<html lang="de" data-ansicht="klar">
+<html lang="de" data-ansicht="pinnwand">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +16,9 @@
   <meta name="description" content="{{ beschreibung }}">
 {% block meta %}{% endblock %}
   <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <script>
+{% include "ansicht.js" %}
+  </script>
   <link rel="stylesheet" href="/static/css/site.css">
 </head>
 <body>
@@ -26,13 +29,20 @@
         <span class="logo__zeichen" aria-hidden="true">{{ site.website_name.replace("-", " ").split() | map("first") | join | upper }}</span>
         <span class="logo__name">{{ site.website_name }}</span>
       </a>
-      <nav class="hauptnav" aria-label="Hauptnavigation">
-        <ul class="hauptnav__liste">
+      <div class="kopf__rechts">
+        <nav class="hauptnav" aria-label="Hauptnavigation">
+          <ul class="hauptnav__liste">
 {% for bereich, href, label in hauptnavigation %}
-          <li><a class="hauptnav__link" href="{{ href }}"{% if bereich == aktiver_bereich %} aria-current="page"{% endif %}>{{ label }}</a></li>
+            <li><a class="hauptnav__link" href="{{ href }}"{% if bereich == aktiver_bereich %} aria-current="page"{% endif %}>{{ label }}</a></li>
 {% endfor %}
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+        <div class="ansichtswahl" role="group" aria-label="Ansicht wählen">
+{% for wert, label in [("pinnwand", "Pinnwand"), ("klar", "Klare Ansicht")] %}
+          <button class="ansichtswahl__knopf" type="button" data-ansicht-wahl="{{ wert }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ label }}</button>
+{% endfor %}
+        </div>
+      </div>
     </div>
   </header>
   <main id="inhalt" class="inhalt" tabindex="-1">
