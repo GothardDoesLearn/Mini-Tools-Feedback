@@ -1,7 +1,7 @@
 """Methodenkarten für Übersichten (Startseite, Kategorieseiten): Anzeigedaten und Sortierung."""
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from generator.content import Kategorie, Methode, SiteData
 
@@ -20,6 +20,8 @@ class Karte:
     druckvorlage: bool
     druckvorlage_optional: bool
     status: str
+    # Filterwerte je Feld aus filter.yaml (Issue #14), z. B. {"zeitpunkt": ["stundenende"]}
+    filterwerte: dict[str, list[str]] = field(default_factory=dict)
 
     @property
     def url(self) -> str:
@@ -44,6 +46,21 @@ def kurztext(methode: Methode, max_zeichen: int = KURZTEXT_MAX_ZEICHEN) -> str:
     return text[:max_zeichen].rsplit(" ", 1)[0].rstrip(" ,;:–-") + " …"
 
 
+def filterwerte(methode: Methode, site: SiteData) -> dict[str, list[str]]:
+    """Werte je Filtergruppe (Reihenfolge wie filter.yaml). `druckvorlage` ist abgeleitet:
+    "ja", wenn mindestens eine Druckvorlage nicht im Status `platzhalter` ist (PRD §9.3)."""
+    vorlagen_status = {v.id: v.status for v in site.druckvorlagen}
+    werte = {}
+    for gruppe in site.filter:
+        if gruppe.feld == "druckvorlage":
+            echt = any(vorlagen_status[v] != "platzhalter" for v in methode.druckvorlagen)
+            werte["druckvorlage"] = ["ja" if echt else "nein"]
+        else:
+            wert = getattr(methode, gruppe.feld)
+            werte[gruppe.feld] = list(wert) if isinstance(wert, list) else [wert]
+    return werte
+
+
 def karten(site: SiteData) -> list[Karte]:
     """Alle Methoden als Karten, nach Kategorie (Reihenfolge in kategorien.yaml), dann Titel."""
     kategorien = {k.id: k for k in site.kategorien}
@@ -66,6 +83,7 @@ def karten(site: SiteData) -> list[Karte]:
             druckvorlage=bool(m.druckvorlagen),
             druckvorlage_optional=m.druckvorlage_optional,
             status=m.status,
+            filterwerte=filterwerte(m, site),
         )
         for m in methoden
     ]
