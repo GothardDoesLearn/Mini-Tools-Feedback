@@ -9,6 +9,7 @@ form: ["analog", "digital"]
 dauer: "ca. 1 Min"
 dauer_min: 1
 dauer_max: 1
+kurz: "Zeigt den Stand der ganzen Klasse, nicht nur der Meldenden, weil alle eine Antwort vorbereiten."
 material: "Namensstäbchen (Eisstiele), Losbox oder Zufallsgenerator"
 druckvorlagen: []
 status: fertig

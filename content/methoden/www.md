@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Gliedert Feedback in Wahrnehmung, Wirkung und Wunsch – ohne Wertung, mit Ich-Botschaft und Tipp."
 material: "Satzanfang-Karte"
 druckvorlagen: ["www-karte"]
 status: fertig

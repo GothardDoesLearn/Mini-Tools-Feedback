@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "5–10 Min"
 dauer_min: 5
 dauer_max: 10
+kurz: "Holt reihum von allen einen Satz oder ein Wort zur Stunde ein – ohne Kommentar oder Diskussion."
 material: "kein Material (optional Redeball)"
 druckvorlagen: []
 status: fertig

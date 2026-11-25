@@ -9,6 +9,7 @@ form: ["analog", "digital"]
 dauer: "10–15 Min"
 dauer_min: 10
 dauer_max: 15
+kurz: "Holt anonym und gründlich Rückmeldung zum Unterricht ein – mit Skala und offenen Fragen."
 material: "Fragebogen (Druck) oder edkimo"
 druckvorlagen: ["fragebogen"]
 tools: ["edkimo"]

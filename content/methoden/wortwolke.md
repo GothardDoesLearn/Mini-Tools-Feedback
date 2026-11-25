@@ -8,6 +8,7 @@ form: ["digital", "analog"]
 dauer: "ca. 3 Min"
 dauer_min: 3
 dauer_max: 3
+kurz: "Zeigt auf einen Blick, welche Begriffe die Klasse mit der Stunde verbindet – häufige erscheinen größer."
 material: "Tool, z. B. Mentimeter oder Oncoo"
 druckvorlagen: []
 tools: ["mentimeter", "oncoo"]

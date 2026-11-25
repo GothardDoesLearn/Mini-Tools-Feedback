@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "2–5 Min"
 dauer_min: 2
 dauer_max: 5
+kurz: "Zeigt am Stundenende, ob der Kern der Stunde bei den SuS angekommen ist."
 material: "kein Material"
 druckvorlagen: []
 status: fertig

@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "10–15 Min"
 dauer_min: 10
 dauer_max: 15
+kurz: "Lässt SuS in wechselnden Paaren über Reflexionsfragen sprechen und sammelt Ergebnisse im Plenum."
 material: "kein Material, Platz für zwei Kreise"
 druckvorlagen: []
 status: fertig

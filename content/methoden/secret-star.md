@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Holt Rückmeldung zur Stunde und zur eigenen Mitarbeit ein – und alle achten bewusster auf die Stunde."
 material: "Losbox oder Namensstäbchen"
 druckvorlagen: []
 status: fertig

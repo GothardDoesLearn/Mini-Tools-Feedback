@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "5–10 Min"
 dauer_min: 5
 dauer_max: 10
+kurz: "Stellt eine Person in den Mittelpunkt, die von den anderen nur positive Rückmeldungen hört."
 material: "kein Material (optional Zettel)"
 druckvorlagen: []
 status: fertig

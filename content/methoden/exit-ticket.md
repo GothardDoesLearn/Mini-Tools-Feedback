@@ -9,6 +9,7 @@ form: ["analog", "digital"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Zeigt am Stundenende, wer es kann, wer teilweise und wer noch nicht – Grundlage für die nächste Stunde."
 material: "Ticket-Zettel (4 pro A4)"
 druckvorlagen: ["exit-ticket"]
 tools: ["kahoot"]
