@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ vorlage.titel }} – Druckvorlage – {{ site.website_name }}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="/static/css/druckvorlage.css">
+  <script src="/static/js/drucken.js" defer></script>
+{% endblock %}
+{% block content %}
+    <div class="vorlage-kopf">
+      <h1>{{ vorlage.titel }}</h1>
+      <p class="vorlage-kopf__methoden">Druckvorlage zu:
+{% for methode in methoden %}
+        <a href="/methoden/{{ methode.id }}/">{{ methode.titel }}</a>{% if not loop.last %}, {% endif %}
+{% endfor %}
+      </p>
+{% if layout %}
+{% if vorlage.status == "annahme" %}
+      <div class="hinweisbox" role="note">
+        <p><strong>Wird noch geprüft:</strong> Diese Druckvorlage ist nach aktueller Spezifikation gebaut und noch nicht abschließend geprüft.</p>
+      </div>
+{% endif %}
+      <p class="vorlage-kopf__aktion">
+        <button type="button" class="knopf" data-drucken hidden>Drucken</button>
+        <span class="vorlage-kopf__ohne-js" data-drucken-hinweis>Zum Drucken oder Speichern als PDF: <kbd>Strg</kbd>+<kbd>P</kbd> (Mac: <kbd>⌘</kbd>+<kbd>P</kbd>).</span>
+      </p>
+{% endif %}
+    </div>
+{% if layout %}
+    <div class="vorlage-blaetter">
+{% include layout %}
+    </div>
+{% else %}
+    <div class="hinweisbox" role="note">
+      <p><strong>Vorlage folgt.</strong> Diese Druckvorlage ist noch nicht fertig.</p>
+    </div>
+{% endif %}
+{% endblock %}

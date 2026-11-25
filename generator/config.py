@@ -15,6 +15,11 @@ class SiteConfig(BaseModel):
     domain: str
     werbung_aktiv: bool = False
 
+    @property
+    def domain_anzeige(self) -> str:
+        """Domain ohne Schema und Schrägstrich, z. B. für den Fußtext der Druckvorlagen."""
+        return self.domain.split("://", 1)[-1].rstrip("/")
+
 
 def load_config(path: Path = CONFIG_FILE) -> SiteConfig:
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
