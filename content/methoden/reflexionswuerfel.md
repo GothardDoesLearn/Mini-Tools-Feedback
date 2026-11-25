@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "5–10 Min"
 dauer_min: 5
 dauer_max: 10
+kurz: "Lässt SuS reihum würfeln und die Reflexionsfrage beantworten, die oben liegt."
 material: "Würfelnetz zum Ausschneiden (oder Schaumstoffwürfel mit Taschen)"
 druckvorlagen: ["wuerfelnetz"]
 status: fertig

@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Lässt SuS zwei gelungene Dinge und einen konkreten Verbesserungswunsch benennen."
 material: "Karte mit 2 Sternen und Wunsch-Feld"
 druckvorlagen: ["sterne-wunsch-karte"]
 status: fertig

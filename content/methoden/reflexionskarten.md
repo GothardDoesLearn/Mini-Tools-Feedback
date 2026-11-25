@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "5–10 Min"
 dauer_min: 5
 dauer_max: 10
+kurz: "Lässt SuS mit Satzanfängen auf Karten über ihren Lernweg nachdenken."
 material: "Kartenset mit Satzanfängen"
 druckvorlagen: ["reflexionskarten"]
 status: fertig

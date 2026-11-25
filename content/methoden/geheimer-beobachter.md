@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "während einer Gruppenarbeit + 5 Min"
 dauer_min: 5
 dauer_max: 10
+kurz: "Lässt verdeckte Beobachter der Gruppe anhand fester Kriterien Rückmeldung zur Zusammenarbeit geben."
 material: "Beobachtungsbogen"
 druckvorlagen: ["beobachtungsbogen"]
 status: fertig

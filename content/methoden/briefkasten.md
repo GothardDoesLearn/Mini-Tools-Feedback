@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "dauerhaft"
 dauer_min: 0
 dauer_max: 0
+kurz: "Sammelt jederzeit anonyme Rückmeldungen, Wünsche oder Probleme der Klasse."
 material: "Box mit Schlitz, Zettel"
 druckvorlagen: []
 status: fertig

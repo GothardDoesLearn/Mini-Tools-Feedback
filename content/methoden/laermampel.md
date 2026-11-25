@@ -8,6 +8,7 @@ form: ["digital", "analog"]
 dauer: "dauerhaft"
 dauer_min: 0
 dauer_max: 0
+kurz: "Zeigt der Klasse dauerhaft, ob die vereinbarte Lautstärke eingehalten wird."
 material: "Browser-Lärmampel am Beamer oder Ampel-Plakat mit Klammer"
 druckvorlagen: []
 status: fertig

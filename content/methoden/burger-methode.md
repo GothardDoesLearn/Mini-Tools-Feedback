@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "ca. 3 Min"
 dauer_min: 3
 dauer_max: 3
+kurz: "Verpackt konkrete Kritik zwischen zwei positiven Rückmeldungen."
 material: "optional Burger-Bild mit drei Ebenen"
 druckvorlagen: ["burger"]
 druckvorlage_optional: true
