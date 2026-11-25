@@ -66,7 +66,7 @@ def test_kategorie_auswahl_zeigt_alle_und_sieben_kategorien_als_buttons(startsei
 
 
 def test_kategorie_auswahl_steht_in_der_filterspalte_vor_den_karten(startseite: str):
-    spalte = startseite.index('<aside class="filterspalte"')
+    spalte = startseite.index('<div class="filterspalte"')
     assert (
         spalte < startseite.index("kategorie-auswahl__liste") < startseite.index('class="karten"')
     )

@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% from "_karte.html" import karte %}
+{% block head %}
+  <script src="/static/js/filter.js" defer></script>
+{% endblock %}
 {% block content %}
     <section class="intro">
       <h1 class="intro__titel">{{ texte.titel }}</h1>
       <p class="intro__text">{{ texte.intro }}</p>
     </section>
-    <div class="uebersicht-layout">
-      <aside class="filterspalte" aria-label="Filter">
+    <section class="uebersicht" aria-labelledby="uebersicht-titel">
+      <div class="filterspalte">
         {# Kategorie-Auswahl (Issue #11), Filterfunktion folgt; DESIGN.md › Kategorie-Auswahl #}
         <section class="kategorie-auswahl" aria-labelledby="kategorie-auswahl-titel">
           <h2 id="kategorie-auswahl-titel" class="kategorie-auswahl__titel"><span class="nur-filz">Nach </span>Kategorie<span class="nur-filz"> filtern – antippen zum Auswählen</span></h2>
@@ -19,14 +22,16 @@
 {% endfor %}
           </div>
         </section>
-      </aside>
-      <section class="uebersicht" aria-labelledby="uebersicht-titel">
-        <p id="uebersicht-titel" class="uebersicht__anzahl">{{ karten | length }} Methoden</p>
+{% include "_filterleiste.html" %}
+      </div>
+      <div class="uebersicht__ergebnis">
+        <p id="uebersicht-titel" class="uebersicht__anzahl" aria-live="polite" data-trefferzahl>{{ karten | length }} Methoden</p>
+        <p class="uebersicht__leer" data-keine-treffer hidden>Keine Methode passt zu diesen Filtern.</p>
         <div class="karten">
 {% for k in karten %}
           {{ karte(k) | indent(10) }}
 {% endfor %}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
 {% endblock %}

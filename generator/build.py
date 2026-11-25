@@ -170,6 +170,8 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         texte=load_startseite(paths.CONTENT_DIR),
         kategorien=kategorie_auswahl(site_data),
         karten=karten(site_data),
+        # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#11)
+        filtergruppen=[g for g in site_data.filter if g.werte],
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
 
