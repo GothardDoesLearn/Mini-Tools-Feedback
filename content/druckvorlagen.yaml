@@ -1,0 +1,128 @@
+# Druckvorlagen – übernommen aus docs/DRUCKVORLAGEN.md (Tabelle, Texte unverändert).
+# status: fertig | annahme | platzhalter. methoden: IDs aus content/methoden/.
+
+- id: feedback-hand
+  titel: 'Feedback-Hand'
+  methoden: [5-finger-methode]
+  inhalt: 'Umriss einer Hand, je Finger Symbol + Leitsatz (Daumen: Das war super; Zeigefinger: Das ist mir aufgefallen; Mittelfinger: Das hat mir nicht gefallen; Ringfinger: Das nehme ich mit; kleiner Finger: Das kam zu kurz) und Schreibfeld'
+  seiten: '1'
+  status: fertig
+
+- id: ampelkarten
+  titel: 'Ampelkarten'
+  methoden: [ampel]
+  inhalt: '3 Karten pro SuS (rot/gelb/grün) im Format A7; zusätzlich Text "Hilfe" / "unsicher" / "verstanden" für SW-Druck; 4 Sätze pro Seite'
+  seiten: '3 (je Farbe 1)'
+  status: fertig
+
+- id: smiley-karten
+  titel: 'Smiley-Karten'
+  methoden: [smileys]
+  inhalt: '3 Kreise (lachend, neutral, traurig), A6, 4 pro Seite, gemischt'
+  seiten: '1'
+  status: fertig
+
+- id: wettersymbole
+  titel: 'Wettersymbole'
+  methoden: [wetterbericht, klebepunkte]
+  inhalt: '4 große Symbole (Sonne, Sonne mit Wolke, Wolke, Gewitter) je A4 quer für die Tafel + Seite mit Mini-Karten (A7)'
+  seiten: '5'
+  status: fertig
+
+- id: eckenschilder
+  titel: 'Eckenschilder'
+  methoden: [4-ecken-methode]
+  inhalt: '4 Schilder A4 quer: großer Buchstabe A–D + leeres Feld für Aussage'
+  seiten: '4'
+  status: fertig
+
+- id: zielscheibe
+  titel: 'Zielscheibe'
+  methoden: [zielscheibe]
+  inhalt: 'Konzentrische Kreise (4 Ringe), 6 Segmente mit leeren Beschriftungsfeldern; Variante A4 (Einzel) und A3-taugliche Plakatversion'
+  seiten: '1–2'
+  status: fertig
+
+- id: skalen-plakat
+  titel: 'Skalen-Plakat'
+  methoden: [klebepunkte, aufstellung]
+  inhalt: 'Waagerechte Skala 1–6 mit Feldern für Klebepunkte; Bodenkarten "1"–"6" (A5)'
+  seiten: '4'
+  status: fertig
+
+- id: lernrad
+  titel: 'Lernrad'
+  methoden: [lernrad]
+  inhalt: 'Kreis mit 6–8 Segmenten, von innen nach außen in 4 Stufen unterteilt, Felder für Themennamen'
+  seiten: '1'
+  status: annahme
+
+- id: wimmelbild
+  titel: 'Wimmelbild'
+  methoden: [wimmelbild-zuordnen]
+  inhalt: 'PLATZHALTER – folgt nach Rücksprache; kein fremdes Bild'
+  seiten: '–'
+  status: platzhalter
+
+- id: checkliste
+  titel: 'Ich-kann-Checkliste'
+  methoden: [checkliste]
+  inhalt: 'Tabelle: "Ich kann …" (8 leere Zeilen) · sicher / teilweise / noch nicht · "Übung dazu"'
+  seiten: '1'
+  status: fertig
+
+- id: exit-ticket
+  titel: 'Exit-Ticket'
+  methoden: [exit-ticket]
+  inhalt: '4 Tickets pro A4: Name (optional), Datum, "Das habe ich gelernt", "Das ist mir unklar", Feld für Kontrollaufgabe; Variante 3-2-1'
+  seiten: '2'
+  status: fertig
+
+- id: reflexionskarten
+  titel: 'Reflexionskarten'
+  methoden: [reflexionskarten]
+  inhalt: '12 Karten (A7) mit Satzanfängen: Am meisten geholfen hat mir … / Schwierig war … / Nächstes Mal mache ich … / Überrascht hat mich … / Ich bin stolz auf … / Ich brauche noch … / Am besten gelernt habe ich durch … / Das will ich noch wissen … / Unsere Zusammenarbeit war … / Mein Ziel war … / Das nehme ich mit … / Joker'
+  seiten: '1'
+  status: fertig
+
+- id: wuerfelnetz
+  titel: 'Reflexionswürfel'
+  methoden: [reflexionswuerfel]
+  inhalt: 'Würfelnetz mit Klebelaschen, Seiten: Was war neu? / Was war schwer? / Was hat Spaß gemacht? / Was willst du noch wissen? / Wie hast du gearbeitet? / Joker; zweite Seite leeres Netz'
+  seiten: '2'
+  status: fertig
+
+- id: fragebogen
+  titel: 'Unterrichts-Fragebogen'
+  methoden: [fragebogen]
+  inhalt: '8 Aussagen mit Skala 1–4 (z. B. "Die Aufgaben waren verständlich", "Ich konnte Fragen stellen", "Das Tempo war passend", "Ich weiß, was ich lernen soll") + 2 offene Fragen (Was soll bleiben? Was soll sich ändern?)'
+  seiten: '1'
+  status: fertig
+
+- id: sterne-wunsch-karte
+  titel: '2 Sterne + ein Wunsch'
+  methoden: [2-sterne-ein-wunsch]
+  inhalt: '4 Karten pro A4: 2 Sternfelder, 1 Wunschfeld, "Feedback für:"'
+  seiten: '1'
+  status: fertig
+
+- id: www-karte
+  titel: 'WWW-Karte'
+  methoden: [www]
+  inhalt: '4 Karten pro A4 mit Satzanfängen Wahrnehmung / Wirkung / Wunsch; zusätzlich Plakat A4 zum Aufhängen'
+  seiten: '2'
+  status: fertig
+
+- id: burger
+  titel: 'Burger-Methode'
+  methoden: [burger-methode]
+  inhalt: 'Burger aus 3 Ebenen mit Schreibfeldern (Lob – Tipp – Lob)'
+  seiten: '1'
+  status: fertig
+
+- id: beobachtungsbogen
+  titel: 'Beobachtungsbogen'
+  methoden: [geheimer-beobachter]
+  inhalt: 'Kriterienliste (alle kommen zu Wort, bleiben beim Thema, hören einander zu, teilen Aufgaben auf, + 2 leere) mit Strichliste und Notizfeld'
+  seiten: '1'
+  status: fertig
