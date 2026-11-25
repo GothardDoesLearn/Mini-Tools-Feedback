@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
 
 from generator.paths import CONTENT_DIR
 
@@ -49,19 +49,97 @@ class Methode(BaseModel):
     body: str
 
 
+class Kategorie(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    slug: str
+    titel: str
+    kurz: str
+    beschreibung: str
+    farbe: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
+
+
+class FilterWert(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    label: str
+    erklaerung: str | None = None
+
+
+class FilterGruppe(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    feld: str
+    titel: str
+    quelle: str | None = None
+    abgeleitet: str | None = None
+    werte: list[FilterWert] = []
+
+
+class Tool(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    titel: str
+    url: str
+    zweck: str
+    ablauf: str
+    sus_geraete: str
+    hinweis: str | None = None
+    methoden: list[str] = []
+
+
+class SiteData(BaseModel):
+    """Alle Inhalte aus content/, geprüft inklusive Querverweisen."""
+
+    kategorien: list[Kategorie]
+    filter: list[FilterGruppe]
+    tools: list[Tool]
+    methoden: list[Methode]
+
+
 ERLAUBTE_WERTE_FELDER = ("kategorie", "richtung", "zeitpunkt", "form")
 
 
-def _read_yaml(path: Path):
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
+def _schemafehler(dateiname: str, e: ValidationError) -> ContentError:
+    details = "\n".join(
+        f"  - {'.'.join(str(teil) for teil in err['loc']) or '(Datei)'}: {err['msg']}"
+        for err in e.errors()
+    )
+    return ContentError(f"{dateiname} entspricht nicht dem Schema:\n{details}")
+
+
+def _load_liste[T: BaseModel](path: Path, modell: type[T]) -> list[T]:
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as e:
+        raise ContentError(f"{path.name}: kein gültiges YAML: {e}") from e
+    try:
+        return TypeAdapter(list[modell]).validate_python(data)
+    except ValidationError as e:
+        raise _schemafehler(f"{path.name}:", e) from e
+
+
+def load_kategorien(content_dir: Path = CONTENT_DIR) -> list[Kategorie]:
+    return _load_liste(content_dir / "kategorien.yaml", Kategorie)
+
+
+def load_filter(content_dir: Path = CONTENT_DIR) -> list[FilterGruppe]:
+    return _load_liste(content_dir / "filter.yaml", FilterGruppe)
+
+
+def load_tools(content_dir: Path = CONTENT_DIR) -> list[Tool]:
+    return _load_liste(content_dir / "tools.yaml", Tool)
 
 
 def erlaubte_werte(content_dir: Path = CONTENT_DIR) -> dict[str, list[str]]:
     """Erlaubte Werte je Feld aus kategorien.yaml und filter.yaml."""
-    werte = {"kategorie": [k["id"] for k in _read_yaml(content_dir / "kategorien.yaml")]}
-    for gruppe in _read_yaml(content_dir / "filter.yaml"):
-        if gruppe["feld"] in ERLAUBTE_WERTE_FELDER and "werte" in gruppe:
-            werte[gruppe["feld"]] = [w["id"] for w in gruppe["werte"]]
+    werte = {"kategorie": [k.id for k in load_kategorien(content_dir)]}
+    for gruppe in load_filter(content_dir):
+        if gruppe.feld in ERLAUBTE_WERTE_FELDER and gruppe.werte:
+            werte[gruppe.feld] = [w.id for w in gruppe.werte]
     return werte
 
 
@@ -98,13 +176,7 @@ def _load_methode(path: Path, erlaubt: dict[str, list[str]]) -> Methode:
     try:
         methode = Methode.model_validate(_read_methode(path))
     except ValidationError as e:
-        details = "\n".join(
-            f"  - {'.'.join(str(teil) for teil in err['loc']) or '(Datei)'}: {err['msg']}"
-            for err in e.errors()
-        )
-        raise ContentError(
-            f"{path.name}: Frontmatter entspricht nicht dem Schema:\n{details}"
-        ) from e
+        raise _schemafehler(f"{path.name}: Frontmatter", e) from e
     fehler = _pruefe_werte(path, methode, erlaubt)
     if methode.id != path.stem:
         fehler.append(
@@ -121,3 +193,37 @@ def load_methoden(content_dir: Path = CONTENT_DIR) -> list[Methode]:
     return [
         _load_methode(path, erlaubt) for path in sorted((content_dir / "methoden").glob("*.md"))
     ]
+
+
+def load_site(content_dir: Path = CONTENT_DIR) -> SiteData:
+    """Lädt alle Inhalte und prüft die Querverweise; bei Fehlern ContentError.
+
+    Die kategorie einer Methode prüft schon load_methoden; die druckvorlagen-IDs werden
+    geprüft, sobald es die Druckvorlagen-Datei gibt.
+    """
+    site = SiteData(
+        kategorien=load_kategorien(content_dir),
+        filter=load_filter(content_dir),
+        tools=load_tools(content_dir),
+        methoden=load_methoden(content_dir),
+    )
+    fehler = _pruefe_querverweise(site)
+    if fehler:
+        raise ContentError("\n".join(fehler))
+    return site
+
+
+def _unbekannt(datei: str, feld: str, ids: list[str], bekannt: set[str]) -> list[str]:
+    return [f"{datei}: {feld} '{i}' ist unbekannt." for i in ids if i not in bekannt]
+
+
+def _pruefe_querverweise(site: SiteData) -> list[str]:
+    tool_ids = {t.id for t in site.tools}
+    methoden_ids = {m.id for m in site.methoden}
+    fehler = []
+    for m in site.methoden:
+        fehler += _unbekannt(f"{m.id}.md", "tools", m.tools, tool_ids)
+        fehler += _unbekannt(f"{m.id}.md", "verwandt", m.verwandt, methoden_ids)
+    for t in site.tools:
+        fehler += _unbekannt(f"tools.yaml: {t.id}", "methoden", t.methoden, methoden_ids)
+    return fehler
