@@ -60,6 +60,9 @@ gemeinsame Liste gibt es nicht. Die Reihenfolge ist alphabetisch nach Datei und 
 - Kontrast: Auf dem Filz der Pinnwand (#8F8B8E) nur `--farbe-text` (4,53:1) oder Weiß ab großem Text. Darum ist
   `--farbe-link` dort die Textfarbe. Die Titelschrift (Caveat) nur ab 22 px; ein Test prüft jede Regel.
 - Ansichtsabhängiges über das Attribut `data-ansicht` am `<html>` stylen, nicht per JavaScript; sonst flackert es.
+- Schriften: `templates/ansicht.js` lädt die Schriftdateien der gewählten Ansicht per `preload` vor, sonst
+  verschiebt der späte Schriftwechsel das Layout (Lighthouse CLS). Neue oder geänderte Schriftdatei in
+  `00-schriften.css` darum auch dort eintragen; `tests/test_ansicht_umschalter.py` prüft, dass beides übereinstimmt.
 - Bedienelemente, die nur mit JavaScript funktionieren: `html:not([data-js]) .x { display: none }`.
 - Klassen deutsch und BEM-artig (`.kopf__rechts`, `.karte__kategorie--link`). Karten auf Druckvorlagen heißen
   `.druckkarte`, weil `.karte` die Methodenkarte ist.

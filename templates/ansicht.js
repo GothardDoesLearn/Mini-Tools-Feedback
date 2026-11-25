@@ -3,6 +3,35 @@
   var html = document.documentElement;
   var schluessel = "mt-ansicht";
   var erlaubt = ["pinnwand", "klar"];
+  // Schriften der Ansicht vorab laden (parallel zum Stylesheet), sonst verschiebt der späte
+  // Schriftwechsel das Layout (Lighthouse CLS, Issue #37). Muss zu static/css/site/00-schriften.css passen.
+  var schriften = {
+    pinnwand: [
+      "caveat/caveat-latin-700-normal",
+      "nunito/nunito-latin-400-normal",
+      "nunito/nunito-latin-600-normal",
+      "nunito/nunito-latin-700-normal",
+    ],
+    klar: [
+      "inter/inter-latin-400-normal",
+      "inter/inter-latin-500-normal",
+      "inter/inter-latin-600-normal",
+      "inter/inter-latin-700-normal",
+    ],
+  };
+
+  function vorladen(ansicht) {
+    var liste = schriften[ansicht] || [];
+    for (var i = 0; i !== liste.length; i++) {
+      var link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "font";
+      link.type = "font/woff2";
+      link.crossOrigin = "anonymous";
+      link.href = "/static/fonts/" + liste[i] + ".woff2";
+      document.head.appendChild(link);
+    }
+  }
 
   function setze(ansicht) {
     if (erlaubt.indexOf(ansicht) === -1) ansicht = "pinnwand";
@@ -20,6 +49,7 @@
   } catch (e) {}
   html.setAttribute("data-js", "");
   setze(gespeichert);
+  vorladen(html.getAttribute("data-ansicht"));
 
   document.addEventListener("DOMContentLoaded", function () {
     setze(html.getAttribute("data-ansicht"));

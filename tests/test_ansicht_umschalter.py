@@ -111,8 +111,11 @@ const localStorage = szenario.speicherKaputt
       getItem: (k) => (k in speicher ? speicher[k] : null),
       setItem: (k, v) => { speicher[k] = v; },
     };
+const vorgeladen = [];
 const document = {
   documentElement: html,
+  head: { appendChild: (el) => { vorgeladen.push(el); } },
+  createElement: (tag) => ({ tag }),
   querySelectorAll: () => knoepfe,
   addEventListener: (t, f) => { (listener[t] = listener[t] || []).push(f); },
 };
@@ -125,6 +128,7 @@ const zustand = () => ({
   js: "data-js" in attrs,
   pressed: knoepfe.map((k) => k.getAttribute("aria-pressed")),
   gespeichert: speicher["mt-ansicht"] ?? null,
+  vorgeladen: vorgeladen.map((el) => [el.tag, el.rel, el.as, el.type, el.crossOrigin, el.href]),
 });
 const ergebnis = { start: zustand() };
 (listener.DOMContentLoaded || []).forEach((f) => f());
@@ -182,6 +186,7 @@ def test_script_ignoriert_ungueltige_gespeicherte_werte(startseite: str):
 @braucht_node
 def test_klick_schaltet_um_und_speichert_wahl(startseite: str):
     e = _laufen(_kopf_script(startseite), klick="klar")
+    e["geklickt"].pop("vorgeladen")
     assert e["geklickt"] == {
         "ansicht": "klar",
         "js": True,
@@ -202,3 +207,29 @@ def test_wahl_in_anderem_tab_wirkt_sofort(startseite: str):
     e = _laufen(_kopf_script(startseite), andererTab="klar")
     assert e["andererTab"]["ansicht"] == "klar"
     assert e["andererTab"]["pressed"] == ["false", "true"]
+
+
+def _vorgeladene_dateien(e: dict) -> list[str]:
+    assert all(
+        el[:5] == ["link", "preload", "font", "font/woff2", "anonymous"]
+        for el in e["start"]["vorgeladen"]
+    )
+    return [el[5] for el in e["start"]["vorgeladen"]]
+
+
+@braucht_node
+@pytest.mark.parametrize(
+    ("gespeichert", "familien"),
+    [(None, {"caveat", "nunito"}), ("klar", {"inter"})],
+)
+def test_script_laedt_genau_die_schriften_der_ansicht_vor(
+    startseite: str, dist: Path, css: str, gespeichert, familien
+):
+    """Gegen Layoutverschiebung durch späten Schriftwechsel (Issue #37, Lighthouse CLS)."""
+    szenario = {} if gespeichert is None else {"gespeichert": gespeichert}
+    dateien = _vorgeladene_dateien(_laufen(_kopf_script(startseite), **szenario))
+    eingebunden = set(re.findall(r'url\("(/static/fonts/[^"]+)"\)', css))
+    erwartet = {u for u in eingebunden if u.split("/")[3] in familien}
+    assert set(dateien) == erwartet
+    for datei in dateien:
+        assert (dist / datei.lstrip("/")).is_file(), datei
