@@ -51,8 +51,17 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
 
     env = make_env(config)
     write_page(env, output_dir, "", "index.html", aktiver_bereich="methoden")
-    inhalte = load_site(paths.CONTENT_DIR)
-    write_toolseite(env, output_dir, inhalte)
+    site_data = load_site(paths.CONTENT_DIR)
+    write_toolseite(env, output_dir, site_data)
+    write_page(
+        env,
+        output_dir,
+        "vorlagen",
+        "vorlagen.html",
+        aktiver_bereich="vorlagen",
+        druckvorlagen=site_data.druckvorlagen,
+        methoden_titel={m.id: m.titel for m in site_data.methoden},
+    )
 
     if STATIC_DIR.exists():
         shutil.copytree(STATIC_DIR, output_dir / "static")
