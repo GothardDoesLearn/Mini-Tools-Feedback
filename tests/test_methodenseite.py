@@ -57,7 +57,7 @@ def test_fertige_methode_hat_keine_hinweisbox(dist: Path):
 
 def test_annahme_zeigt_hinweisbox_mit_hinweistext(dist: Path):
     box = hinweisbox(seite(dist, "fahrstuhlmethode"))
-    assert box == (
+    assert box.startswith(
         "<strong>Wird noch geprüft:</strong> Methode aus dem Kollegium. "
         "Der Ablauf ist eine Vermutung und wird noch geprüft."
     )

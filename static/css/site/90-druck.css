@@ -11,6 +11,7 @@
   .methode__zurueck,
   .methode__seite,
   .video,
+  .hinweis,
   .werbeplatz {
     display: none !important;
   }

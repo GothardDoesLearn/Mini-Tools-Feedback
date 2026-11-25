@@ -14,5 +14,11 @@ def textseiten(env, output_dir, site: SiteData) -> None:
     for textseite in load_seiten(paths.CONTENT_DIR):
         bereich = textseite.id if textseite.id in SEITEN_MIT_MENUEPUNKT else ""
         write_page(
-            env, output_dir, textseite.id, "seite.html", seite=textseite, aktiver_bereich=bereich
+            env,
+            output_dir,
+            textseite.id,
+            "seite.html",
+            seite=textseite,
+            aktiver_bereich=bereich,
+            hinweise=site.hinweise,
         )

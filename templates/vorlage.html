@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_hinweis.html" import hinweis %}
 {% block head %}
   <link rel="stylesheet" href="/static/css/druckvorlage.css">
   <script src="/static/js/drucken.js" defer></script>
@@ -34,4 +35,5 @@
       <p><strong>{{ t.titel }}.</strong> {{ t.text }}</p>
     </div>
 {% endif %}
+    {{ hinweis(hinweis_links(hinweise, "vorlage", vorlage.titel, vorlage.id)) | indent(4) }}
 {% endblock %}

@@ -14,6 +14,9 @@ class SiteConfig(BaseModel):
     website_name: str
     domain: str
     beschreibung: str
+    # Hinweise (PRD §5.8): Repository für „Auf GitHub melden“, Adresse für „Per E-Mail schreiben“
+    github_repo: str
+    kontakt_email: str
     werbung_aktiv: bool = False
     # Übersicht: Werbeplatz nach jeder n-ten Methodenkarte (nur wirksam, wenn werbung_aktiv).
     werbung_nach_karten: int = Field(default=6, ge=1)

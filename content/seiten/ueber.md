@@ -17,7 +17,7 @@ Rücksprache.
 
 ## Kontakt
 
-[Platzhalter: Kontaktangabe folgt nach Rücksprache mit dem Betreiber.]
+<!-- hinweis-links -->
 
 ## Lizenz
 

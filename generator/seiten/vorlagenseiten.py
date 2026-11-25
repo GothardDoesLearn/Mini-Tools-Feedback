@@ -38,4 +38,5 @@ def vorlagen(env, output_dir, site: SiteData) -> None:
             vorlage=vorlage,
             methoden=site.methoden_mit_vorlage(vorlage.id),
             layout=layout if gebaut else None,
+            hinweise=site.hinweise,
         )

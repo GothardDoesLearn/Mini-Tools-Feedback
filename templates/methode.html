@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_hinweis.html" import hinweis %}
 {% from "_statushinweis.html" import statushinweis %}
 {% from "_werbeplatz.html" import werbeplatz %}
 {% block head %}
@@ -23,7 +24,7 @@
 {% if nutzen %}
         <p class="methode__nutzen">{{ nutzen }}</p>
 {% endif %}
-        {{ statushinweis(methode.status, methode.hinweis) }}
+        {{ statushinweis(methode.status, methode.hinweis, hinweise) }}
         <dl class="kurzinfos">
 {% for label, wert in kurzinfos %}
           <div class="kurzinfos__eintrag">
@@ -60,5 +61,6 @@
         </div>
         {% include "methode_seitenleiste.html" %}
       </div>
+      {{ hinweis(hinweis_links(hinweise, "methode", methode.titel, methode.id)) | indent(6) }}
     </article>
 {% endblock %}
