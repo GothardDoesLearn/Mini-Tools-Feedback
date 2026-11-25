@@ -42,7 +42,10 @@ Alle Inhalte liegen fertig in `content/`.
 ### 5.1 Startseite `/`
 - Kurze Erklärung, was Feedback-Tools sind (2–3 Sätze).
 - Suchfeld + Filterleiste + Ergebnisliste aller Methoden als Karten (siehe 5.2) – Startseite IST die Übersicht.
-- Kachel-Links zu den Kategorien.
+- Kategorie-Auswahl als Filter (Mehrfachauswahl, siehe 5.2 und `docs/DESIGN.md` › Kategorie-Auswahl); ohne
+  JavaScript ausgeblendet wie die übrigen Filter (Kategorieseiten bleiben über das Label jeder Karte erreichbar).
+- Ist genau eine Kategorie gewählt, zeigt die Übersicht über den Ergebnissen den Kurzsatz der Kategorie (`kurz`)
+  und einen Link zu ihrer Kategorieseite (Beschriftung aus `content/startseite.yaml`).
 
 ### 5.2 Methodenübersicht (Teil der Startseite)
 - Karte pro Methode: Titel, Kategorie-Farbe/Label, Dauer, Form-Icons (analog/digital), Druckvorlagen-Icon,
