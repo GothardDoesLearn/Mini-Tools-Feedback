@@ -62,7 +62,7 @@ Alle Inhalte liegen fertig in `content/`.
 
 ### 5.3 Methodenseite `/methoden/<id>/`
 - Kopf: Titel, Kategorie, Kurzinfos (Form, Dauer, Material, Richtung, Zeitpunkt).
-- Hinweisbox bei `status: annahme` ("Ablauf wird noch geprüft") bzw. `platzhalter`.
+- Statushinweis bei `status: annahme` ("Ablauf wird noch geprüft") bzw. `platzhalter`. Bei `annahme` zusätzlich die Bitte um einen Hinweis mit Hinweis-Link (siehe 5.8).
 - Anleitung (Markdown-Body: Ablauf, Tipps, Varianten).
 - Download-Bereich: Link(s) zur Druckvorlage, falls `druckvorlagen` nicht leer.
 - Video-Bereich, nur wenn `videos` gefüllt: Zwei-Klick-Einbettung (eigenes Vorschaubild mit Hinweis
@@ -85,6 +85,24 @@ Alle Inhalte liegen fertig in `content/`.
 ### 5.7 Über / Impressum `/ueber/`
 - Herkunft der Sammlung, Kontakt, Hinweis zu Annahmen, Lizenzhinweis (Inhalte CC BY-NC-SA 4.0).
 - Impressum (Pflicht für öffentlich angebotene Websites) und Datenschutzerklärung – zunächst Platzhalter.
+- Kontakt: Hinweis-Link (siehe 5.8) ohne Bezug auf eine bestimmte Methode.
+
+### 5.8 Hinweise (seitenübergreifend)
+Lehrkräfte können dem Betreiber einen **Hinweis** geben (Fehler/Korrektur, Ergänzung/Variante, Rückfrage, neue Methode).
+Kein eigenes Formular und kein Backend: Die Website verlinkt nur.
+- **Wo:** am Ende jeder Methodenseite, jeder Druckvorlagen-Seite und unter „Kontakt“ auf `/ueber/`. Auf Methoden- und
+  Vorlagenseiten ist der Bezug vorausgefüllt (Titel und ID). In der Druckansicht ausgeblendet.
+- **Zwei Wege nebeneinander:**
+  - „Auf GitHub melden“: Link auf `…/issues/new?template=hinweis.yml` mit vorausgefülltem Titel und Bezug.
+  - „Per E-Mail schreiben“: `mailto:` an `kontakt_email` aus `config.yaml` mit vorausgefülltem Betreff
+    (z. B. „Hinweis zur Methode Daumenprobe“). Die Adresse wird als HTML-Zeichenreferenzen kodiert (kein JavaScript).
+- **Issue-Vorlage** `.github/ISSUE_TEMPLATE/hinweis.yml` (GitHub-Issue-Formular), Label `needs-triage`, Felder:
+  Art des Hinweises (Auswahl der vier Arten), Bezug (Text, vorausgefüllt), Beschreibung (Pflicht). Darüber fester Satz:
+  keine Namen oder Daten von SuS angeben, der Hinweis ist öffentlich sichtbar.
+- **Datenschutz:** Vor dem Klick wird nichts von GitHub geladen (ADR 0001 bleibt gewahrt). Die Datenschutzerklärung
+  erhält einen Satz: Wer „Auf GitHub melden“ wählt, verlässt die Website; es gelten die Bedingungen von GitHub.
+- **Texte** (Linktexte, Vorlagentexte, Satz in der Datenschutzerklärung) aus `content/` bzw. `config.yaml`, zunächst
+  als Entwurf markiert und vom Betreiber freizugeben.
 
 ## 6. Datenmodell
 
@@ -107,7 +125,7 @@ Frontmatter jeder Datei in `content/methoden/` (Schema mit Pydantic abbilden, Bu
 | `druckvorlage_optional` | boolean | nein | Vorlage hilfreich, aber nicht nötig |
 | `tools` | string[] | nein | IDs aus `tools.yaml` |
 | `status` | enum | ja | `fertig`, `annahme`, `platzhalter` |
-| `hinweis` | string | nein | Text für die Hinweisbox |
+| `hinweis` | string | nein | Text für den Statushinweis |
 | `verwandt` | string[] | nein | IDs verwandter Methoden |
 | `videos` | {titel, url}[] | nein | erklärende Videos (z. B. YouTube); Anzeige nur wenn gefüllt |
 

@@ -31,6 +31,14 @@ Was eine Lehrkraft für eine Methode bereithalten muss, als kurzer Text beschrie
 Eine feste Stelle im Layout, an der später Werbung erscheinen darf. Nie auf einer Druckvorlage oder in der Druckansicht.
 _Vermeiden_: Banner, Anzeigenfläche
 
+**Hinweis**:
+Eine Mitteilung einer Lehrkraft an den Betreiber zu einer Methode, einer Druckvorlage oder der Website: ein Fehler, eine Ergänzung, eine Rückfrage oder der Vorschlag einer neuen Methode.
+_Vermeiden_: Feedback, Rückmeldung, Kommentar (diese meinen das Feedback der SuS)
+
+**Statushinweis**:
+Die sichtbare Kennzeichnung einer Methode oder Druckvorlage im Status Annahme oder Platzhalter. Kein Hinweis im obigen Sinn.
+_Vermeiden_: Hinweisbox
+
 ## Status
 
 **fertig**:
