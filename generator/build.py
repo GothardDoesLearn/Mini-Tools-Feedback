@@ -8,9 +8,10 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoes
 
 from generator import paths
 from generator.config import SiteConfig, load_config
-from generator.content import SiteData, load_site
+from generator.content import SiteData, load_site, load_startseite
 from generator.karten import karten
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
+from generator.startseite import kategorie_auswahl
 
 # Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
 VORLAGEN_LAYOUT_DIR = "vorlagen"
@@ -97,7 +98,14 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
     env = make_env(config)
     site_data = load_site(paths.CONTENT_DIR)
     write_page(
-        env, output_dir, "", "index.html", aktiver_bereich="methoden", karten=karten(site_data)
+        env,
+        output_dir,
+        "",
+        "index.html",
+        aktiver_bereich="methoden",
+        texte=load_startseite(paths.CONTENT_DIR),
+        kategorien=kategorie_auswahl(site_data),
+        karten=karten(site_data),
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
 

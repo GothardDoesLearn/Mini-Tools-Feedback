@@ -1,13 +1,32 @@
 {% extends "base.html" %}
 {% from "_karte.html" import karte %}
 {% block content %}
-    <h1>{{ site.website_name }}</h1>
-    <section class="uebersicht" aria-labelledby="uebersicht-titel">
-      <p id="uebersicht-titel" class="uebersicht__anzahl">{{ karten | length }} Methoden</p>
-      <div class="karten">
-{% for k in karten %}
-        {{ karte(k) | indent(8) }}
-{% endfor %}
-      </div>
+    <section class="intro">
+      <h1 class="intro__titel">{{ texte.titel }}</h1>
+      <p class="intro__text">{{ texte.intro }}</p>
     </section>
+    <div class="uebersicht-layout">
+      <aside class="filterspalte" aria-label="Filter">
+        {# Kategorie-Auswahl (Issue #11), Filterfunktion folgt; DESIGN.md › Kategorie-Auswahl #}
+        <section class="kategorie-auswahl" aria-labelledby="kategorie-auswahl-titel">
+          <h2 id="kategorie-auswahl-titel" class="kategorie-auswahl__titel"><span class="nur-filz">Nach </span>Kategorie<span class="nur-filz"> filtern – antippen zum Auswählen</span></h2>
+          <div class="kategorie-auswahl__liste" role="group" aria-labelledby="kategorie-auswahl-titel">
+{% for k in kategorien %}
+            <button type="button" class="kategorie-auswahl__eintrag" data-kategorie="{{ k.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}" style="--kategorie-papier: {{ k.papier }}; --kategorie-pin: {{ k.pin }}; --kategorie-farbe: {{ k.farbe }}">
+              <span class="kategorie-auswahl__name">{{ k.kurzname }}</span>
+              <span class="kategorie-auswahl__anzahl">{{ k.anzahl }} {{ "Methode" if k.anzahl == 1 else "Methoden" }}</span>
+            </button>
+{% endfor %}
+          </div>
+        </section>
+      </aside>
+      <section class="uebersicht" aria-labelledby="uebersicht-titel">
+        <p id="uebersicht-titel" class="uebersicht__anzahl">{{ karten | length }} Methoden</p>
+        <div class="karten">
+{% for k in karten %}
+          {{ karte(k) | indent(10) }}
+{% endfor %}
+        </div>
+      </section>
+    </div>
 {% endblock %}
