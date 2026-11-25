@@ -8,7 +8,6 @@ form: ["analog"]
 dauer: "ca. 5 Min"
 dauer_min: 5
 dauer_max: 5
-kurz: "Zeigt auf einen Blick, bei welchen Themen der Einheit noch Übungsbedarf besteht."
 material: "Rad mit Segmenten je Teilkompetenz"
 druckvorlagen: ["lernrad"]
 status: annahme
