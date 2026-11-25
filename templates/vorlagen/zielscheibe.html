@@ -1,0 +1,16 @@
+{#- Zielscheibe nach docs/DRUCKVORLAGEN.md: 4 Ringe, 6 Segmente mit leeren Beschriftungsfeldern.
+    Seite 1 = Variante A4 (Einzel), Seite 2 = A3-taugliche Plakatversion (gleiches Seitenverhältnis,
+    beim Drucken auf A3 vergrößern). -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+{% from "vorlagen/_scheibe.html" import scheibe %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1: Einzel (A4)") %}
+<p class="scheibe__titel">{{ vorlage.titel }}</p>
+{{ scheibe(6, 4, radius=50, abstand=72, feld_breite=40, feld_hoehe=12, beschreibung=vorlage.inhalt) }}
+{% endcall %}
+
+{% call blatt(vorlage.titel ~ " – Seite 2: Plakatversion (A3-tauglich)") %}
+<p class="scheibe__titel scheibe__titel--plakat">{{ vorlage.titel }}</p>
+{{ scheibe(6, 4, radius=60, abstand=86, feld_breite=36, feld_hoehe=16, versatz=30,
+           beschreibung=vorlage.inhalt, plakat=true) }}
+{% endcall %}
