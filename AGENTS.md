@@ -48,6 +48,7 @@ Technik siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md` (Pyth
 - `python build.py` – statischer Build nach `dist/`
 - `python build.py --check` – nur Content-Schema und Querverweise prüfen
 - `pytest` – Tests; `ruff check` und `ruff format` – Lint und Formatierung
+- `tools/deploy.sh [--probe]` – bauen, testen, `dist/` per rsync/sftp hochladen; Ziel aus `deploy.env` (siehe `docs/DEPLOYMENT.md`)
 - `python tools/druck_pruefen.py <vorlage-id …> | --alle` – Druckvorlagen per Headless-Edge/Chrome als PDF drucken, Seitenzahl/Ausrichtung gegen `druckvorlagen.yaml` prüfen; `--screenshot /pfad/ --breite 375 --ansicht klar --out DIR` für Bildschirmfotos
 - `python tools/netzwerk_pruefen.py [url-pfad …] [--ansicht klar]` – alle Seiten per Headless-Edge/Chrome laden und Anfragen an Drittserver melden (PRD §9.5)
 
