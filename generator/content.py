@@ -62,6 +62,10 @@ class Kategorie(BaseModel):
     papier: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
     pin: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
 
+    @property
+    def url(self) -> str:
+        return f"/kategorien/{self.slug}/"
+
 
 class FilterWert(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -114,6 +118,18 @@ class StartseitenTexte(BaseModel):
 
     titel: str = Field(min_length=1)
     intro: str = Field(min_length=1)
+
+
+class Seite(BaseModel):
+    """Eine Textseite aus content/seiten/ (z. B. Über, Impressum, Datenschutz)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")
+    titel: str
+    status: Literal["fertig", "entwurf", "platzhalter"]
+    hinweis: str | None = None
+    body: str
 
 
 class SiteData(BaseModel):
@@ -185,7 +201,7 @@ def erlaubte_werte(content_dir: Path = CONTENT_DIR) -> dict[str, list[str]]:
     return werte
 
 
-def _read_methode(path: Path) -> dict:
+def _read_markdown_datei(path: Path) -> dict:
     text = path.read_text(encoding="utf-8")
     teile = text.split("---\n", 2)
     if len(teile) != 3 or teile[0].strip():
@@ -216,7 +232,7 @@ def _pruefe_werte(path: Path, methode: Methode, erlaubt: dict[str, list[str]]) -
 
 def _load_methode(path: Path, erlaubt: dict[str, list[str]]) -> Methode:
     try:
-        methode = Methode.model_validate(_read_methode(path))
+        methode = Methode.model_validate(_read_markdown_datei(path))
     except ValidationError as e:
         raise _schemafehler(f"{path.name}: Frontmatter", e) from e
     fehler = _pruefe_werte(path, methode, erlaubt)
@@ -235,6 +251,23 @@ def load_methoden(content_dir: Path = CONTENT_DIR) -> list[Methode]:
     return [
         _load_methode(path, erlaubt) for path in sorted((content_dir / "methoden").glob("*.md"))
     ]
+
+
+def _load_seite(path: Path) -> Seite:
+    try:
+        seite = Seite.model_validate(_read_markdown_datei(path))
+    except ValidationError as e:
+        raise _schemafehler(f"{path.name}: Frontmatter", e) from e
+    if seite.id != path.stem:
+        raise ContentError(
+            f"{path.name}: id '{seite.id}' muss dem Dateinamen entsprechen ('{path.stem}')."
+        )
+    return seite
+
+
+def load_seiten(content_dir: Path = CONTENT_DIR) -> list[Seite]:
+    """Lädt die Textseiten aus content/seiten/; bei Fehlern ContentError."""
+    return [_load_seite(path) for path in sorted((content_dir / "seiten").glob("*.md"))]
 
 
 def load_site(content_dir: Path = CONTENT_DIR) -> SiteData:

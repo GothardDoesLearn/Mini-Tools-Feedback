@@ -1,0 +1,50 @@
+{#- Wettersymbole nach docs/DRUCKVORLAGEN.md: 4 große Symbole je A4 quer + 1 Seite Mini-Karten (A7). -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{#- Eigene SVG-Formen, viewBox 100 × 100; Wolke weiß gefüllt, damit sie die Sonne verdeckt. -#}
+{% macro sonne(cx, cy, r) %}
+  <circle cx="{{ cx }}" cy="{{ cy }}" r="{{ r }}"/>
+{% for winkel in range(0, 360, 45) %}
+  <line x1="{{ cx }}" y1="{{ cy - r * 1.45 }}" x2="{{ cx }}" y2="{{ cy - r * 2.05 }}" transform="rotate({{ winkel }} {{ cx }} {{ cy }})"/>
+{% endfor %}
+{% endmacro %}
+
+{% macro wolke(dx=0, dy=0) %}
+  <path class="wetter__wolke" transform="translate({{ dx }} {{ dy }})" d="M27 76 H73 A14 14 0 0 0 73 48 A20 20 0 0 0 36 42 A17 17 0 0 0 27 76 Z"/>
+{% endmacro %}
+
+{% macro symbol(name) %}
+<svg class="wetter" viewBox="0 0 100 100" role="img" aria-label="{{ name }}">
+{% if name == "Sonne" %}
+{{ sonne(50, 50, 20) }}
+{% elif name == "Sonne mit Wolke" %}
+{{ sonne(38, 36, 14) }}
+{{ wolke(8, 8) }}
+{% elif name == "Wolke" %}
+{{ wolke(0, -6) }}
+{% else %}
+{{ wolke(0, -22) }}
+  <path class="wetter__blitz" d="M53 58 L41 77 H50 L45 95 L62 70 H53 L58 58 Z"/>
+{% endif %}
+</svg>
+{% endmacro %}
+
+{% set namen = ["Sonne", "Sonne mit Wolke", "Wolke", "Gewitter"] %}
+
+{% for name in namen %}
+{% call blatt(vorlage.titel ~ " – Seite " ~ loop.index ~ ": " ~ name, quer=true) %}
+<div class="wetter-gross">
+  {{ symbol(name) }}
+</div>
+{% endcall %}
+{% endfor %}
+
+{% call blatt(vorlage.titel ~ " – Seite 5: Mini-Karten") %}
+<div class="raster raster--2x4">
+{% for name in namen + namen %}
+  <div class="mini-karte">
+    {{ symbol(name) }}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}
