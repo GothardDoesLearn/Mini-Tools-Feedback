@@ -5,7 +5,8 @@ Alle Vorlagen: A4, Schwarz-Weiß-tauglich (Farbe nur als Zusatz), Schneidelinien
 
 Druckvorlagen haben einen Status wie Methoden. `platzhalter` (derzeit `wimmelbild`): Seite „Vorlage folgt“, zählt
 nicht als vorhanden. `annahme` (derzeit `lernrad`): wird nach aktueller Spezifikation gebaut und trägt den Hinweis
-„wird noch geprüft“.
+„wird noch geprüft“. Der Hinweis erscheint nur am Bildschirm (Druckvorlagen- und Methodenseite), nicht auf dem
+Ausdruck: Das Blatt ist für die SuS, die Kennzeichnung für die Lehrkraft, die vor dem Drucken entscheidet.
 
 | ID | Titel | Methoden | Format / Inhalt | Seiten |
 | --- | --- | --- | --- | --- |
