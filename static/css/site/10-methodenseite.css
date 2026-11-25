@@ -1,0 +1,196 @@
+/* 4a. Methodenseite (DESIGN.md › Methodenseite) --------------------------- */
+
+.brotkrumen__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand-s);
+  margin: 0 0 var(--abstand-m);
+  padding: 0;
+  list-style: none;
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+.brotkrumen__liste li + li::before {
+  content: "/";
+  margin-right: var(--abstand-s);
+}
+
+.brotkrumen a {
+  text-decoration: none;
+}
+
+.brotkrumen a:hover {
+  text-decoration: underline;
+}
+
+.methode__zurueck {
+  display: none; /* nur in der Pinnwand; Klar nutzt die Brotkrumen */
+}
+
+.methode__kopf {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--abstand-l);
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.methode__kategorie {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--abstand-s);
+  margin: 0;
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.methode__farbpunkt {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--kategorie-farbe, var(--farbe-nebentext));
+}
+
+.methode__titel {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.methode__nutzen {
+  max-width: 720px;
+  margin: 0;
+  color: var(--farbe-nebentext);
+  font-size: 18px;
+}
+
+.statushinweis {
+  max-width: 720px;
+  margin: 0;
+  padding: 12px var(--abstand-m);
+  border-radius: var(--radius-s);
+  background: #FFF1D6;
+  color: #7A4B00;
+  font-size: 15px;
+}
+
+.kurzinfos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  margin: 10px 0 0;
+  background: var(--farbe-rahmen);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.kurzinfos__eintrag {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px var(--abstand-m);
+  background: var(--farbe-flaeche);
+}
+
+.kurzinfos dt {
+  color: var(--farbe-nebentext);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kurzinfos dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.methode__spalten {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+  margin-top: 32px;
+}
+
+.methode__haupt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--abstand-l);
+  min-width: 0;
+}
+
+.anleitung__abschnitt {
+  padding: var(--abstand-l);
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.anleitung__abschnitt h2 {
+  margin: 0 0 var(--abstand-m);
+  font-size: 22px;
+}
+
+.anleitung__abschnitt > :last-child {
+  margin-bottom: 0;
+}
+
+.anleitung__abschnitt ul {
+  padding-left: 1.2em;
+}
+
+.anleitung__abschnitt--ablauf ol {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: schritt;
+  font-size: 17px;
+}
+
+.anleitung__abschnitt--ablauf ol > li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  counter-increment: schritt;
+}
+
+.anleitung__abschnitt--ablauf ol > li::before {
+  content: counter(schritt);
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  border-radius: 50%;
+  background: #E8F0FC;
+  color: var(--farbe-akzent);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.anleitung__zettelreihe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand-l);
+}
+
+.anleitung__zettel {
+  flex: 1 1 260px;
+  font-size: 15px;
+}
+
+.anleitung__zettel h2 {
+  margin-bottom: var(--abstand-s);
+  font-size: 17px;
+}
+

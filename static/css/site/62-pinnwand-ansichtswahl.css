@@ -1,0 +1,38 @@
+@media screen {
+  /* Ansichts-Umschalter: Hervorhebung hängt am <html>-Attribut, das das Inline-Script im
+     <head> vor dem ersten Rendern setzt – so flackert nichts. */
+  [data-ansicht="klar"] .ansichtswahl__knopf[data-ansicht-wahl="klar"] {
+    background: var(--farbe-flaeche);
+    color: var(--farbe-text);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(20, 30, 50, 0.15);
+  }
+
+  [data-ansicht="pinnwand"] .kopf__rechts {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: var(--abstand-m);
+  }
+
+  [data-ansicht="pinnwand"] .ansichtswahl {
+    gap: 4px;
+    padding: 4px;
+    border-radius: 0;
+    background: var(--farbe-flaeche);
+    box-shadow: var(--schatten-schild);
+    transform: rotate(1deg);
+  }
+
+  [data-ansicht="pinnwand"] .ansichtswahl__knopf {
+    border-radius: 0;
+    color: var(--farbe-text);
+    font-weight: 600;
+  }
+
+  [data-ansicht="pinnwand"] .ansichtswahl__knopf[data-ansicht-wahl="pinnwand"] {
+    background: var(--farbe-akzent);
+    color: var(--farbe-akzent-text);
+    font-weight: 700;
+  }
+}
+

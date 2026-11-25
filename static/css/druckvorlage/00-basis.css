@@ -1,0 +1,106 @@
+/* Druckvorlagen: A4-Blätter (Bildschirm-Vorschau + Druck). Nur auf /vorlagen/<id>/ eingebunden.
+   Ein .blatt = genau eine Druckseite. Maße in mm, damit Vorschau und Druck übereinstimmen.
+   Schwarz-Weiß-tauglich: Linien als Rahmen (keine Hintergrundbilder – die drucken Browser nicht).
+
+   build.py hängt alle Dateien aus static/css/druckvorlage/ in Dateinamen-Reihenfolge zu
+   dist/static/css/druckvorlage.css zusammen: 00 Basis (Blatt, A4 hoch/quer), 10 Raster,
+   20 gemeinsame Bausteine (Feld, Symbole, Kreisscheibe), 50-<id>.css je Druckvorlage
+   (nur Klassen dieser Vorlage), 90 Druck. Neue Druckvorlage = neue Datei 50-<id>.css. */
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+:root {
+  --blatt-breite: 186mm; /* 210mm − 2 × 12mm Rand */
+  --blatt-hoehe: 272mm; /* 297mm − 2 × 12mm Rand, 1mm Reserve gegen Rundung */
+  --blatt-linie: 0.3mm solid #000000;
+  --blatt-schnitt: 0.3mm dashed #000000;
+}
+
+/* Seitenkopf (nur Bildschirm) --------------------------------------------- */
+
+.vorlage-kopf {
+  margin-bottom: var(--abstand-6, 1.5rem);
+}
+
+.vorlage-kopf__aktion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--abstand-3, 0.75rem);
+}
+
+.knopf {
+  min-height: var(--ziel-min, 44px);
+  padding: 0 1.25rem;
+  border: 0;
+  border-radius: var(--radius-s, 6px);
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.knopf:focus-visible {
+  outline: var(--fokus-breite, 3px) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.hinweisbox {
+  margin: var(--abstand-4, 1rem) 0;
+  padding: var(--abstand-3, 0.75rem) var(--abstand-4, 1rem);
+  border: 1px solid var(--farbe-rahmen);
+  border-left: 4px solid var(--farbe-akzent);
+  border-radius: var(--radius-s, 6px);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+}
+
+/* Blatt -------------------------------------------------------------------- */
+
+.vorlage-blaetter {
+  overflow-x: auto; /* A4-Vorschau ist breiter als ein Handy */
+}
+
+.blatt {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto var(--abstand-6, 1.5rem);
+  padding: 12mm;
+  background: #FFFFFF;
+  color: #000000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  font-family: var(--schrift-text, sans-serif);
+  font-size: 11pt;
+  line-height: 1.3;
+}
+
+.blatt__inhalt {
+  flex: 1;
+  min-height: 0;
+}
+
+.blatt__fuss {
+  margin: 2mm 0 0;
+  font-size: 7pt;
+  text-align: right;
+}
+
+/* Querformat (A4 quer): eigene benannte Druckseite */
+@page quer {
+  size: A4 landscape;
+  margin: 12mm;
+}
+
+.blatt--quer {
+  page: quer;
+  width: 297mm;
+  height: 210mm;
+}
+

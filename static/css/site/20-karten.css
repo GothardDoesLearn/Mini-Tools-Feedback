@@ -1,0 +1,141 @@
+/* Methodenkarten (Issue #10). Kategorie-Farben kommen als --karte-papier, --karte-pin und
+   --karte-farbe per style-Attribut aus kategorien.yaml. Die ganze Karte ist über den Titel-Link
+   klickbar (::after über die Karte gespannt). */
+
+.uebersicht__anzahl {
+  margin: 0 0 var(--abstand-m);
+  font-weight: 600;
+}
+
+.karten {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: var(--abstand-m);
+}
+
+.karte {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 168px;
+  padding: 20px;
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  color: var(--farbe-text);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.karte:hover {
+  border-color: #B9C2CE;
+  box-shadow: 0 4px 16px rgba(20, 30, 50, 0.08);
+}
+
+.karte:focus-within {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.karte__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.karte__link:focus-visible {
+  outline: none; /* Fokusrahmen zeigt die ganze Karte (.karte:focus-within) */
+}
+
+.karte__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.karte__kopf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--abstand-s);
+}
+
+.karte__kategorie {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--farbe-nebentext);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Kategorie-Link (Issue #12) liegt über dem aufgespannten Titel-Link der Karte. */
+.karte__kategorie--link {
+  position: relative;
+  z-index: 1;
+  min-height: 24px;
+  text-decoration: none;
+}
+
+.karte__kategorie--link:hover {
+  text-decoration: underline;
+}
+
+.karte__kategorie--link:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.karte__kategorie::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--karte-farbe);
+}
+
+.karte__status {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #FFF1D6;
+  color: #7A4B00;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.karte__titel {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.karte__kurz {
+  flex-grow: 1;
+  margin: 0;
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.karte__infos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--farbe-nebentext);
+  font-size: 13px;
+}
+
+.karte__info {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+

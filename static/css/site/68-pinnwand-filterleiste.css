@@ -1,0 +1,80 @@
+@media screen {
+  /* Filterleiste als weißer Zettel über den Karten, Werte als Knöpfe (#F2F2F2, aktiv Akzent) */
+  [data-ansicht="pinnwand"] .uebersicht {
+    display: block;
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    margin-bottom: var(--abstand-l);
+    padding: 18px 20px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste__kopf {
+    flex: 1 1 100%;
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste__titel {
+    font-size: 30px;
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste__zuruecksetzen {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  [data-ansicht="pinnwand"] .filtergruppe__titel {
+    color: var(--farbe-text);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  [data-ansicht="pinnwand"] .filtergruppe__werte {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert {
+    position: relative;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__box {
+    position: absolute;
+    opacity: 0;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__text {
+    display: flex;
+    align-items: center;
+    min-height: var(--ziel-min);
+    padding: 0 14px;
+    background: #F2F2F2;
+    color: var(--farbe-text);
+    font-weight: 600;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__box:checked + .filterwert__text {
+    background: var(--farbe-akzent);
+    color: var(--farbe-akzent-text);
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__box:focus-visible + .filterwert__text {
+    outline: var(--fokus-breite) solid var(--farbe-fokus);
+    outline-offset: 2px;
+  }
+
+  [data-ansicht="pinnwand"] .uebersicht__leer {
+    color: #FFFFFF;
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+  }
+}
+

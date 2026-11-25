@@ -1,0 +1,30 @@
+/* Feedback-Hand (#23) */
+.hand__titel {
+  margin: 0;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.hand {
+  display: block;
+  width: 110mm;
+  height: 135mm;
+  margin: 0 auto 4mm;
+  fill: none;
+  stroke: #000000;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hand__umriss {
+  stroke-width: 2;
+}
+
+.hand__symbol {
+  stroke-width: 2;
+}
+
+.hand-feld {
+  margin-bottom: 3mm;
+}
+

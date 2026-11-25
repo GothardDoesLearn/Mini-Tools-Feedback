@@ -1,0 +1,33 @@
+/* 2. Tokens -------------------------------------------------------------- */
+
+:root {
+  --breite-max: 1200px;
+  --abstand-seite: 16px;
+  --abstand-s: 8px;
+  --abstand-m: 16px;
+  --abstand-l: 24px;
+  --abstand-xl: 48px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --ziel-min: 44px; /* Mindestgröße für Touch-Ziele */
+  --fokus-breite: 3px;
+  --schrift-groesse: 16px;
+  --zeilenhoehe: 1.55;
+}
+
+/* Klare Ansicht (DESIGN.md › Tokens › Klare Ansicht). Auch Fallback ohne Attribut und im Druck. */
+:root,
+[data-ansicht="klar"] {
+  --farbe-hintergrund: #F6F7F9;
+  --farbe-flaeche: #FFFFFF;
+  --farbe-rahmen: #E3E6EA;
+  --farbe-text: #1B1F24;
+  --farbe-nebentext: #4A525C;
+  --farbe-akzent: #1F5FBF;
+  --farbe-akzent-text: #FFFFFF;
+  --farbe-fokus: #1F5FBF;
+  --farbe-link: #1F5FBF;
+  --schrift-text: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --schrift-titel: var(--schrift-text);
+}
+

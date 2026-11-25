@@ -1,0 +1,33 @@
+/* Druck: nur die Blätter, je Blatt eine Seite ------------------------------ */
+
+@media print {
+  .vorlage-kopf,
+  .hinweisbox,
+  .werbeplatz {
+    display: none !important;
+  }
+
+  .vorlage-blaetter {
+    overflow: visible;
+  }
+
+  .blatt {
+    width: var(--blatt-breite);
+    height: var(--blatt-hoehe);
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    overflow: hidden;
+    break-after: page;
+  }
+
+  .blatt--quer {
+    width: 273mm; /* 297mm − 2 × 12mm Rand */
+    height: 185mm; /* 210mm − 2 × 12mm Rand, 1mm Reserve */
+  }
+
+  .blatt:last-child {
+    break-after: auto;
+  }
+}
+

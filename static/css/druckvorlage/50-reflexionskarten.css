@@ -1,0 +1,13 @@
+/* Reflexionskarten (#27) */
+.reflexionskarte {
+  display: flex;
+  flex-direction: column;
+}
+
+.reflexionskarte__text {
+  margin: 0 0 1mm;
+  font-size: 13pt;
+  font-weight: 700;
+  line-height: 1.2;
+}
+

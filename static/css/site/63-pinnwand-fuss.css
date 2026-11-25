@@ -1,0 +1,17 @@
+@media screen {
+  /* Fuß als weißer Zettel */
+  [data-ansicht="pinnwand"] .fuss {
+    background: transparent;
+    border-top: 0;
+    padding-bottom: var(--abstand-l);
+  }
+
+  [data-ansicht="pinnwand"] .fuss__innen {
+    background: var(--farbe-flaeche);
+    box-shadow: var(--schatten-schild);
+    max-width: calc(var(--breite-max) - 2 * var(--abstand-seite));
+    padding-left: var(--abstand-m);
+    padding-right: var(--abstand-m);
+  }
+}
+

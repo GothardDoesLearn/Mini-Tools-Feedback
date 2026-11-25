@@ -1,161 +1,23 @@
-"""Baut die Website: Konfiguration laden, Seiten rendern, statische Dateien kopieren."""
+"""Baut die Website: Konfiguration laden, Seiten rendern, statische Dateien kopieren.
 
-import re
+Die Seiten melden sich selbst an (`@seite` in generator/seiten/), Stylesheets entstehen aus
+den Ordnern unter static/css/ (generator/css.py). Hier steht nur der Ablauf.
+"""
+
 import shutil
 from pathlib import Path
-from xml.etree.ElementTree import SubElement
 
-import markdown
-from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
-from markdown.extensions import Extension
-from markdown.treeprocessors import Treeprocessor
-from markupsafe import Markup
-
-from generator import methodenseite, paths
+from generator import paths
 from generator.config import SiteConfig, load_config
-from generator.content import PLATZHALTER, SiteData, load_seiten, load_site, load_startseite
-from generator.karten import dauer_bereich, karten
-from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
-from generator.startseite import kategorie_auswahl
-from generator.status import STATUS_TEXTE
-from generator.suche import suchindex
-from generator.vorlagen import satzanfaenge
+from generator.content import load_site
+from generator.css import CSS_DIR, schreibe_stylesheets, stylesheet_ordner
+from generator.paths import DIST_DIR, STATIC_DIR
 
-# Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
-VORLAGEN_LAYOUT_DIR = "vorlagen"
+# Weiterhin über generator.build erreichbar (Tests, ältere Notizen).
+from generator.render import kurzbeschreibung, make_env, markdown_zu_html, write_page
+from generator.seiten import alle_seiten
 
-# Textseiten mit eigenem Menüpunkt in der Hauptnavigation (die übrigen nur im Fuß verlinkt).
-SEITEN_MIT_MENUEPUNKT = {"ueber"}
-
-
-def kurzbeschreibung(text: str, max_laenge: int = 160) -> str:
-    """Macht aus Markdown-Text eine einzeilige Meta-Description, gekürzt an einer Wortgrenze."""
-    text = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", text)  # Links/Bilder -> Linktext
-    text = re.sub(r"[*_`#>]+", "", text)
-    text = " ".join(text.split())
-    if len(text) <= max_laenge:
-        return text
-    gekuerzt = text[: max_laenge - 1]
-    if text[max_laenge - 1] != " ":
-        gekuerzt = gekuerzt.rsplit(" ", 1)[0]
-    return gekuerzt.rstrip(" ,;:.–-") + "…"
-
-
-class _ExterneLinks(Treeprocessor):
-    """Kennzeichnet Links nach außen wie auf der Toolseite (Klasse, rel, Screenreader-Hinweis)."""
-
-    def run(self, root):
-        for link in root.iter("a"):
-            href = link.get("href", "")
-            if not re.match(r"(?:https?:)?//", href):
-                continue
-            link.attrib.clear()
-            link.set("class", "extern-link")
-            link.set("href", href)
-            link.set("rel", "noopener noreferrer")
-            hinweis = SubElement(link, "span", {"class": "nur-screenreader"})
-            hinweis.text = " (externer Link)"
-
-
-class _ExterneLinksExtension(Extension):
-    def extendMarkdown(self, md):  # noqa: N802 (Name von Python-Markdown vorgegeben)
-        md.treeprocessors.register(_ExterneLinks(md), "externe_links", 0)
-
-
-def markdown_zu_html(text: str) -> Markup:
-    """Rendert Markdown aus content/ zu HTML; externe Links werden gekennzeichnet."""
-    return Markup(markdown.markdown(text, extensions=[_ExterneLinksExtension()]))
-
-
-def make_env(config: SiteConfig) -> Environment:
-    env = Environment(
-        loader=FileSystemLoader(TEMPLATES_DIR),
-        autoescape=select_autoescape(),
-        undefined=StrictUndefined,
-        trim_blocks=True,
-        lstrip_blocks=True,
-    )
-    env.globals["site"] = config
-    env.globals["status_texte"] = STATUS_TEXTE
-    env.globals["satzanfaenge"] = satzanfaenge
-    env.filters["kurzbeschreibung"] = kurzbeschreibung
-    env.filters["markdown"] = markdown_zu_html
-    return env
-
-
-def write_page(env: Environment, output_dir: Path, url_path: str, template: str, **context):
-    """Rendert `template` nach `output_dir/url_path/index.html` (url_path "" = Startseite).
-
-    Seitenkopf über den Kontext: `seitentitel` (-> "<seitentitel> – <Website-Name>", leer =
-    nur Website-Name) und `beschreibung` (Meta-Description, Standard: `site.beschreibung`;
-    aus Inhalten z. B. `methode.kurz` oder `text | kurzbeschreibung`). Beides muss je Seite
-    eindeutig sein (tests/test_seitenkopf.py).
-    """
-    target = output_dir / url_path / "index.html"
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(env.get_template(template).render(**context), encoding="utf-8")
-
-
-def write_vorlagen(env: Environment, output_dir: Path, site: SiteData) -> None:
-    """Schreibt /vorlagen/<id>/ für jede Druckvorlage."""
-    for vorlage in site.druckvorlagen:
-        layout = f"{VORLAGEN_LAYOUT_DIR}/{vorlage.id}.html"
-        gebaut = vorlage.status != PLATZHALTER and (TEMPLATES_DIR / layout).is_file()
-        write_page(
-            env,
-            output_dir,
-            f"vorlagen/{vorlage.id}",
-            "vorlage.html",
-            aktiver_bereich="vorlagen",
-            seitentitel=f"{vorlage.titel} – Druckvorlage",
-            beschreibung=kurzbeschreibung(f"Druckvorlage {vorlage.titel}: {vorlage.inhalt}"),
-            vorlage=vorlage,
-            methoden=site.methoden_mit_vorlage(vorlage.id),
-            layout=layout if gebaut else None,
-        )
-
-
-def write_methodenseiten(env: Environment, output_dir: Path, site: SiteData) -> None:
-    """Schreibt /methoden/<id>/ für jede Methode (Issue #7; Kontext: generator/methodenseite.py)."""
-    for methode in site.methoden:
-        write_page(
-            env,
-            output_dir,
-            f"methoden/{methode.id}",
-            "methode.html",
-            **methodenseite.kontext(methode, site),
-        )
-
-
-def write_toolseite(env: Environment, output_dir: Path, inhalte: SiteData) -> None:
-    """Toolseite /tools/ aus tools.yaml (Issue #13)."""
-    write_page(
-        env,
-        output_dir,
-        "tools",
-        "tools.html",
-        aktiver_bereich="tools",
-        tools=inhalte.tools,
-        tools_hinweis=inhalte.tools_hinweis,
-        methoden_titel={m.id: m.titel for m in inhalte.methoden},
-    )
-
-
-def write_kategorieseiten(env: Environment, output_dir: Path, site: SiteData) -> None:
-    """Schreibt /kategorien/<slug>/ mit Beschreibung und allen Methoden der Kategorie (#12)."""
-    alle_karten = karten(site)
-    for kategorie in site.kategorien:
-        write_page(
-            env,
-            output_dir,
-            kategorie.url.strip("/"),
-            "kategorie.html",
-            aktiver_bereich="methoden",
-            seitentitel=kategorie.titel,
-            beschreibung=kurzbeschreibung(kategorie.beschreibung),
-            kategorie=kategorie,
-            karten=[k for k in alle_karten if k.kategorie.id == kategorie.id],
-        )
+__all__ = ["build", "kurzbeschreibung", "make_env", "markdown_zu_html", "write_page"]
 
 
 def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None:
@@ -166,37 +28,15 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
 
     env = make_env(config)
     site_data = load_site(paths.CONTENT_DIR)
-    write_page(
-        env,
-        output_dir,
-        "",
-        "index.html",
-        aktiver_bereich="methoden",
-        texte=load_startseite(paths.CONTENT_DIR),
-        kategorien=kategorie_auswahl(site_data),
-        karten=karten(site_data),
-        # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#11)
-        filtergruppen=[g for g in site_data.filter if g.werte],
-        suchindex=suchindex(site_data),
-        dauer_bereich=dauer_bereich(site_data),
-    )
-    (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
-
-    write_kategorieseiten(env, output_dir, site_data)
-    write_methodenseiten(env, output_dir, site_data)
-    write_toolseite(env, output_dir, site_data)
-    write_page(
-        env,
-        output_dir,
-        "vorlagen",
-        "vorlagen.html",
-        aktiver_bereich="vorlagen",
-        druckvorlagen=[(v, site_data.methoden_mit_vorlage(v.id)) for v in site_data.druckvorlagen],
-    )
-    write_vorlagen(env, output_dir, site_data)
-    for seite in load_seiten(paths.CONTENT_DIR):
-        bereich = seite.id if seite.id in SEITEN_MIT_MENUEPUNKT else ""
-        write_page(env, output_dir, seite.id, "seite.html", seite=seite, aktiver_bereich=bereich)
+    for schreibe_seite in alle_seiten():
+        schreibe_seite(env, output_dir, site_data)
 
     if STATIC_DIR.exists():
-        shutil.copytree(STATIC_DIR, output_dir / "static")
+        # Stylesheet-Ordner (static/css/<name>/) nicht kopieren, sondern zusammenhängen.
+        ordner = set(stylesheet_ordner())
+        shutil.copytree(
+            STATIC_DIR,
+            output_dir / "static",
+            ignore=lambda d, namen: [n for n in namen if Path(d, n) in ordner],
+        )
+        schreibe_stylesheets(output_dir / "static" / "css", CSS_DIR)

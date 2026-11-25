@@ -1,0 +1,105 @@
+@media screen {
+  /* Kopf: kein Balken, Logo-Zettel und Navigation als Papierschildchen auf dem Filz */
+  [data-ansicht="pinnwand"] .kopf {
+    background: transparent;
+    border-bottom: 0;
+  }
+
+  [data-ansicht="pinnwand"] .kopf__innen {
+    align-items: flex-start;
+    gap: var(--abstand-l);
+    padding-top: var(--abstand-l);
+    padding-bottom: var(--abstand-s);
+  }
+
+  [data-ansicht="pinnwand"] .logo {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 40px 22px;
+    background: var(--farbe-flaeche);
+    box-shadow: var(--schatten-zettel);
+    transform: rotate(-1.5deg);
+  }
+
+  /* zwei blaue Pins am Logo-Zettel */
+  [data-ansicht="pinnwand"] .logo::before,
+  [data-ansicht="pinnwand"] .logo::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--pin-logo);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-ansicht="pinnwand"] .logo::before {
+    left: 18px;
+  }
+
+  [data-ansicht="pinnwand"] .logo::after {
+    right: 18px;
+  }
+
+  [data-ansicht="pinnwand"] .logo__zeichen {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .logo__name {
+    font-family: var(--schrift-titel);
+    font-size: clamp(44px, 9vw, 76px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--farbe-akzent);
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav {
+    margin-top: var(--abstand-s);
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste {
+    gap: 10px;
+    margin: 0;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__link {
+    padding: 0 18px;
+    border-radius: 0;
+    background: var(--farbe-flaeche);
+    color: var(--farbe-text);
+    font-weight: 600;
+    box-shadow: var(--schatten-schild);
+    transform: rotate(var(--drehung, 0deg));
+    transition: transform 0.18s;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 1) .hauptnav__link {
+    --drehung: 1deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 2) .hauptnav__link {
+    --drehung: -1deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 3) .hauptnav__link {
+    --drehung: 1.5deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 4) .hauptnav__link {
+    --drehung: -0.5deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__link:hover {
+    color: var(--farbe-text);
+    transform: rotate(0deg) translateY(-3px);
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__link[aria-current="page"] {
+    background: var(--zettel-gelb);
+    color: var(--farbe-text);
+    font-weight: 700;
+  }
+}
+

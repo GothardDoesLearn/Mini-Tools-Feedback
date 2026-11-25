@@ -7,6 +7,7 @@ import pytest
 
 from generator.build import build
 from generator.content import Methode, load_site
+from generator.css import stylesheet
 from generator.karten import kurztext
 
 
@@ -19,7 +20,7 @@ def startseite(tmp_path_factory) -> str:
 
 @pytest.fixture(scope="module")
 def css() -> str:
-    text = Path("static/css/site.css").read_text(encoding="utf-8")
+    text = stylesheet("site")
     return re.sub(r"/\*.*?\*/", "", text, flags=re.S)
 
 

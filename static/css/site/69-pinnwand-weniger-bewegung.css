@@ -1,0 +1,11 @@
+/* Weniger Bewegung gewünscht: keine Drehungen, keine Hover-Animationen */
+@media screen and (prefers-reduced-motion: reduce) {
+  [data-ansicht="pinnwand"] *,
+  [data-ansicht="pinnwand"] *::before,
+  [data-ansicht="pinnwand"] *::after {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
