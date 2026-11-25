@@ -4,11 +4,11 @@
  * Aufbau:
  *   1. Schriften (lokal, SIL OFL – keine Drittserver)
  *   2. Tokens: ansichtsunabhängig auf :root, Farben/Schrift je Ansicht über [data-ansicht]
- *   3. Grundstil, 4. Layout (Kopf, Inhalt, Fuß), 5. Fokus, 6. Druck
+ *   3. Grundstil, 4. Layout (Kopf, Inhalt, Fuß), 5. Fokus, 6. Ansicht Pinnwand, 7. Druck
  *
- * Weitere Ansicht (Pinnwand, Issue #5): eigenen Block [data-ansicht="pinnwand"] mit denselben
- * Token-Namen ergänzen und in @media screen kapseln – der Druck fällt so automatisch auf die
- * klare Ansicht (Tokens auf :root) zurück.
+ * Pinnwand (Issue #5): alle Regeln mit [data-ansicht="pinnwand"] stehen in @media screen – der
+ * Druck fällt so automatisch auf die klare Ansicht (Tokens auf :root) zurück. Handschrift
+ * (--schrift-titel) nur für Überschriften ab 22 px.
  */
 
 /* 1. Schriften ----------------------------------------------------------- */
@@ -45,6 +45,38 @@
   src: url("/static/fonts/inter/inter-latin-700-normal.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/fonts/caveat/caveat-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/nunito/nunito-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/static/fonts/nunito/nunito-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/fonts/nunito/nunito-latin-700-normal.woff2") format("woff2");
+}
+
 /* 2. Tokens -------------------------------------------------------------- */
 
 :root {
@@ -73,6 +105,7 @@
   --farbe-akzent: #1F5FBF;
   --farbe-akzent-text: #FFFFFF;
   --farbe-fokus: #1F5FBF;
+  --farbe-link: #1F5FBF;
   --schrift-text: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --schrift-titel: var(--schrift-text);
 }
@@ -110,7 +143,7 @@ h3 {
 }
 
 a {
-  color: var(--farbe-akzent);
+  color: var(--farbe-link);
 }
 
 img {
@@ -274,7 +307,174 @@ img {
   outline-offset: 2px;
 }
 
-/* 6. Druck: immer klare Ansicht, ohne Navigation -------------------------- */
+/* 6. Ansicht Pinnwand (DESIGN.md › Tokens › Pinnwand) – nur am Bildschirm ------- */
+
+@media screen {
+  [data-ansicht="pinnwand"] {
+    --farbe-hintergrund: #8F8B8E;
+    --farbe-flaeche: #FFFFFF;
+    --farbe-rahmen: #CFCBC6;
+    --farbe-text: #22262B;
+    --farbe-nebentext: #3C434B;
+    --farbe-akzent: #0E7C7B;
+    --farbe-akzent-text: #FFFFFF;
+    --farbe-fokus: #22262B; /* Akzent hätte auf dem Filz zu wenig Kontrast */
+    --farbe-link: #22262B; /* Links auf Filz und Papier in Textfarbe, unterstrichen */
+    --schrift-text: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --schrift-titel: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+    --pin-logo: #2B4C9B;
+    --zettel-gelb: #FFF6C7;
+    --schatten-zettel: 0 6px 14px rgba(0, 0, 0, 0.25);
+    --schatten-schild: 0 3px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Handschrift nur ab 22 px */
+  [data-ansicht="pinnwand"] h1 {
+    font-size: 48px;
+    line-height: 1.05;
+  }
+
+  [data-ansicht="pinnwand"] h2 {
+    font-size: 34px;
+    line-height: 1.1;
+  }
+
+  [data-ansicht="pinnwand"] h3 {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+
+  /* Kopf: kein Balken, Logo-Zettel und Navigation als Papierschildchen auf dem Filz */
+  [data-ansicht="pinnwand"] .kopf {
+    background: transparent;
+    border-bottom: 0;
+  }
+
+  [data-ansicht="pinnwand"] .kopf__innen {
+    align-items: flex-start;
+    gap: var(--abstand-l);
+    padding-top: var(--abstand-l);
+    padding-bottom: var(--abstand-s);
+  }
+
+  [data-ansicht="pinnwand"] .logo {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 40px 22px;
+    background: var(--farbe-flaeche);
+    box-shadow: var(--schatten-zettel);
+    transform: rotate(-1.5deg);
+  }
+
+  /* zwei blaue Pins am Logo-Zettel */
+  [data-ansicht="pinnwand"] .logo::before,
+  [data-ansicht="pinnwand"] .logo::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--pin-logo);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-ansicht="pinnwand"] .logo::before {
+    left: 18px;
+  }
+
+  [data-ansicht="pinnwand"] .logo::after {
+    right: 18px;
+  }
+
+  [data-ansicht="pinnwand"] .logo__zeichen {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .logo__name {
+    font-family: var(--schrift-titel);
+    font-size: clamp(44px, 9vw, 76px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--farbe-akzent);
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav {
+    margin-top: var(--abstand-s);
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste {
+    gap: 10px;
+    margin: 0;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__link {
+    padding: 0 18px;
+    border-radius: 0;
+    background: var(--farbe-flaeche);
+    color: var(--farbe-text);
+    font-weight: 600;
+    box-shadow: var(--schatten-schild);
+    transform: rotate(var(--drehung, 0deg));
+    transition: transform 0.18s;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 1) .hauptnav__link {
+    --drehung: 1deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 2) .hauptnav__link {
+    --drehung: -1deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 3) .hauptnav__link {
+    --drehung: 1.5deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__liste li:nth-child(4n + 4) .hauptnav__link {
+    --drehung: -0.5deg;
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__link:hover {
+    color: var(--farbe-text);
+    transform: rotate(0deg) translateY(-3px);
+  }
+
+  [data-ansicht="pinnwand"] .hauptnav__link[aria-current="page"] {
+    background: var(--zettel-gelb);
+    color: var(--farbe-text);
+    font-weight: 700;
+  }
+
+  /* Fuß als weißer Zettel */
+  [data-ansicht="pinnwand"] .fuss {
+    background: transparent;
+    border-top: 0;
+    padding-bottom: var(--abstand-l);
+  }
+
+  [data-ansicht="pinnwand"] .fuss__innen {
+    background: var(--farbe-flaeche);
+    box-shadow: var(--schatten-schild);
+    max-width: calc(var(--breite-max) - 2 * var(--abstand-seite));
+    padding-left: var(--abstand-m);
+    padding-right: var(--abstand-m);
+  }
+}
+
+/* Weniger Bewegung gewünscht: keine Drehungen, keine Hover-Animationen */
+@media screen and (prefers-reduced-motion: reduce) {
+  [data-ansicht="pinnwand"] *,
+  [data-ansicht="pinnwand"] *::before,
+  [data-ansicht="pinnwand"] *::after {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 7. Druck: immer klare Ansicht, ohne Navigation -------------------------- */
 
 @media print {
   .skiplink,
