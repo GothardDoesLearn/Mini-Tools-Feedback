@@ -104,7 +104,10 @@ Alles in `static/js/filter.js`. Der Kopfkommentar listet die Erweiterungspunkte:
 - JavaScript wird mit Node und einem Mini-DOM getestet (Muster: `tests/test_filterleiste.py`). Lokal ohne Node
   übersprungen, in der CI Pflicht (`tests/conftest.py`).
 - Drittserver-Test (`tests/test_cli.py`): Er prüft alles, was der Browser selbst lädt. Externe URLs darum nie in
-  Attributen, die auf `src` enden, auch nicht `data-…-src`.
+  Attributen, die auf `src` enden, auch nicht `data-…-src`. Im echten Browser prüft das
+  `python tools/netzwerk_pruefen.py` (alle Seiten, beide Ansichten; braucht Edge/Chrome, darum nicht in der CI).
+- Link-Check (`tests/test_links.py`): Jedes interne `href`/`src` und `url()` muss im Build existieren, Anker
+  (`#id`) auf der Zielseite.
 - Neue Tests für eine eigene Komponente in eine eigene Datei; das vermeidet Merge-Konflikte bei paralleler Arbeit.
 - Optik prüfen: `python tools/druck_pruefen.py --screenshot / --breite 375 --ansicht klar --out <ordner>` (in Git Bash mit
   `MSYS_NO_PATHCONV=1` davor).
