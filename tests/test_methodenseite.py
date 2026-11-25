@@ -28,14 +28,12 @@ def test_alle_31_methodenseiten_werden_gebaut(dist: Path):
     assert "daumenprobe" in seiten
 
 
-def test_kopf_zeigt_kategorie_titel_und_ersten_ablaufschritt_als_nutzen(dist: Path):
+def test_kopf_zeigt_kategorie_titel_und_satz_nutzen(dist: Path):
+    # Woher der Satz kommt (Feld `kurz` oder erster Ablaufschritt), prüft test_startseite.py.
     html = seite(dist, "daumenprobe")
     assert "Daumenprobe</h1>" in html
     assert "Handzeichen &amp; Karten" in html
-    assert (
-        '<p class="methode__nutzen">Lehrkraft stellt eine Ja/Nein- oder Einschätzungsfrage '
-        "(„Konntet ihr der Erklärung folgen?“).</p>"
-    ) in html
+    assert re.search(r'<p class="methode__nutzen">[^<]+</p>', html)
 
 
 def test_brotkrumen_fuehren_zur_uebersicht(dist: Path):

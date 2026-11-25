@@ -9,6 +9,7 @@ form: ["analog", "digital"]
 dauer: "ca. 5 Min"
 dauer_min: 5
 dauer_max: 5
+kurz: "Holt Rückmeldung zu mehreren Kriterien auf einmal ein und zeigt, wo es hakt."
 material: "Zielscheibe mit 4–6 Segmenten (Plakat oder A4)"
 druckvorlagen: ["zielscheibe"]
 tools: ["oncoo"]

@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "ca. 1 Min"
 dauer_min: 1
 dauer_max: 1
+kurz: "Zeigt auf einen Blick, wer verstanden hat, wer unsicher ist und wer Hilfe braucht."
 material: "Ampelkarten rot/gelb/grün (oder Becher)"
 druckvorlagen: ["ampelkarten"]
 status: fertig

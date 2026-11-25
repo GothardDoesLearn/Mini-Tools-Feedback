@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "1–3 Min"
 dauer_min: 1
 dauer_max: 3
+kurz: "Zeigt sofort, wer eine Aufgabe lösen kann, weil alle gleichzeitig antworten."
 material: "kleine Whiteboards oder laminierte Blätter + Stifte"
 druckvorlagen: []
 tools: ["plickers"]

@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "ca. 1 Min"
 dauer_min: 1
 dauer_max: 1
+kurz: "Fragt Stimmung oder Zufriedenheit schnell und ohne viele Worte ab."
 material: "Smiley-Karten (lachend, neutral, traurig)"
 druckvorlagen: ["smiley-karten"]
 status: fertig
