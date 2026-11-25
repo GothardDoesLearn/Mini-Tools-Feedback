@@ -1,0 +1,31 @@
+/* Wettersymbole */
+.wetter-gross,
+.mini-karte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wetter-gross {
+  height: 100%;
+}
+
+.wetter {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wetter__wolke {
+  fill: #FFFFFF;
+}
+
+.wetter__blitz {
+  fill: #000000;
+}
+

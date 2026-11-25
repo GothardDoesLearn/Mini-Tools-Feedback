@@ -1,0 +1,44 @@
+/* Unterrichts-Fragebogen (#27) */
+.fragebogen__titel {
+  margin: 0 0 5mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.fragebogen__tabelle {
+  width: 100%;
+  margin-bottom: 8mm;
+  border-collapse: collapse;
+}
+
+.fragebogen__tabelle th,
+.fragebogen__tabelle td {
+  height: 12mm;
+  padding: 0 2mm;
+  border-bottom: var(--blatt-linie);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.fragebogen__tabelle thead th {
+  height: 8mm;
+  font-weight: 700;
+}
+
+.fragebogen__tabelle td:first-child,
+.fragebogen__spalte-aussage {
+  width: 70%;
+  text-align: left;
+}
+
+.fragebogen__tabelle .feld__linie {
+  height: 6mm;
+}
+
+.fragebogen__kreuz {
+  display: inline-block;
+  width: 5mm;
+  height: 5mm;
+  border: var(--blatt-linie);
+}
+

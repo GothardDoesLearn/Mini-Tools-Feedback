@@ -1,0 +1,110 @@
+@media screen {
+  /* Methodenkarten als Papierzettel mit Pin, leicht gedreht (−2° bis +2°) */
+  [data-ansicht="pinnwand"] .uebersicht__anzahl {
+    color: #FFFFFF; /* Weiß auf Filz nur als Large Text */
+    font-family: var(--schrift-titel);
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  [data-ansicht="pinnwand"] .karten {
+    gap: 34px 28px;
+    padding-top: 6px;
+  }
+
+  [data-ansicht="pinnwand"] .karte {
+    min-height: 180px;
+    padding: 30px 22px 20px;
+    background: var(--karte-papier);
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+    transform: rotate(var(--drehung, 0deg));
+    transition: transform 0.18s;
+  }
+
+  [data-ansicht="pinnwand"] .karte:nth-child(5n + 1) {
+    --drehung: -1.4deg;
+  }
+
+  [data-ansicht="pinnwand"] .karte:nth-child(5n + 2) {
+    --drehung: 1deg;
+  }
+
+  [data-ansicht="pinnwand"] .karte:nth-child(5n + 3) {
+    --drehung: -0.6deg;
+  }
+
+  [data-ansicht="pinnwand"] .karte:nth-child(5n + 4) {
+    --drehung: 1.4deg;
+  }
+
+  [data-ansicht="pinnwand"] .karte:nth-child(5n + 5) {
+    --drehung: 0.4deg;
+  }
+
+  [data-ansicht="pinnwand"] .karte:hover,
+  [data-ansicht="pinnwand"] .karte:focus-within {
+    box-shadow: var(--schatten-zettel);
+    transform: rotate(0deg) translateY(-3px);
+  }
+
+  [data-ansicht="pinnwand"] .karte::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    background: var(--karte-pin);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-ansicht="pinnwand"] .karte__kategorie {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  [data-ansicht="pinnwand"] .karte__kategorie::before {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .karte__titel {
+    font-family: var(--schrift-titel);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  [data-ansicht="pinnwand"] .karte__kurz {
+    color: var(--farbe-text);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  [data-ansicht="pinnwand"] .karte__infos {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* Hinweis „wird geprüft!“ als roter Stempel */
+  [data-ansicht="pinnwand"] .karte__status {
+    padding: 0 8px;
+    border: 2px solid #9B1C1C;
+    border-radius: 0;
+    background: transparent;
+    color: #9B1C1C;
+    font-family: var(--schrift-titel);
+    font-size: 22px;
+    font-weight: 700;
+    transform: rotate(-4deg);
+  }
+
+  [data-ansicht="pinnwand"] .karte__status--annahme::after {
+    content: "!";
+  }
+}
+

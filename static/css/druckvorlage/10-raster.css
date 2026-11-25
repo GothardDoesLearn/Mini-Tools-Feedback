@@ -1,0 +1,48 @@
+/* Raster mit gestrichelten Schneidelinien (jede Linie nur einmal) */
+.raster {
+  display: grid;
+  height: 100%;
+  border-top: var(--blatt-schnitt);
+  border-left: var(--blatt-schnitt);
+}
+
+.raster > * {
+  box-sizing: border-box;
+  min-height: 0;
+  padding: 5mm;
+  border-right: var(--blatt-schnitt);
+  border-bottom: var(--blatt-schnitt);
+}
+
+.raster--2x2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Raster 3 Spalten × 4 Zeilen (z. B. 12 Karten pro Blatt) */
+.raster--3x4 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+/* Raster 2 Spalten × 4 Zeilen (z. B. Wettersymbole) */
+.raster--2x4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+}
+
+/* Raster 1 Spalte × 2 Zeilen (z. B. 2 × A5 auf A4 hoch) */
+.raster--1x2 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Raster A7: 2 × 2 Karten im Format A7 (74 × 105 mm), z. B. Ampelkarten */
+.raster--a7 {
+  grid-template-columns: 74mm 74mm;
+  grid-template-rows: 105mm 105mm;
+  width: max-content;
+  height: auto;
+  margin: 0 auto;
+}
+

@@ -1,0 +1,86 @@
+@media screen {
+  /* Rechte Spalte (#8): Druckvorlage weißer Zettel, Digital hellblau, Vorschläge als Zettel */
+  [data-ansicht="pinnwand"] .seitenleiste__druck,
+  [data-ansicht="pinnwand"] .seitenleiste__digital {
+    position: relative;
+    padding: 30px 24px 22px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__druck::before,
+  [data-ansicht="pinnwand"] .seitenleiste__digital::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--pin-farbe, #D62F2F);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__druck {
+    --pin-farbe: #2E8B57;
+    background: #FFFFFF;
+    transform: rotate(0.8deg);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__digital {
+    background: #E2EDFA;
+    transform: rotate(-1deg);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__druck h2,
+  [data-ansicht="pinnwand"] .seitenleiste__digital h2,
+  [data-ansicht="pinnwand"] .seitenleiste__passt h2 {
+    font-family: var(--schrift-titel);
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  /* Weiß auf Filz nur als Large Text (34 px) */
+  [data-ansicht="pinnwand"] .seitenleiste__passt h2 {
+    margin-bottom: 14px;
+    color: #FFFFFF;
+  }
+
+  [data-ansicht="pinnwand"] .methode__seite .knopf {
+    border-radius: 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__vorschlaege {
+    gap: 14px;
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag {
+    border: 0;
+    border-radius: 0;
+    background: var(--vorschlag-papier);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+    transform: rotate(-0.8deg);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__vorschlaege li:nth-child(even) .vorschlag {
+    transform: rotate(0.9deg);
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag__titel {
+    font-family: var(--schrift-titel);
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag__punkt {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag__dauer {
+    color: #3C434B;
+    font-weight: 700;
+  }
+}
+

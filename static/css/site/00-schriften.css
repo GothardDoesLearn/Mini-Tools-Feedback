@@ -1,0 +1,83 @@
+/*
+ * Feedback-Tools – Basis-Stylesheet, aufgeteilt in eine Datei pro Komponente.
+ *
+ * build.py hängt alle Dateien aus static/css/site/ in Dateinamen-Reihenfolge zu
+ * dist/static/css/site.css zusammen. Die Nummer bestimmt die Kaskade:
+ *   00–09 Schriften, Tokens, Grundstil, Layout, allgemeine Bausteine
+ *   10–49 Komponenten in der klaren Ansicht (Methodenseite, Karten, Filter, Startseite …)
+ *   50    Fokus
+ *   60–69 Ansicht Pinnwand (je Datei ein eigenes @media screen)
+ *   90    Druck
+ * Neue Komponente = neue Datei mit passender Nummer (gleiche Nummern sind erlaubt).
+ *
+ * Pinnwand (Issue #5): alle Regeln mit [data-ansicht="pinnwand"] stehen in @media screen – der
+ * Druck fällt so automatisch auf die klare Ansicht (Tokens auf :root) zurück. Handschrift
+ * (--schrift-titel) nur für Überschriften ab 22 px.
+ */
+
+/* 1. Schriften ----------------------------------------------------------- */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/fonts/caveat/caveat-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/nunito/nunito-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/static/fonts/nunito/nunito-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/fonts/nunito/nunito-latin-700-normal.woff2") format("woff2");
+}
+

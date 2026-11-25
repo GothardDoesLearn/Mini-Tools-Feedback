@@ -1,0 +1,12 @@
+/* Exit-Ticket */
+.ticket__kopf {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 4mm;
+}
+
+.ticket__kopf .feld__beschriftung {
+  font-weight: 400;
+  font-size: 9pt;
+}
+
