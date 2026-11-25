@@ -6,5 +6,9 @@ website_name: "Feedback-Tools"
 # Domain der Website – noch offen (Issue #43), bis dahin Platzhalter.
 domain: "https://example.org"
 
+# Standard-Description (Meta-Description) für Seiten ohne eigene Beschreibung, z. B. die Startseite.
+# ENTWURF – vom Betreiber noch freizugeben.
+beschreibung: "Kurze Feedbackmethoden für den Unterricht (1–10 Minuten, analog oder digital) mit Anleitungen und Druckvorlagen für Lehrkräfte."
+
 # Werbeplätze einblenden? Standard: aus (siehe docs/adr/ zu Datenschutz/Werbung).
 werbung_aktiv: false
