@@ -192,6 +192,125 @@
   stroke-width: 0.7;
 }
 
+/* Raster 3 Spalten × 4 Zeilen (z. B. 12 Karten pro Blatt) */
+.raster--3x4 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+/* Reflexionskarten (#27) */
+.reflexionskarte {
+  display: flex;
+  flex-direction: column;
+}
+
+.reflexionskarte__text {
+  margin: 0 0 1mm;
+  font-size: 13pt;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Würfelnetz (#27): SVG-Einheiten = mm */
+.wuerfel__titel {
+  margin: 0 0 4mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.wuerfel {
+  display: block;
+  width: 176mm;
+  height: 242mm;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.wuerfel__schnitt,
+.wuerfel__falz {
+  fill: none;
+  stroke: #000000;
+}
+
+.wuerfel__schnitt {
+  stroke-width: 0.4;
+  stroke-dasharray: 3 2;
+}
+
+.wuerfel__falz {
+  stroke-width: 0.3;
+  stroke-dasharray: 0.5 1.5;
+}
+
+.wuerfel__seite text {
+  font-size: 5px;
+  font-weight: 700;
+  fill: #000000;
+}
+
+.wuerfel__legende {
+  margin: 3mm 0 0;
+  font-size: 9pt;
+}
+
+.wuerfel__muster {
+  display: inline-block;
+  width: 10mm;
+  vertical-align: middle;
+}
+
+.wuerfel__muster--schnitt {
+  border-top: var(--blatt-schnitt);
+}
+
+.wuerfel__muster--falz {
+  border-top: 0.3mm dotted #000000;
+}
+
+/* Unterrichts-Fragebogen (#27) */
+.fragebogen__titel {
+  margin: 0 0 5mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.fragebogen__tabelle {
+  width: 100%;
+  margin-bottom: 8mm;
+  border-collapse: collapse;
+}
+
+.fragebogen__tabelle th,
+.fragebogen__tabelle td {
+  height: 12mm;
+  padding: 0 2mm;
+  border-bottom: var(--blatt-linie);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.fragebogen__tabelle thead th {
+  height: 8mm;
+  font-weight: 700;
+}
+
+.fragebogen__tabelle td:first-child,
+.fragebogen__spalte-aussage {
+  width: 70%;
+  text-align: left;
+}
+
+.fragebogen__tabelle .feld__linie {
+  height: 6mm;
+}
+
+.fragebogen__kreuz {
+  display: inline-block;
+  width: 5mm;
+  height: 5mm;
+  border: var(--blatt-linie);
+}
+
 /* Querformat (A4 quer): eigene benannte Druckseite */
 @page quer {
   size: A4 landscape;
@@ -504,4 +623,121 @@
   .blatt:last-child {
     break-after: auto;
   }
+}
+
+/* 2 Sterne + ein Wunsch, WWW-Karte, Burger, Beobachtungsbogen (Issue #28) -- */
+
+.satzanfang {
+  margin: 1mm 0 0;
+  font-style: italic;
+}
+
+.plakat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  text-align: center;
+}
+
+.plakat p {
+  margin: 0;
+}
+
+.plakat__titel {
+  font-size: 72pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.plakat__block {
+  padding-top: 8mm;
+  border-top: var(--blatt-linie);
+}
+
+.plakat__wort {
+  font-size: 40pt;
+  font-weight: 700;
+}
+
+.plakat__satz {
+  margin-top: 3mm !important;
+  font-size: 26pt;
+}
+
+.plakat__hinweis {
+  margin-top: 2mm !important;
+  font-size: 16pt;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.burger__ebene {
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  padding: 6mm 14mm 2mm;
+  border: 0.6mm solid #000000;
+}
+
+.burger__ebene--oben {
+  padding: 4mm 24mm 2mm;
+  border-radius: 50% 50% 6mm 6mm / 40% 40% 6mm 6mm;
+}
+
+.burger__ebene--mitte {
+  margin: 1mm 4mm 3mm;
+  border-width: 1.2mm;
+  border-style: double;
+  border-radius: 8mm;
+}
+
+.burger__ebene--unten {
+  border-radius: 6mm 6mm 40% 40% / 6mm 6mm 35% 35%;
+}
+
+.burger__sesam {
+  display: block;
+  width: 50%;
+  height: 6mm;
+  margin: 0 auto 2mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 0.8;
+}
+
+.burger__salat {
+  display: block;
+  width: 100%;
+  height: 4mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 0.8;
+}
+
+.bogen {
+  width: 100%;
+  margin-bottom: 6mm;
+  border-collapse: collapse;
+}
+
+.bogen th,
+.bogen td {
+  padding: 2mm 3mm;
+  border: var(--blatt-linie);
+  text-align: left;
+  vertical-align: top;
+}
+
+.bogen td {
+  height: 22mm;
+}
+
+.bogen th:first-child,
+.bogen td:first-child {
+  width: 45%;
 }

@@ -616,6 +616,151 @@ html:not([data-js]) .ansichtswahl {
   font-size: 17px;
 }
 
+/* Rechte Spalte der Methodenseite (Issue #8): Druckvorlage, Digital, Passt auch dazu */
+.methode__seite {
+  display: flex;
+  flex-direction: column;
+  gap: var(--abstand-l);
+  min-width: 0;
+}
+
+.methode__seite h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.seitenleiste__druck,
+.seitenleiste__digital {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.seitenleiste__vorlage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seitenleiste__vorlagentitel,
+.seitenleiste__klein {
+  margin: 0;
+}
+
+.seitenleiste__vorlagentitel {
+  font-weight: 600;
+}
+
+.seitenleiste__klein {
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+.seitenleiste__digital a,
+.seitenleiste__klein a {
+  color: var(--farbe-link);
+  font-weight: 600;
+}
+
+.seitenleiste__tools,
+.seitenleiste__vorschlaege {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seitenleiste__tools {
+  gap: 6px;
+  font-size: 15px;
+}
+
+.seitenleiste__vorschlaege {
+  gap: 10px;
+}
+
+.methode__seite .knopf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-m);
+  border-radius: var(--radius-s);
+  font: inherit;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.methode__seite .knopf--haupt {
+  border: 0;
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font-weight: 600;
+}
+
+.methode__seite .knopf--neben {
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+  font-weight: 500;
+}
+
+.methode__seite .knopf[hidden] {
+  display: none;
+}
+
+.methode__seite .knopf:focus-visible,
+.vorschlag:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.vorschlag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--ziel-min);
+  padding: 12px 16px;
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  color: var(--farbe-text);
+  text-decoration: none;
+}
+
+.vorschlag:hover .vorschlag__titel {
+  text-decoration: underline;
+}
+
+.vorschlag__titel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vorschlag__punkt {
+  flex: 0 0 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--vorschlag-farbe);
+}
+
+.vorschlag__dauer {
+  flex: none;
+  color: var(--farbe-nebentext);
+  font-size: 13px;
+}
+
 @media (min-width: 960px) {
   .methode__kopf {
     padding: 28px 32px 32px;
@@ -1430,6 +1575,90 @@ html:not([data-js]) .filterleiste {
     --pin-farbe: #E8B21E;
     background: #CDEEE6;
     transform: rotate(1.2deg);
+  }
+
+  /* Rechte Spalte (#8): Druckvorlage weißer Zettel, Digital hellblau, Vorschläge als Zettel */
+  [data-ansicht="pinnwand"] .seitenleiste__druck,
+  [data-ansicht="pinnwand"] .seitenleiste__digital {
+    position: relative;
+    padding: 30px 24px 22px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__druck::before,
+  [data-ansicht="pinnwand"] .seitenleiste__digital::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--pin-farbe, #D62F2F);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__druck {
+    --pin-farbe: #2E8B57;
+    background: #FFFFFF;
+    transform: rotate(0.8deg);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__digital {
+    background: #E2EDFA;
+    transform: rotate(-1deg);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__druck h2,
+  [data-ansicht="pinnwand"] .seitenleiste__digital h2,
+  [data-ansicht="pinnwand"] .seitenleiste__passt h2 {
+    font-family: var(--schrift-titel);
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  /* Weiß auf Filz nur als Large Text (34 px) */
+  [data-ansicht="pinnwand"] .seitenleiste__passt h2 {
+    margin-bottom: 14px;
+    color: #FFFFFF;
+  }
+
+  [data-ansicht="pinnwand"] .methode__seite .knopf {
+    border-radius: 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__vorschlaege {
+    gap: 14px;
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag {
+    border: 0;
+    border-radius: 0;
+    background: var(--vorschlag-papier);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+    transform: rotate(-0.8deg);
+  }
+
+  [data-ansicht="pinnwand"] .seitenleiste__vorschlaege li:nth-child(even) .vorschlag {
+    transform: rotate(0.9deg);
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag__titel {
+    font-family: var(--schrift-titel);
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag__punkt {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .vorschlag__dauer {
+    color: #3C434B;
+    font-weight: 700;
   }
 
   /* Methodenkarten als Papierzettel mit Pin, leicht gedreht (−2° bis +2°) */

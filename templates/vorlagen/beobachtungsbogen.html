@@ -1,0 +1,36 @@
+{#- Beobachtungsbogen nach docs/DRUCKVORLAGEN.md: Kriterienliste (4 + 2 leere) mit Strichliste und Notizfeld. -#}
+{% from "vorlagen/_blatt.html" import blatt, feld %}
+
+{% set kriterien = [
+  "alle kommen zu Wort",
+  "bleiben beim Thema",
+  "hören einander zu",
+  "teilen Aufgaben auf",
+] %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<p class="ticket__titel">{{ vorlage.titel }}</p>
+<table class="bogen">
+  <thead>
+    <tr>
+      <th scope="col">Kriterium</th>
+      <th scope="col">Strichliste</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for kriterium in kriterien %}
+    <tr>
+      <td>{{ kriterium }}</td>
+      <td></td>
+    </tr>
+{% endfor %}
+{% for _ in range(2) %}
+    <tr>
+      <td class="bogen__leer"></td>
+      <td></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{{ feld("Notizen", 11) }}
+{% endcall %}

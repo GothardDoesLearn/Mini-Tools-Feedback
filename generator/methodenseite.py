@@ -6,8 +6,8 @@ from dataclasses import dataclass
 import markdown
 from markupsafe import Markup
 
-from generator.content import Methode, SiteData
-from generator.karten import kurztext
+from generator.content import Methode, SiteData, Tool
+from generator.karten import kurztext, titel_sortierschluessel
 
 NUTZEN_MAX = 160  # Satz Nutzen im Kopf: Feld `kurz`, sonst 1. Ablaufschritt gekürzt
 
@@ -83,4 +83,39 @@ def kontext(methode: Methode, daten: SiteData) -> dict:
         "nutzen": nutzen,
         "kurzinfos": kurzinfos(methode, daten),
         "anleitung": anleitung(methode),
+        # Rechte Spalte (Issue #8, templates/methode_seitenleiste.html)
+        "druckvorlagen": [
+            v for i in methode.druckvorlagen for v in daten.druckvorlagen if v.id == i
+        ],
+        "ist_digital": "digital" in methode.form,
+        "digitale_tools": digitale_tools(methode, daten),
+        "passt_auch_dazu": [
+            (m, next(k for k in daten.kategorien if k.id == m.kategorie))
+            for m in passt_auch_dazu(methode, daten)
+        ],
     }
+
+
+PASST_AUCH_DAZU_MAX = 3
+
+
+def passt_auch_dazu(methode: Methode, daten: SiteData) -> list[Methode]:
+    """Zuerst `verwandt`, aufgefüllt mit der gleichen Kategorie (nach Titel), max. 3."""
+    nach_id = {m.id: m for m in daten.methoden}
+    gleiche_kategorie = sorted(
+        (m for m in daten.methoden if m.kategorie == methode.kategorie),
+        key=lambda m: titel_sortierschluessel(m.titel),
+    )
+    vorschlaege: list[Methode] = []
+    for kandidat in [nach_id[i] for i in methode.verwandt] + gleiche_kategorie:
+        if kandidat.id != methode.id and kandidat not in vorschlaege:
+            vorschlaege.append(kandidat)
+    return vorschlaege[:PASST_AUCH_DAZU_MAX]
+
+
+def digitale_tools(methode: Methode, daten: SiteData) -> list[Tool]:
+    """Tools aus dem Feld `tools` der Methode, dazu Tools, die die Methode in tools.yaml nennen."""
+    ids = list(methode.tools)
+    ids += [t.id for t in daten.tools if methode.id in t.methoden and t.id not in ids]
+    nach_id = {t.id: t for t in daten.tools}
+    return [nach_id[i] for i in ids]

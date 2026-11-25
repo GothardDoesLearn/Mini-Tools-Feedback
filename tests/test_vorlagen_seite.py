@@ -120,6 +120,75 @@ def test_lernrad_ein_blatt_mit_6_bis_8_segmenten_4_stufen_und_hinweis(dist: Path
     assert "Wird noch geprüft" in html
 
 
+REFLEXIONS_SATZANFAENGE = (
+    "Am meisten geholfen hat mir …",
+    "Schwierig war …",
+    "Nächstes Mal mache ich …",
+    "Überrascht hat mich …",
+    "Ich bin stolz auf …",
+    "Ich brauche noch …",
+    "Am besten gelernt habe ich durch …",
+    "Das will ich noch wissen …",
+    "Unsere Zusammenarbeit war …",
+    "Mein Ziel war …",
+    "Das nehme ich mit …",
+    "Joker",
+)
+
+
+def test_reflexionskarten_zwoelf_karten_auf_einem_blatt(dist: Path):
+    (blatt,) = blaetter(seite(dist, "reflexionskarten"))
+    blatt = blatt.replace(" ", " ")  # geschütztes Leerzeichen vor „…“
+
+    assert blatt.count('class="reflexionskarte"') == 12
+    for satzanfang in REFLEXIONS_SATZANFAENGE:
+        assert f">{satzanfang}<" in blatt
+
+
+WUERFEL_FRAGEN = (
+    "Was war neu?",
+    "Was war schwer?",
+    "Was hat Spaß gemacht?",
+    "Was willst du noch wissen?",
+    "Wie hast du gearbeitet?",
+    "Joker",
+)
+
+
+def ohne_tags(html: str) -> str:
+    return " ".join(re.sub(r"<[^>]+>", " ", html).split())
+
+
+def test_wuerfelnetz_mit_fragen_und_leerem_netz(dist: Path):
+    beschriftet, leer = blaetter(seite(dist, "wuerfelnetz"))
+
+    for netz in (beschriftet, leer):
+        assert netz.count('class="wuerfel__seite"') == 6
+        assert netz.count('class="wuerfel__lasche"') == 7  # 12 Kanten − 5 Falzkanten im Netz
+    text = ohne_tags(beschriftet)
+    for frage in WUERFEL_FRAGEN:
+        assert frage in text
+        assert frage not in ohne_tags(leer)
+
+
+def test_fragebogen_acht_aussagen_mit_skala_und_zwei_offene_fragen(dist: Path):
+    (blatt,) = blaetter(seite(dist, "fragebogen"))
+
+    assert blatt.count('class="fragebogen__aussage"') == 8
+    for aussage in (
+        "Die Aufgaben waren verständlich",
+        "Ich konnte Fragen stellen",
+        "Das Tempo war passend",
+        "Ich weiß, was ich lernen soll",
+    ):
+        assert f">{aussage}<" in blatt
+    assert blatt.count('class="fragebogen__kreuz"') == 8 * 4
+    for stufe in "1234":
+        assert f'<th scope="col">{stufe}</th>' in blatt
+    for frage in ("Was soll bleiben?", "Was soll sich ändern?"):
+        assert f"{frage}</p>" in blatt
+
+
 def test_wettersymbole_vier_quer_blaetter_und_eine_seite_mini_karten(dist: Path):
     html = seite(dist, "wettersymbole")
 
