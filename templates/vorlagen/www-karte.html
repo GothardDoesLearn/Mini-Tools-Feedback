@@ -1,0 +1,39 @@
+{#- WWW-Karte nach docs/DRUCKVORLAGEN.md: Seite 1 = 4 Karten mit Satzanfängen, Seite 2 = Plakat zum Aufhängen.
+    Satzanfänge kommen aus dem Ablauf von content/methoden/www.md (generator/vorlagen.py). -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% set saetze = satzanfaenge(methoden | selectattr("id", "equalto", "www") | first) %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<div class="raster raster--2x2">
+{% for _ in range(4) %}
+  <div class="druckkarte">
+    <p class="ticket__titel">{{ vorlage.titel }}</p>
+{% for titel, satz, _ in saetze %}
+    <div class="feld">
+      <p class="feld__beschriftung">{{ titel }}</p>
+      <p class="satzanfang">{{ satz }}</p>
+{% for _ in range(3) %}
+      <span class="feld__linie"></span>
+{% endfor %}
+    </div>
+{% endfor %}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}
+
+{% call blatt(vorlage.titel ~ " – Seite 2: Plakat") %}
+<div class="plakat">
+  <p class="plakat__titel">WWW</p>
+{% for titel, satz, hinweis in saetze %}
+  <div class="plakat__block">
+    <p class="plakat__wort">{{ titel }}</p>
+    <p class="plakat__satz">{{ satz }}</p>
+{% if hinweis %}
+    <p class="plakat__hinweis">({{ hinweis }})</p>
+{% endif %}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}

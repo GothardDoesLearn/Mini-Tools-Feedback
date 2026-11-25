@@ -1,0 +1,90 @@
+/* Ansichts-Umschalter (Issue #6). Ohne JavaScript wirkungslos, daher ausgeblendet. */
+.ansichtswahl {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--farbe-rahmen);
+}
+
+html:not([data-js]) .ansichtswahl {
+  display: none;
+}
+
+.ansichtswahl__knopf {
+  min-height: var(--ziel-min);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--farbe-nebentext);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ansichtswahl__knopf:hover {
+  color: var(--farbe-text);
+}
+
+.inhalt {
+  flex: 1 0 auto;
+  padding-top: var(--abstand-l);
+  padding-bottom: var(--abstand-xl);
+}
+
+.inhalt:focus {
+  outline: none;
+}
+
+.fuss {
+  background: var(--farbe-flaeche);
+  border-top: 1px solid var(--farbe-rahmen);
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+.fuss__innen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 var(--abstand-l);
+  padding-top: var(--abstand-m);
+  padding-bottom: var(--abstand-m);
+}
+
+.fuss p {
+  margin: 0;
+}
+
+.fuss a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  color: var(--farbe-nebentext);
+}
+
+.fussnav__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--abstand-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.textseite {
+  max-width: 70ch;
+  padding: var(--abstand-l);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+}
+
+.textseite a {
+  color: var(--farbe-link);
+}
+

@@ -1,0 +1,38 @@
+/* 6. Ansicht Pinnwand (DESIGN.md › Tokens › Pinnwand) – nur am Bildschirm ------- */
+
+@media screen {
+  [data-ansicht="pinnwand"] {
+    --farbe-hintergrund: #8F8B8E;
+    --farbe-flaeche: #FFFFFF;
+    --farbe-rahmen: #CFCBC6;
+    --farbe-text: #22262B;
+    --farbe-nebentext: #3C434B;
+    --farbe-akzent: #0E7C7B;
+    --farbe-akzent-text: #FFFFFF;
+    --farbe-fokus: #22262B; /* Akzent hätte auf dem Filz zu wenig Kontrast */
+    --farbe-link: #22262B; /* Links auf Filz und Papier in Textfarbe, unterstrichen */
+    --schrift-text: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --schrift-titel: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+    --pin-logo: #2B4C9B;
+    --zettel-gelb: #FFF6C7;
+    --schatten-zettel: 0 6px 14px rgba(0, 0, 0, 0.25);
+    --schatten-schild: 0 3px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Handschrift nur ab 22 px */
+  [data-ansicht="pinnwand"] h1 {
+    font-size: 48px;
+    line-height: 1.05;
+  }
+
+  [data-ansicht="pinnwand"] h2 {
+    font-size: 34px;
+    line-height: 1.1;
+  }
+
+  [data-ansicht="pinnwand"] h3 {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+}
+

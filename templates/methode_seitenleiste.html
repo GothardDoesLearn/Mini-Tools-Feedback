@@ -1,0 +1,56 @@
+{# Rechte Spalte der Methodenseite (Desktop; mobil unter der Anleitung; im Druck ausgeblendet).
+   Kontext aus generator/methodenseite.py: druckvorlagen, ist_digital, digitale_tools,
+   tools_hinweis, passt_auch_dazu. #}
+<aside class="methode__seite" aria-label="Material und Weiteres">
+  <script src="/static/js/drucken.js" defer></script>
+{% if druckvorlagen %}
+  <section class="seitenleiste__druck" aria-labelledby="seitenleiste-druck">
+    <h2 id="seitenleiste-druck">{{ "Druckvorlagen" if druckvorlagen | length > 1 else "Druckvorlage" }}</h2>
+{% for vorlage in druckvorlagen %}
+    <div class="seitenleiste__vorlage">
+      <p class="seitenleiste__vorlagentitel">{{ vorlage.titel }}{% if vorlage.status in status_texte.vorlage %} <span class="status-hinweis">{{ status_texte.vorlage[vorlage.status].marke }}</span>{% endif %}</p>
+{% if vorlage.seiten not in ("", "–", "-") %}
+      <p class="seitenleiste__klein">A4 · Seiten: {{ vorlage.seiten }}</p>
+{% endif %}
+{% if vorlage.status == "platzhalter" %}
+      <a class="knopf knopf--neben" href="/vorlagen/{{ vorlage.id }}/">
+        Zur Vorlage<span class="nur-screenreader"> {{ vorlage.titel }}</span>
+      </a>
+{% else %}
+      <a class="knopf knopf--haupt" href="/vorlagen/{{ vorlage.id }}/">
+        Vorlage drucken<span class="nur-screenreader">: {{ vorlage.titel }}</span>
+      </a>
+{% endif %}
+    </div>
+{% endfor %}
+    <button type="button" class="knopf knopf--neben" data-drucken hidden>Anleitung drucken</button>
+  </section>
+{% else %}
+  <div class="seitenleiste__anleitung-drucken">
+    <button type="button" class="knopf knopf--neben" data-drucken hidden>Anleitung drucken</button>
+  </div>
+{% endif %}
+{% if ist_digital %}
+  <section class="seitenleiste__digital" aria-labelledby="seitenleiste-digital">
+    <h2 id="seitenleiste-digital">Digital</h2>
+{% if digitale_tools %}
+    <ul class="seitenleiste__tools">
+{% for tool in digitale_tools %}
+      <li><a class="extern-link" href="{{ tool.url }}" rel="noopener noreferrer">{{ tool.titel }}<span class="nur-screenreader"> (externer Link)</span></a> – {{ tool.zweck }}</li>
+{% endfor %}
+    </ul>
+{% endif %}
+    <p class="seitenleiste__klein">{{ tools_hinweis }} <a href="/tools/">Alle digitalen Tools</a></p>
+  </section>
+{% endif %}
+{% if passt_auch_dazu %}
+  <section class="seitenleiste__passt" aria-labelledby="seitenleiste-passt">
+    <h2 id="seitenleiste-passt">Passt auch dazu</h2>
+    <ul class="seitenleiste__vorschlaege">
+{% for vorschlag, vorschlag_kategorie in passt_auch_dazu %}
+      <li><a class="vorschlag" href="/methoden/{{ vorschlag.id }}/" style="--vorschlag-farbe: {{ vorschlag_kategorie.farbe }}; --vorschlag-papier: {{ vorschlag_kategorie.papier }}"><span class="vorschlag__titel"><span class="vorschlag__punkt" aria-hidden="true"></span>{{ vorschlag.titel }}</span> <span class="vorschlag__dauer">{{ vorschlag.dauer }}</span></a></li>
+{% endfor %}
+    </ul>
+  </section>
+{% endif %}
+</aside>

@@ -1,0 +1,29 @@
+{#- Smiley-Karten nach docs/DRUCKVORLAGEN.md: 3 Kreise (lachend, neutral, traurig), A6, 4 pro Seite. -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% set muender = {
+  "lachend": "M30 58q20 18 40 0",
+  "neutral": "M31 64h38",
+  "traurig": "M30 70q20 -18 40 0",
+} %}
+
+{% macro smiley(gesicht) %}
+<svg class="smiley" data-smiley="{{ gesicht }}" viewBox="0 0 100 100" role="img" aria-label="{{ gesicht }}">
+  <circle cx="50" cy="50" r="46"/>
+  <circle class="smiley__auge" cx="35" cy="38" r="5"/>
+  <circle class="smiley__auge" cx="65" cy="38" r="5"/>
+  <path d="{{ muender[gesicht] }}"/>
+</svg>
+{% endmacro %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<div class="raster raster--2x2">
+{% for _ in range(4) %}
+  <div class="smiley-karte">
+{% for gesicht in ("lachend", "neutral", "traurig") %}
+    {{ smiley(gesicht) }}
+{% endfor %}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}

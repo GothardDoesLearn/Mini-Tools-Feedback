@@ -1,0 +1,56 @@
+/* Würfelnetz (#27): SVG-Einheiten = mm */
+.wuerfel__titel {
+  margin: 0 0 4mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.wuerfel {
+  display: block;
+  width: 176mm;
+  height: 242mm;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.wuerfel__schnitt,
+.wuerfel__falz {
+  fill: none;
+  stroke: #000000;
+}
+
+.wuerfel__schnitt {
+  stroke-width: 0.4;
+  stroke-dasharray: 3 2;
+}
+
+.wuerfel__falz {
+  stroke-width: 0.3;
+  stroke-dasharray: 0.5 1.5;
+}
+
+.wuerfel__seite text {
+  font-size: 5px;
+  font-weight: 700;
+  fill: #000000;
+}
+
+.wuerfel__legende {
+  margin: 3mm 0 0;
+  font-size: 9pt;
+}
+
+.wuerfel__muster {
+  display: inline-block;
+  width: 10mm;
+  vertical-align: middle;
+}
+
+.wuerfel__muster--schnitt {
+  border-top: var(--blatt-schnitt);
+}
+
+.wuerfel__muster--falz {
+  border-top: 0.3mm dotted #000000;
+}
+

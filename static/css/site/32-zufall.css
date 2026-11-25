@@ -1,0 +1,35 @@
+/* Button „Zufällige Methode“ (Issue #17) – braucht JavaScript */
+.startaktionen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand-s);
+  margin: 0 0 var(--abstand-m);
+}
+
+.zufall-knopf {
+  min-height: var(--ziel-min);
+  padding: 0 20px;
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-s);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.zufall-knopf:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.zufall-knopf:disabled {
+  color: var(--farbe-nebentext);
+  cursor: not-allowed;
+}
+
+html:not([data-js]) .zufall-knopf {
+  display: none;
+}
+

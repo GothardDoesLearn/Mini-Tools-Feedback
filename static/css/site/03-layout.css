@@ -1,0 +1,112 @@
+/* 4. Layout -------------------------------------------------------------- */
+
+.skiplink {
+  position: absolute;
+  left: var(--abstand-m);
+  top: -100px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-m);
+  border-radius: var(--radius-s);
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font-weight: 600;
+}
+
+.skiplink:focus {
+  top: var(--abstand-s);
+}
+
+.kopf {
+  background: var(--farbe-flaeche);
+  border-bottom: 1px solid var(--farbe-rahmen);
+}
+
+.kopf__innen,
+.inhalt,
+.fuss__innen {
+  width: 100%;
+  max-width: var(--breite-max);
+  margin: 0 auto;
+  padding-left: var(--abstand-seite);
+  padding-right: var(--abstand-seite);
+}
+
+.kopf__innen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--abstand-s) var(--abstand-l);
+  min-height: 64px;
+  padding-top: var(--abstand-s);
+  padding-bottom: var(--abstand-s);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--ziel-min);
+  color: var(--farbe-text);
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logo__zeichen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-s);
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font-size: 15px;
+}
+
+.hauptnav {
+  max-width: 100%;
+}
+
+.hauptnav__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--abstand-s);
+  margin: 0 calc(-1 * var(--abstand-s));
+  padding: 0;
+  list-style: none;
+}
+
+.hauptnav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-s);
+  border-radius: var(--radius-s);
+  color: var(--farbe-nebentext);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.hauptnav__link:hover {
+  color: var(--farbe-text);
+  text-decoration: underline;
+}
+
+.hauptnav__link[aria-current="page"] {
+  color: var(--farbe-akzent);
+  font-weight: 600;
+}
+
+.kopf__rechts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--abstand-s) var(--abstand-l);
+}
+

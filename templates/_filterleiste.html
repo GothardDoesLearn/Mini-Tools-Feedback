@@ -1,0 +1,31 @@
+{# Filterleiste der Übersicht (Issue #14). Gruppen und Werte aus filter.yaml; Logik in
+   static/js/filter.js. Ohne JavaScript per CSS ausgeblendet, dann sind alle Karten sichtbar. #}
+<form class="filterleiste" aria-labelledby="filterleiste-titel" data-filterleiste>
+  <div class="filterleiste__kopf">
+    <h2 id="filterleiste-titel" class="filterleiste__titel">Filter</h2>
+    <button class="filterleiste__zuruecksetzen" type="reset">Filter zurücksetzen</button>
+  </div>
+{% for gruppe in filtergruppen %}
+  <fieldset class="filtergruppe">
+    <legend class="filtergruppe__titel">{{ gruppe.titel }}</legend>
+    <div class="filtergruppe__werte">
+{% for wert in gruppe.werte %}
+      <label class="filterwert"{% if wert.erklaerung %} title="{{ wert.erklaerung }}"{% endif %}>
+        <input type="checkbox" name="{{ gruppe.feld }}" value="{{ wert.id }}" class="filterwert__box">
+        <span class="filterwert__text">{{ wert.label }}</span>
+      </label>
+{% endfor %}
+    </div>
+  </fieldset>
+{% endfor %}
+{# Dauer-Filter (Issue #19): max. Minuten; Spanne aus dauer_max aller Methoden. Ganz rechts =
+   keine Einschränkung. Methoden mit Zeitpunkt „dauerhaft“ (0/0) erscheinen immer. #}
+{% set dauer_von, dauer_bis = dauer_bereich %}
+  <div class="filtergruppe filterdauer">
+    <label class="filtergruppe__titel" for="filter-dauer">Max. Dauer</label>
+    <div class="filterdauer__zeile">
+      <input class="filterdauer__regler" type="range" id="filter-dauer" name="dauer" min="{{ dauer_von }}" max="{{ dauer_bis }}" step="1" value="{{ dauer_bis }}" aria-valuetext="beliebig" data-dauer-regler>
+      <output class="filterdauer__wert" for="filter-dauer" data-dauer-anzeige>beliebig</output>
+    </div>
+  </div>
+</form>

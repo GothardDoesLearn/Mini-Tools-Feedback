@@ -1,0 +1,53 @@
+/* Skalen-Plakat */
+.skala {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.skala__frage {
+  height: 14mm;
+  margin-bottom: 8mm;
+}
+
+.skala__stufen {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-left: var(--blatt-linie);
+}
+
+.skala__stufe {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--blatt-linie);
+  border-right: var(--blatt-linie);
+  border-bottom: var(--blatt-linie);
+}
+
+.skala__zahl {
+  padding: 3mm 0;
+  border-bottom: var(--blatt-linie);
+  font-size: 40pt;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.skala__punkte {
+  flex: 1; /* freies Feld für Klebepunkte */
+}
+
+/* Bodenkarten (A5) */
+.bodenkarte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodenkarte__zahl {
+  font-size: 260pt;
+  font-weight: 700;
+  line-height: 1;
+}
+

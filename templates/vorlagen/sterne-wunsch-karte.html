@@ -1,0 +1,16 @@
+{#- 2 Sterne + ein Wunsch nach docs/DRUCKVORLAGEN.md: 4 Karten pro A4, 2 Sternfelder, 1 Wunschfeld, "Feedback für:". -#}
+{% from "vorlagen/_blatt.html" import blatt, feld %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<div class="raster raster--2x2">
+{% for _ in range(4) %}
+  <div class="druckkarte">
+    <p class="ticket__titel">{{ vorlage.titel }}</p>
+    {{ feld("Feedback für:", 1) }}
+    {{ feld("Stern", 3, "stern") }}
+    {{ feld("Stern", 3, "stern") }}
+    {{ feld("Wunsch", 3, "wunsch") }}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}

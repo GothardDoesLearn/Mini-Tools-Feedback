@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block head %}
+  <link rel="stylesheet" href="/static/css/druckvorlage.css">
+  <script src="/static/js/drucken.js" defer></script>
+{% endblock %}
+{% block content %}
+    <div class="vorlage-kopf">
+      <h1>{{ vorlage.titel }}</h1>
+      <p class="vorlage-kopf__methoden">Druckvorlage zu:
+{% for methode in methoden %}
+        <a href="/methoden/{{ methode.id }}/">{{ methode.titel }}</a>{% if not loop.last %}, {% endif %}
+{% endfor %}
+      </p>
+{% if layout %}
+{% if vorlage.status == "annahme" %}
+{% set t = status_texte.vorlage.annahme %}
+      <div class="hinweisbox" role="note">
+        <p><strong>{{ t.titel }}:</strong> {{ t.text }}</p>
+      </div>
+{% endif %}
+      <p class="vorlage-kopf__aktion">
+        <button type="button" class="knopf" data-drucken hidden>Drucken</button>
+        <span class="vorlage-kopf__ohne-js" data-drucken-hinweis>Zum Drucken oder Speichern als PDF: <kbd>Strg</kbd>+<kbd>P</kbd> (Mac: <kbd>⌘</kbd>+<kbd>P</kbd>).</span>
+      </p>
+{% endif %}
+    </div>
+{% if layout %}
+    <div class="vorlage-blaetter">
+{% include layout %}
+    </div>
+{% else %}
+{% set t = status_texte.vorlage.platzhalter %}
+    <div class="hinweisbox" role="note">
+      <p><strong>{{ t.titel }}.</strong> {{ t.text }}</p>
+    </div>
+{% endif %}
+{% endblock %}

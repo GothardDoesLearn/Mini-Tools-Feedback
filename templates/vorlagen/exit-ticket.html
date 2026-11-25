@@ -1,0 +1,36 @@
+{#- Exit-Ticket nach docs/DRUCKVORLAGEN.md: 4 Tickets pro A4, Seite 2 = Variante 3-2-1. -#}
+{% from "vorlagen/_blatt.html" import blatt, feld %}
+
+{% macro kopfzeile(titel) %}
+<p class="ticket__titel">{{ titel }}</p>
+<div class="ticket__kopf">
+  {{ feld("Name (optional)", 1) }}
+  {{ feld("Datum", 1) }}
+</div>
+{% endmacro %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<div class="raster raster--2x2">
+{% for _ in range(4) %}
+  <div class="ticket">
+    {{ kopfzeile(vorlage.titel) }}
+    {{ feld("Das habe ich gelernt", 3, "haken") }}
+    {{ feld("Das ist mir unklar", 3, "frage") }}
+    {{ feld("Kontrollaufgabe", 3, "stift") }}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}
+
+{% call blatt(vorlage.titel ~ " – Seite 2: Variante 3-2-1") %}
+<div class="raster raster--2x2">
+{% for _ in range(4) %}
+  <div class="ticket">
+    {{ kopfzeile(vorlage.titel ~ " · 3-2-1") }}
+    {{ feld("3 Dinge gelernt", 3) }}
+    {{ feld("2 interessant", 2) }}
+    {{ feld("1 Frage", 2) }}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}

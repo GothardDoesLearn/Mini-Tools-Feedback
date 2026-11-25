@@ -1,0 +1,29 @@
+{#- Ich-kann-Checkliste nach docs/DRUCKVORLAGEN.md: Tabelle mit 8 leeren „Ich kann …“-Zeilen,
+    Ankreuzfelder sicher / teilweise / noch nicht und Spalte „Übung dazu“. -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<p class="checkliste__titel">{{ vorlage.titel }}</p>
+<table class="checkliste">
+  <thead>
+    <tr>
+      <th scope="col">Ich kann …</th>
+      <th scope="col">sicher</th>
+      <th scope="col">teilweise</th>
+      <th scope="col">noch nicht</th>
+      <th scope="col">Übung dazu</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for _ in range(8) %}
+    <tr>
+      <td></td>
+{% for _ in range(3) %}
+      <td class="checkliste__kreuz"><span class="ankreuzfeld"></span></td>
+{% endfor %}
+      <td></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endcall %}

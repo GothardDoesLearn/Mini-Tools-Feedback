@@ -1,0 +1,70 @@
+{% set hauptnavigation = [
+  ("methoden", "/", "Methoden"),
+  ("vorlagen", "/vorlagen/", "Druckvorlagen"),
+  ("tools", "/tools/", "Digitale Tools"),
+  ("ueber", "/ueber/", "Über"),
+] %}
+{% set fussnavigation = [
+  ("/ueber/", "Über"),
+  ("/impressum/", "Impressum"),
+  ("/datenschutz/", "Datenschutz"),
+] %}
+{% set aktiver_bereich = aktiver_bereich | default("") %}
+{% set seitentitel = seitentitel | default("") %}
+{% set beschreibung = beschreibung | default(site.beschreibung) %}
+<!doctype html>
+<html lang="de" data-ansicht="pinnwand">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% if seitentitel %}{{ seitentitel }} – {% endif %}{{ site.website_name }}{% endblock %}</title>
+  <meta name="description" content="{{ beschreibung }}">
+{% block meta %}{% endblock %}
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <script>
+{% include "ansicht.js" %}
+  </script>
+  <link rel="stylesheet" href="/static/css/site.css">
+{% block head %}{% endblock %}
+</head>
+<body>
+  <a class="skiplink" href="#inhalt">Zum Inhalt springen</a>
+  <header class="kopf">
+    <div class="kopf__innen">
+      <a class="logo" href="/">
+        <span class="logo__zeichen" aria-hidden="true">{{ site.website_name.replace("-", " ").split() | map("first") | join | upper }}</span>
+        <span class="logo__name">{{ site.website_name }}</span>
+      </a>
+      <div class="kopf__rechts">
+        <nav class="hauptnav" aria-label="Hauptnavigation">
+          <ul class="hauptnav__liste">
+{% for bereich, href, label in hauptnavigation %}
+            <li><a class="hauptnav__link" href="{{ href }}"{% if bereich == aktiver_bereich %} aria-current="page"{% endif %}>{{ label }}</a></li>
+{% endfor %}
+          </ul>
+        </nav>
+        <div class="ansichtswahl" role="group" aria-label="Ansicht wählen">
+{% for wert, label in [("pinnwand", "Pinnwand"), ("klar", "Klare Ansicht")] %}
+          <button class="ansichtswahl__knopf" type="button" data-ansicht-wahl="{{ wert }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ label }}</button>
+{% endfor %}
+        </div>
+      </div>
+    </div>
+  </header>
+  <main id="inhalt" class="inhalt" tabindex="-1">
+{% block content %}{% endblock %}
+  </main>
+  <footer class="fuss">
+    <div class="fuss__innen">
+      <p>{{ site.website_name }} · Inhalte unter CC BY-NC-SA 4.0</p>
+      <nav class="fussnav" aria-label="Rechtliches und Informationen">
+        <ul class="fussnav__liste">
+{% for href, label in fussnavigation %}
+          <li><a href="{{ href }}">{{ label }}</a></li>
+{% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

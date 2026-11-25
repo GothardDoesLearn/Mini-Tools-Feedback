@@ -1,0 +1,10 @@
+{#- Werbeplatz-Komponente (Issue #36, ADR 0001, DESIGN.md → Werbeplätze).
+    Ausgeschaltet (config.yaml: werbung_aktiv: false) rendert sie NICHTS.
+    Eingeschaltet: leerer Platzhalter ohne Anfragen an Drittserver – Werbenetz und
+    Einwilligungs-Tool sind noch offen (#45). Nie in Druckvorlagen (templates/vorlage.html,
+    templates/vorlagen/) verwenden; im Druck blendet site.css sie aus. -#}
+{% macro werbeplatz(position) %}
+{% if site.werbung_aktiv %}
+<div class="werbeplatz werbeplatz--{{ position }}" data-werbeplatz="{{ position }}" aria-hidden="true"></div>
+{% endif %}
+{% endmacro %}
