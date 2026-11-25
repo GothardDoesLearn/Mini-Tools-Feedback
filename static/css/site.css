@@ -454,6 +454,23 @@ html:not([data-js]) .ansichtswahl {
   font-weight: 500;
 }
 
+/* Kategorie-Link (Issue #12) liegt über dem aufgespannten Titel-Link der Karte. */
+.karte__kategorie--link {
+  position: relative;
+  z-index: 1;
+  min-height: 24px;
+  text-decoration: none;
+}
+
+.karte__kategorie--link:hover {
+  text-decoration: underline;
+}
+
+.karte__kategorie--link:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
 .karte__kategorie::before {
   content: "";
   width: 10px;

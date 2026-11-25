@@ -88,6 +88,23 @@ def write_toolseite(env: Environment, output_dir: Path, inhalte: SiteData) -> No
     )
 
 
+def write_kategorieseiten(env: Environment, output_dir: Path, site: SiteData) -> None:
+    """Schreibt /kategorien/<slug>/ mit Beschreibung und allen Methoden der Kategorie (#12)."""
+    alle_karten = karten(site)
+    for kategorie in site.kategorien:
+        write_page(
+            env,
+            output_dir,
+            kategorie.url.strip("/"),
+            "kategorie.html",
+            aktiver_bereich="methoden",
+            seitentitel=kategorie.titel,
+            beschreibung=kurzbeschreibung(kategorie.beschreibung),
+            kategorie=kategorie,
+            karten=[k for k in alle_karten if k.kategorie.id == kategorie.id],
+        )
+
+
 def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None:
     config = config or load_config()
     if output_dir.exists():
@@ -101,6 +118,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
 
+    write_kategorieseiten(env, output_dir, site_data)
     write_toolseite(env, output_dir, site_data)
     write_page(
         env,

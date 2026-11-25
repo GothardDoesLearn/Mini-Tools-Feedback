@@ -62,6 +62,10 @@ class Kategorie(BaseModel):
     papier: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
     pin: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
 
+    @property
+    def url(self) -> str:
+        return f"/kategorien/{self.slug}/"
+
 
 class FilterWert(BaseModel):
     model_config = ConfigDict(extra="forbid")
