@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% from "_statushinweis.html" import statushinweis %}
+{% block content %}
+    <article class="methode" style="--kategorie-farbe: {{ kategorie.farbe }}; --kategorie-papier: {{ kategorie.papier }}; --kategorie-pin: {{ kategorie.pin }}">
+      <nav class="brotkrumen" aria-label="Brotkrumen">
+        <ol class="brotkrumen__liste">
+          <li><a href="/">Methoden</a></li>
+          <li><a href="{{ kategorie.url }}">{{ kategorie.titel }}</a></li>
+          <li><span aria-current="page">{{ methode.titel }}</span></li>
+        </ol>
+      </nav>
+      <a class="methode__zurueck" href="/">← zurück zu allen Methoden</a>
+
+      <header class="methode__kopf">
+        <p class="methode__kategorie"><span class="methode__farbpunkt" aria-hidden="true"></span>{{ kategorie.titel }}</p>
+        <h1 class="methode__titel">{{ methode.titel }}</h1>
+{% if nutzen %}
+        <p class="methode__nutzen">{{ nutzen }}</p>
+{% endif %}
+        {{ statushinweis(methode.status, methode.hinweis) }}
+        <dl class="kurzinfos">
+{% for label, wert in kurzinfos %}
+          <div class="kurzinfos__eintrag">
+            <dt>{{ label }}</dt>
+            <dd>{{ wert }}</dd>
+          </div>
+{% endfor %}
+        </dl>
+      </header>
+
+      <div class="methode__spalten">
+        <div class="methode__haupt anleitung">
+{% for abschnitt in anleitung if not abschnitt.zettel %}
+          <section class="anleitung__abschnitt anleitung__abschnitt--{{ abschnitt.slug }}">
+            <h2>{{ abschnitt.titel }}</h2>
+            {{ abschnitt.html }}
+          </section>
+{% endfor %}
+{% set zettel = anleitung | selectattr("zettel") | list %}
+{% if zettel %}
+          <div class="anleitung__zettelreihe">
+{% for abschnitt in zettel %}
+            <section class="anleitung__abschnitt anleitung__abschnitt--{{ abschnitt.slug }} anleitung__zettel">
+              <h2>{{ abschnitt.titel }}</h2>
+              {{ abschnitt.html }}
+            </section>
+{% endfor %}
+          </div>
+{% endif %}
+{# Video-Bereich (#9) kommt hier unter Tipp/Variante. #}
+        </div>
+        {% include "methode_seitenleiste.html" %}
+      </div>
+    </article>
+{% endblock %}
