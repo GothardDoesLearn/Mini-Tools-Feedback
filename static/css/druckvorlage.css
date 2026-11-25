@@ -280,6 +280,77 @@
   border: var(--blatt-linie);
 }
 
+/* Querformat (A4 quer): eigene benannte Druckseite */
+@page quer {
+  size: A4 landscape;
+  margin: 12mm;
+}
+
+.blatt--quer {
+  page: quer;
+  width: 297mm;
+  height: 210mm;
+}
+
+/* Wettersymbole */
+.raster--2x4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.wetter-gross,
+.mini-karte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wetter-gross {
+  height: 100%;
+}
+
+.wetter {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wetter__wolke {
+  fill: #FFFFFF;
+}
+
+.wetter__blitz {
+  fill: #000000;
+}
+
+/* Eckenschilder */
+.eckenschild {
+  display: grid;
+  grid-template-rows: 1fr 55mm;
+  gap: 5mm;
+  height: 100%;
+}
+
+.eckenschild__buchstabe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 120mm;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.eckenschild__feld {
+  border: var(--blatt-linie);
+  border-width: 0.6mm;
+}
+
 /* Druck: nur die Blätter, je Blatt eine Seite ------------------------------ */
 
 @media print {
@@ -301,6 +372,11 @@
     box-shadow: none;
     overflow: hidden;
     break-after: page;
+  }
+
+  .blatt--quer {
+    width: 273mm; /* 297mm − 2 × 12mm Rand */
+    height: 185mm; /* 210mm − 2 × 12mm Rand, 1mm Reserve */
   }
 
   .blatt:last-child {

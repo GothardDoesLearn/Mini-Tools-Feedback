@@ -157,3 +157,37 @@ def test_fragebogen_acht_aussagen_mit_skala_und_zwei_offene_fragen(dist: Path):
         assert f'<th scope="col">{stufe}</th>' in blatt
     for frage in ("Was soll bleiben?", "Was soll sich ändern?"):
         assert f"{frage}</p>" in blatt
+
+
+def test_wettersymbole_vier_quer_blaetter_und_eine_seite_mini_karten(dist: Path):
+    html = seite(dist, "wettersymbole")
+
+    *gross, karten = blaetter(html)
+    assert len(gross) == 4
+    namen = ("Sonne", "Sonne mit Wolke", "Wolke", "Gewitter")
+    for blatt, name in zip(gross, namen, strict=True):
+        assert blatt.startswith(" blatt--quer")
+        assert blatt.count('<svg class="wetter"') == 1
+        assert f'aria-label="{name}"' in blatt
+    assert not karten.startswith(" blatt--quer")
+    assert karten.count('class="mini-karte"') == 8
+    for name in namen:
+        assert karten.count(f'aria-label="{name}"') == 2
+
+
+def test_eckenschilder_vier_quer_blaetter_mit_buchstabe_und_leerem_feld(dist: Path):
+    html = seite(dist, "eckenschilder")
+
+    schilder = blaetter(html)
+    assert len(schilder) == 4
+    for blatt, buchstabe in zip(schilder, "ABCD", strict=True):
+        assert blatt.startswith(" blatt--quer")
+        assert f'<p class="eckenschild__buchstabe">{buchstabe}</p>' in blatt
+        assert '<div class="eckenschild__feld"></div>' in blatt
+
+
+def test_quer_blaetter_drucken_auf_a4_quer(dist: Path):
+    css = (dist / "static" / "css" / "druckvorlage.css").read_text(encoding="utf-8")
+
+    assert re.search(r"@page\s+quer\s*\{\s*size:\s*A4 landscape;", css)
+    assert re.search(r"\.blatt--quer\s*\{[^}]*page:\s*quer;", css)

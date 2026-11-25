@@ -6,10 +6,11 @@ der Build brechen dann ab. Schema und Querverweise prüft generator.content.load
 
 from generator import paths
 from generator.config import SiteConfig, load_config
-from generator.content import load_site
+from generator.content import load_seiten, load_site
 
 
 def check() -> SiteConfig:
     config = load_config()
     load_site(paths.CONTENT_DIR)
+    load_seiten(paths.CONTENT_DIR)
     return config
