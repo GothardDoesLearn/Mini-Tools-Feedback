@@ -1,0 +1,31 @@
+{#- Ampelkarten nach docs/DRUCKVORLAGEN.md: je Farbe ein Blatt mit 4 Karten im Format A7.
+    SW-tauglich: Text und Position des Lichts (oben/Mitte/unten) unterscheiden die Karten auch ohne Farbe. -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% set karten = [
+  {"farbe": "rot", "name": "rot", "text": "Hilfe", "licht": 0},
+  {"farbe": "gelb", "name": "gelb", "text": "unsicher", "licht": 1},
+  {"farbe": "gruen", "name": "grün", "text": "verstanden", "licht": 2},
+] %}
+
+{% macro ampel(karte) %}
+<svg class="ampel" viewBox="0 0 40 100" role="img" aria-label="Ampel {{ karte.name }}">
+  <rect x="2" y="2" width="36" height="96" rx="8"/>
+{% for i in range(3) %}
+  <circle{% if i == karte.licht %} class="ampel__licht"{% endif %} cx="20" cy="{{ 18 + i * 32 }}" r="12"/>
+{% endfor %}
+</svg>
+{% endmacro %}
+
+{% for karte in karten %}
+{% call blatt(vorlage.titel ~ " – Seite " ~ loop.index ~ ": " ~ karte.name) %}
+<div class="raster raster--a7">
+{% for _ in range(4) %}
+  <div class="ampel-karte ampel-karte--{{ karte.farbe }}">
+    {{ ampel(karte) }}
+    <p class="ampel-karte__text">{{ karte.text }}</p>
+  </div>
+{% endfor %}
+</div>
+{% endcall %}
+{% endfor %}

@@ -60,9 +60,16 @@ def test_platzhalter_vorlage_zeigt_vorlage_folgt_ohne_blatt(dist: Path):
 
 
 def test_noch_nicht_gebaute_vorlage_zeigt_vorlage_folgt(dist: Path):
-    html = seite(dist, "feedback-hand")
+    vorlagen_dir = Path(__file__).parents[1] / "templates" / "vorlagen"
+    offen = [
+        v.id
+        for v in load_site().druckvorlagen
+        if v.status != "platzhalter" and not (vorlagen_dir / f"{v.id}.html").exists()
+    ]
+    if not offen:
+        pytest.skip("alle Druckvorlagen sind gebaut")
 
-    assert "Vorlage folgt" in html
+    assert "Vorlage folgt" in seite(dist, offen[0])
 
 
 def test_druckvorlage_verlinkt_ihre_methoden(dist: Path):
