@@ -331,6 +331,43 @@ html:not([data-js]) .ansichtswahl {
   color: var(--farbe-nebentext);
 }
 
+.fussnav__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--abstand-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.textseite {
+  max-width: 70ch;
+  padding: var(--abstand-l);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+}
+
+.textseite a {
+  color: var(--farbe-link);
+}
+
+/* Hinweisbox für Textseiten im Status entwurf/platzhalter (Farben wie „wird geprüft“) */
+.hinweisbox.hinweisbox--status {
+  margin: var(--abstand-m) 0;
+  padding: var(--abstand-s) var(--abstand-m);
+  border: 1px solid #7a4b00;
+  border-left-width: 4px;
+  border-radius: var(--radius-s);
+  background: #fff1d6;
+  color: #7a4b00;
+}
+
+.hinweisbox--status p {
+  margin: 0;
+}
+
 /* Hinweis bei Status annahme/platzhalter (DESIGN.md › Klare Ansicht › „wird geprüft“) */
 .status-hinweis {
   display: inline-block;
