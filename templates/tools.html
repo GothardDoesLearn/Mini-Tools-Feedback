@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% set seitentitel = "Digitale Tools" %}
+{% set beschreibung = "Digitale Tools für schnelles Feedback im Unterricht – mit Zweck, Ablauf und passenden Methoden." %}
+{% block content %}
+    <h1>Digitale Tools</h1>
+    <p class="hinweisbox" role="note">Bitte prüfen Sie, ob das Tool an Ihrer Schule freigegeben ist.</p>
+    <div class="toolliste">
+{% for tool in tools %}
+      <article class="toolkarte" id="tool-{{ tool.id }}" aria-labelledby="tool-{{ tool.id }}-titel">
+        <h2 class="toolkarte__titel" id="tool-{{ tool.id }}-titel">{{ tool.titel }}</h2>
+        <p class="toolkarte__link"><a class="extern-link" href="{{ tool.url }}" rel="noopener noreferrer">{{ tool.url.split("://")[-1] }}<span class="nur-screenreader"> (externer Link)</span></a></p>
+        <dl class="toolkarte__angaben">
+          <dt>Zweck</dt>
+          <dd>{{ tool.zweck }}</dd>
+          <dt>Ablauf</dt>
+          <dd>{{ tool.ablauf }}</dd>
+          <dt>Geräte für SuS</dt>
+          <dd>{{ tool.sus_geraete }}</dd>
+{% if tool.hinweis %}
+          <dt>Hinweis</dt>
+          <dd>{{ tool.hinweis }}</dd>
+{% endif %}
+{% if tool.methoden %}
+          <dt>Passende Methoden</dt>
+          <dd>
+{% for methoden_id in tool.methoden %}
+            <a href="/methoden/{{ methoden_id }}/">{{ methoden_titel[methoden_id] }}</a>{% if not loop.last %},{% endif %}
+
+{% endfor %}
+          </dd>
+{% endif %}
+        </dl>
+      </article>
+{% endfor %}
+    </div>
+{% endblock %}
