@@ -294,9 +294,112 @@ img {
   color: var(--farbe-nebentext);
 }
 
+/* Hinweis bei Status annahme/platzhalter (DESIGN.md › Klare Ansicht › „wird geprüft“) */
+.status-hinweis {
+  display: inline-block;
+  padding: 2px var(--abstand-s);
+  border-radius: var(--radius-s);
+  background: #FFF1D6;
+  color: #7A4B00;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Vorlagen-Übersicht /vorlagen/ */
+.vorlagen {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--abstand-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vorlagen__eintrag {
+  padding: var(--abstand-m);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  background: var(--farbe-flaeche);
+}
+
+.vorlagen__eintrag p {
+  margin: var(--abstand-s) 0 0;
+}
+
+.vorlagen__titel {
+  margin: 0;
+}
+
+.vorlagen__titel a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+}
+
+.vorlagen__methoden {
+  color: var(--farbe-nebentext);
+}
+
 @media (min-width: 768px) {
   :root {
     --abstand-seite: 24px;
+  }
+}
+
+/* 4b. Toolseite, externe Links, Hinweisbox (Issue #13) ---------------------- */
+
+.nur-screenreader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Externe Links: sichtbarer Pfeil; Screenreader lesen den Text in .nur-screenreader */
+.extern-link::after {
+  content: "\2009\2197";
+  content: "\2009\2197" / ""; /* Alternativtext leer, wo unterstützt */
+}
+
+.hinweisbox {
+  padding: var(--abstand-m);
+  border: 1px solid var(--farbe-rahmen);
+  border-left: 4px solid var(--farbe-akzent);
+  border-radius: var(--radius-s);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+}
+
+.toolliste {
+  display: grid;
+  gap: var(--abstand-m);
+}
+
+.toolkarte {
+  padding: var(--abstand-m);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+}
+
+.toolkarte__titel {
+  margin-top: 0;
+}
+
+.toolkarte__angaben dt {
+  font-weight: 700;
+}
+
+.toolkarte__angaben dd {
+  margin: 0 0 var(--abstand-s);
+}
+
+@media (min-width: 768px) {
+  .toolliste {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

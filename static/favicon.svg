@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Platzhalter-Favicon (Issue #35): endgültiges Logo steht noch aus. -->
+  <path d="M6 4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H14l-7 6v-6H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#1F5FBF"/>
+  <path d="M10 14l4 4 8-8" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
