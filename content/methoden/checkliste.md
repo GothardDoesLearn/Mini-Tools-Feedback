@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Lässt SuS ihren Stand zu den Lernzielen einschätzen und verknüpft ihn mit passenden Übungen."
 material: "Checkliste je Einheit"
 druckvorlagen: ["checkliste"]
 status: fertig

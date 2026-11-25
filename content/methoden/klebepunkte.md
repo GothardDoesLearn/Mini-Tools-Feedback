@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Sammelt Einschätzungen oder wichtige Themen der Klasse sichtbar auf einem Plakat."
 material: "Klebepunkte, Plakat mit Skala oder Symbolen"
 druckvorlagen: ["skalen-plakat", "wettersymbole"]
 status: fertig

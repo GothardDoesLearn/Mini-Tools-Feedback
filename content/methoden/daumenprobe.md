@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "ca. 1 Min"
 dauer_min: 1
 dauer_max: 1
+kurz: "Holt in Sekunden ein Stimmungsbild der ganzen Klasse ein – ganz ohne Material."
 material: "kein Material"
 druckvorlagen: []
 status: fertig

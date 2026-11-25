@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "ca. 2 Min"
 dauer_min: 2
 dauer_max: 2
+kurz: "Macht die Lernstimmung der Klasse mit Wettersymbolen sichtbar."
 material: "Wettersymbole Sonne, Sonne-Wolke, Wolke, Gewitter"
 druckvorlagen: ["wettersymbole"]
 status: fertig

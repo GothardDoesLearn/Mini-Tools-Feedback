@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "3–5 Min"
 dauer_min: 3
 dauer_max: 5
+kurz: "Macht Einschätzungen der Klasse auf einer Linie im Raum sichtbar und lädt zum Begründen ein."
 material: "optional Bodenkarten „1“ bis „6“"
 druckvorlagen: ["skalen-plakat"]
 druckvorlage_optional: true

@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "5–10 Min"
 dauer_min: 5
 dauer_max: 10
+kurz: "Bringt Bewegung in die Abfrage und führt direkt ins Gespräch über die Gründe."
 material: "4 Eckenschilder (A–D oder Aussagen)"
 druckvorlagen: ["eckenschilder"]
 status: fertig

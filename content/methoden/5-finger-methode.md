@@ -9,6 +9,7 @@ form: ["analog"]
 dauer: "3–10 Min"
 dauer_min: 3
 dauer_max: 10
+kurz: "Holt strukturierte Rückmeldung zu Gelungenem, Kritik und Gelerntem ein – mündlich oder schriftlich."
 material: "optional Druckvorlage (Hand mit Leitsätzen)"
 druckvorlagen: ["feedback-hand"]
 druckvorlage_optional: true

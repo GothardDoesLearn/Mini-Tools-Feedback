@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "ca. 5 Min"
 dauer_min: 5
 dauer_max: 5
+kurz: "Lässt SuS ihr Befinden über eine Figur ausdrücken statt in Worten."
 material: "Wimmelbild mit vielen Figuren in unterschiedlichen Situationen"
 druckvorlagen: ["wimmelbild"]
 status: platzhalter
