@@ -1,0 +1,20 @@
+{#- Kreisscheibe für Druckvorlagen (Zielscheibe, Lernrad): konzentrische Ringe, Segmente,
+    je Segment ein leeres Beschriftungsfeld außen. Maße im viewBox = mm bei voller Blattbreite (186 mm).
+    Nur Drehungen (rotate), keine Trigonometrie nötig.
+    radius = Außenradius, abstand = Mitte Scheibe → Mitte Feld, versatz = Drehung der Teilerlinien. -#}
+{% macro scheibe(segmente, ringe, radius, abstand, feld_breite, feld_hoehe, versatz=0,
+                 beschreibung="", plakat=false) %}
+{%- set halbe_hoehe = abstand + feld_hoehe / 2 + 1 -%}
+<svg class="scheibe{% if plakat %} scheibe--plakat{% endif %}" viewBox="-93 {{ -halbe_hoehe }} 186 {{ 2 * halbe_hoehe }}" role="img" aria-label="{{ beschreibung }}">
+{% for k in range(1, ringe + 1) %}
+  <circle class="scheibe__ring" cx="0" cy="0" r="{{ radius * k / ringe }}"/>
+{% endfor %}
+{% for i in range(segmente) %}
+  <line class="scheibe__teiler" x1="0" y1="0" x2="0" y2="{{ -radius }}" transform="rotate({{ versatz + 360 * i / segmente }})"/>
+{% endfor %}
+{% for i in range(segmente) %}
+{% set winkel = versatz + 360 * (i + 0.5) / segmente %}
+  <rect class="scheibe__feld" x="{{ -feld_breite / 2 }}" y="{{ -feld_hoehe / 2 }}" width="{{ feld_breite }}" height="{{ feld_hoehe }}" transform="rotate({{ winkel }}) translate(0 {{ -abstand }}) rotate({{ -winkel }})"/>
+{% endfor %}
+</svg>
+{% endmacro %}
