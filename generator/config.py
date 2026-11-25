@@ -3,7 +3,7 @@
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from generator.paths import CONFIG_FILE
 
@@ -15,6 +15,8 @@ class SiteConfig(BaseModel):
     domain: str
     beschreibung: str
     werbung_aktiv: bool = False
+    # Übersicht: Werbeplatz nach jeder n-ten Methodenkarte (nur wirksam, wenn werbung_aktiv).
+    werbung_nach_karten: int = Field(default=6, ge=1)
 
     @property
     def domain_anzeige(self) -> str:

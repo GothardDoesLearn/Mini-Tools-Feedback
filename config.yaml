@@ -12,3 +12,7 @@ beschreibung: "Kurze Feedbackmethoden für den Unterricht (1–10 Minuten, analo
 
 # Werbeplätze einblenden? Standard: aus (siehe docs/adr/ zu Datenschutz/Werbung).
 werbung_aktiv: false
+
+# Übersicht: Werbeplatz nach jeder n-ten Methodenkarte (nur wirksam, wenn werbung_aktiv).
+# ANNAHME – Wert vom Betreiber noch festzulegen.
+werbung_nach_karten: 6

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_karte.html" import karte %}
+{% from "_werbeplatz.html" import werbeplatz %}
 {% block content %}
     <h1>{{ site.website_name }}</h1>
     <section class="uebersicht" aria-labelledby="uebersicht-titel">
@@ -7,6 +8,9 @@
       <div class="karten">
 {% for k in karten %}
         {{ karte(k) | indent(8) }}
+{% if loop.index is divisibleby(site.werbung_nach_karten) and not loop.last %}
+        {{ werbeplatz("uebersicht") | indent(8) }}
+{% endif %}
 {% endfor %}
       </div>
     </section>

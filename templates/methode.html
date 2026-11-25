@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_statushinweis.html" import statushinweis %}
+{% from "_werbeplatz.html" import werbeplatz %}
 {% block content %}
     <article class="methode" style="--kategorie-farbe: {{ kategorie.farbe }}; --kategorie-papier: {{ kategorie.papier }}; --kategorie-pin: {{ kategorie.pin }}">
       <nav class="brotkrumen" aria-label="Brotkrumen">
@@ -48,6 +49,7 @@
           </div>
 {% endif %}
 {# Video-Bereich (#9) kommt hier unter Tipp/Variante. #}
+          {{ werbeplatz("methode") | indent(10) }}
         </div>
         {% include "methode_seitenleiste.html" %}
       </div>
