@@ -256,6 +256,43 @@ img {
   font-weight: 600;
 }
 
+.kopf__rechts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--abstand-s) var(--abstand-l);
+}
+
+/* Ansichts-Umschalter (Issue #6). Ohne JavaScript wirkungslos, daher ausgeblendet. */
+.ansichtswahl {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--farbe-rahmen);
+}
+
+html:not([data-js]) .ansichtswahl {
+  display: none;
+}
+
+.ansichtswahl__knopf {
+  min-height: var(--ziel-min);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--farbe-nebentext);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ansichtswahl__knopf:hover {
+  color: var(--farbe-text);
+}
+
 .inhalt {
   flex: 1 0 auto;
   padding-top: var(--abstand-l);
@@ -444,6 +481,42 @@ img {
   [data-ansicht="pinnwand"] .hauptnav__link[aria-current="page"] {
     background: var(--zettel-gelb);
     color: var(--farbe-text);
+    font-weight: 700;
+  }
+
+  /* Ansichts-Umschalter: Hervorhebung hängt am <html>-Attribut, das das Inline-Script im
+     <head> vor dem ersten Rendern setzt – so flackert nichts. */
+  [data-ansicht="klar"] .ansichtswahl__knopf[data-ansicht-wahl="klar"] {
+    background: var(--farbe-flaeche);
+    color: var(--farbe-text);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(20, 30, 50, 0.15);
+  }
+
+  [data-ansicht="pinnwand"] .kopf__rechts {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: var(--abstand-m);
+  }
+
+  [data-ansicht="pinnwand"] .ansichtswahl {
+    gap: 4px;
+    padding: 4px;
+    border-radius: 0;
+    background: var(--farbe-flaeche);
+    box-shadow: var(--schatten-schild);
+    transform: rotate(1deg);
+  }
+
+  [data-ansicht="pinnwand"] .ansichtswahl__knopf {
+    border-radius: 0;
+    color: var(--farbe-text);
+    font-weight: 600;
+  }
+
+  [data-ansicht="pinnwand"] .ansichtswahl__knopf[data-ansicht-wahl="pinnwand"] {
+    background: var(--farbe-akzent);
+    color: var(--farbe-akzent-text);
     font-weight: 700;
   }
 
