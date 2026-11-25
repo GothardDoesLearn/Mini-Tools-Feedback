@@ -54,10 +54,10 @@ def test_unbekannte_option_bricht_ab(tmp_path):
 
 def test_ziel_kommt_aus_env_datei(tmp_path):
     datei = tmp_path / "deploy.env"
-    datei.write_text('DEPLOY_ZIEL="b@s:/w"\nDEPLOY_METHODE="ftp"\n', encoding="utf-8")
+    datei.write_bytes(b'DEPLOY_ZIEL="b@s:/w"\r\nDEPLOY_METHODE="ftp"\r\n')
     r = starte(tmp_path, DEPLOY_ENV=str(datei))
     assert r.returncode == 2
-    assert "rsync oder sftp" in r.stderr
+    assert "nicht: ftp\n" in r.stderr  # Windows-Zeilenenden sind entfernt
 
 
 def test_zugangsdaten_sind_ignoriert():

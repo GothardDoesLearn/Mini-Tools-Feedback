@@ -19,8 +19,9 @@ esac
 
 env_datei="${DEPLOY_ENV:-deploy.env}"
 if [[ -f "$env_datei" ]]; then
+  # Windows-Zeilenenden (CRLF) entfernen, sonst hängt an jedem Wert ein \r.
   # shellcheck disable=SC1090
-  source "$env_datei"
+  source <(tr -d '\r' < "$env_datei")
 fi
 
 : "${DEPLOY_ZIEL:?DEPLOY_ZIEL fehlt, z. B. benutzer@server.example:/var/www/feedback-tools (siehe deploy.env.beispiel)}"
