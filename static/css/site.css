@@ -1152,6 +1152,40 @@ html:not([data-js]) .zufall-knopf {
   display: none;
 }
 
+/* Volltextsuche (Issue #18) – braucht JavaScript */
+.suche {
+  display: flex;
+  flex: 1 1 360px;
+  max-width: 560px;
+}
+
+.suche__feld {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-s);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+  font: inherit;
+  font-size: 16px;
+}
+
+.suche__feld::placeholder {
+  color: var(--farbe-nebentext);
+  opacity: 1;
+}
+
+.suche__feld:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+html:not([data-js]) .suche {
+  display: none;
+}
+
 @media (min-width: 900px) {
   .uebersicht {
     display: grid;

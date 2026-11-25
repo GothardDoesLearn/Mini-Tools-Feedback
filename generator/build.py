@@ -17,6 +17,7 @@ from generator.content import SiteData, load_seiten, load_site, load_startseite
 from generator.karten import dauer_bereich, karten
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 from generator.startseite import kategorie_auswahl
+from generator.suche import suchindex
 
 # Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
 VORLAGEN_LAYOUT_DIR = "vorlagen"
@@ -172,6 +173,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         karten=karten(site_data),
         # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#11)
         filtergruppen=[g for g in site_data.filter if g.werte],
+        suchindex=suchindex(site_data),
         dauer_bereich=dauer_bereich(site_data),
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")

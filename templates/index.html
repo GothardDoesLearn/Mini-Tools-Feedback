@@ -10,6 +10,11 @@
       <p class="intro__text">{{ texte.intro }}</p>
     </section>
     <div class="startaktionen">
+      {# Volltextsuche (Issue #18) über Titel, Aliase und Anleitung, per static/js/filter.js; ohne JS ausgeblendet. #}
+      <div class="suche" role="search">
+        <label class="nur-screenreader" for="suche">Methoden durchsuchen</label>
+        <input class="suche__feld" id="suche" type="search" placeholder="Methode suchen, z. B. Daumenprobe" autocomplete="off" data-suche>
+      </div>
       {# Wählt per static/js/filter.js aus den aktuell sichtbaren Karten (Issue #17); ohne JS ausgeblendet. #}
       <button class="zufall-knopf" type="button" data-zufall>Zufällige Methode</button>
     </div>
@@ -42,4 +47,5 @@
         </div>
       </div>
     </section>
+    <script type="application/json" data-suchindex>{{ suchindex | tojson }}</script>
 {% endblock %}
