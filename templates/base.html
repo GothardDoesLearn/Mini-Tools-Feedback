@@ -4,6 +4,11 @@
   ("tools", "/tools/", "Digitale Tools"),
   ("ueber", "/ueber/", "Über"),
 ] %}
+{% set fussnavigation = [
+  ("/ueber/", "Über"),
+  ("/impressum/", "Impressum"),
+  ("/datenschutz/", "Datenschutz"),
+] %}
 {% set aktiver_bereich = aktiver_bereich | default("") %}
 <!doctype html>
 <html lang="de" data-ansicht="klar">
@@ -36,7 +41,13 @@
   <footer class="fuss">
     <div class="fuss__innen">
       <p>{{ site.website_name }} · Inhalte unter CC BY-NC-SA 4.0</p>
-      <p><a href="/ueber/">Impressum und Datenschutz</a></p>
+      <nav class="fussnav" aria-label="Rechtliches und Informationen">
+        <ul class="fussnav__liste">
+{% for href, label in fussnavigation %}
+          <li><a href="{{ href }}">{{ label }}</a></li>
+{% endfor %}
+        </ul>
+      </nav>
     </div>
   </footer>
 </body>

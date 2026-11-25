@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% set status_hinweise = {
+  "platzhalter": ("Platzhalter", "Dieser Inhalt fehlt noch und folgt nach Rücksprache."),
+  "entwurf": ("Entwurf", "Dieser Text ist ein Entwurf und noch nicht freigegeben."),
+} %}
+{% block title %}{{ seite.titel }} – {{ site.website_name }}{% endblock %}
+{% block content %}
+    <article class="textseite">
+      <h1>{{ seite.titel }}</h1>
+{% if seite.status in status_hinweise %}
+{% set label, standardtext = status_hinweise[seite.status] %}
+      <aside class="hinweisbox hinweisbox--{{ seite.status }}" aria-label="Hinweis">
+        <p><strong>{{ label }}:</strong> {{ seite.hinweis or standardtext }}</p>
+      </aside>
+{% endif %}
+      {{ seite.body | markdown }}
+    </article>
+{% endblock %}
