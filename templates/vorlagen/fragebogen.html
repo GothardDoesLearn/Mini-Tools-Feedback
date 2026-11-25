@@ -1,0 +1,38 @@
+{#- Unterrichts-Fragebogen nach docs/DRUCKVORLAGEN.md: 8 Aussagen mit Skala 1–4 + 2 offene Fragen.
+    Die Spezifikation nennt nur 4 Aussagen ("z. B."); die übrigen 4 Zeilen bleiben leer zum Selbst-Eintragen,
+    bis der Betreiber die Texte festlegt. Bedeutung der Skalenenden ist ebenfalls noch nicht festgelegt. -#}
+{% from "vorlagen/_blatt.html" import blatt, feld %}
+
+{% set aussagen = [
+  "Die Aufgaben waren verständlich",
+  "Ich konnte Fragen stellen",
+  "Das Tempo war passend",
+  "Ich weiß, was ich lernen soll",
+  none, none, none, none,
+] %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<p class="fragebogen__titel">{{ vorlage.titel }}</p>
+<table class="fragebogen__tabelle">
+  <thead>
+    <tr>
+      <th scope="col" class="fragebogen__spalte-aussage"><span class="nur-screenreader">Aussage</span></th>
+{% for stufe in range(1, 5) %}
+      <th scope="col">{{ stufe }}</th>
+{% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+{% for aussage in aussagen %}
+    <tr class="fragebogen__aussage">
+      <td>{% if aussage %}<span>{{ aussage }}</span>{% else %}<span class="feld__linie"></span>{% endif %}</td>
+{% for _ in range(4) %}
+      <td><span class="fragebogen__kreuz"></span></td>
+{% endfor %}
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{{ feld("Was soll bleiben?", 6) }}
+{{ feld("Was soll sich ändern?", 6) }}
+{% endcall %}

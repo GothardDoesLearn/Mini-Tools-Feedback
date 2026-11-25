@@ -161,6 +161,156 @@
   font-size: 9pt;
 }
 
+/* Kreisscheibe (Zielscheibe, Lernrad): viewBox-Einheiten ≈ mm bei voller Breite */
+.scheibe__titel {
+  margin: 0 0 6mm;
+  font-size: 18pt;
+  font-weight: 700;
+}
+
+.scheibe__titel--plakat {
+  font-size: 28pt;
+}
+
+.scheibe {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.scheibe__ring,
+.scheibe__teiler,
+.scheibe__feld {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 0.4;
+}
+
+.scheibe--plakat .scheibe__ring,
+.scheibe--plakat .scheibe__teiler,
+.scheibe--plakat .scheibe__feld {
+  stroke-width: 0.7;
+}
+
+/* Raster 3 Spalten × 4 Zeilen (z. B. 12 Karten pro Blatt) */
+.raster--3x4 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+/* Reflexionskarten (#27) */
+.reflexionskarte {
+  display: flex;
+  flex-direction: column;
+}
+
+.reflexionskarte__text {
+  margin: 0 0 1mm;
+  font-size: 13pt;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Würfelnetz (#27): SVG-Einheiten = mm */
+.wuerfel__titel {
+  margin: 0 0 4mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.wuerfel {
+  display: block;
+  width: 176mm;
+  height: 242mm;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.wuerfel__schnitt,
+.wuerfel__falz {
+  fill: none;
+  stroke: #000000;
+}
+
+.wuerfel__schnitt {
+  stroke-width: 0.4;
+  stroke-dasharray: 3 2;
+}
+
+.wuerfel__falz {
+  stroke-width: 0.3;
+  stroke-dasharray: 0.5 1.5;
+}
+
+.wuerfel__seite text {
+  font-size: 5px;
+  font-weight: 700;
+  fill: #000000;
+}
+
+.wuerfel__legende {
+  margin: 3mm 0 0;
+  font-size: 9pt;
+}
+
+.wuerfel__muster {
+  display: inline-block;
+  width: 10mm;
+  vertical-align: middle;
+}
+
+.wuerfel__muster--schnitt {
+  border-top: var(--blatt-schnitt);
+}
+
+.wuerfel__muster--falz {
+  border-top: 0.3mm dotted #000000;
+}
+
+/* Unterrichts-Fragebogen (#27) */
+.fragebogen__titel {
+  margin: 0 0 5mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.fragebogen__tabelle {
+  width: 100%;
+  margin-bottom: 8mm;
+  border-collapse: collapse;
+}
+
+.fragebogen__tabelle th,
+.fragebogen__tabelle td {
+  height: 12mm;
+  padding: 0 2mm;
+  border-bottom: var(--blatt-linie);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.fragebogen__tabelle thead th {
+  height: 8mm;
+  font-weight: 700;
+}
+
+.fragebogen__tabelle td:first-child,
+.fragebogen__spalte-aussage {
+  width: 70%;
+  text-align: left;
+}
+
+.fragebogen__tabelle .feld__linie {
+  height: 6mm;
+}
+
+.fragebogen__kreuz {
+  display: inline-block;
+  width: 5mm;
+  height: 5mm;
+  border: var(--blatt-linie);
+}
+
 /* Querformat (A4 quer): eigene benannte Druckseite */
 @page quer {
   size: A4 landscape;
@@ -230,6 +380,216 @@
 .eckenschild__feld {
   border: var(--blatt-linie);
   border-width: 0.6mm;
+}
+
+/* Raster 1 Spalte × 2 Zeilen (z. B. 2 × A5 auf A4 hoch) */
+.raster--1x2 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Skalen-Plakat */
+.skala {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.skala__frage {
+  height: 14mm;
+  margin-bottom: 8mm;
+}
+
+.skala__stufen {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-left: var(--blatt-linie);
+}
+
+.skala__stufe {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--blatt-linie);
+  border-right: var(--blatt-linie);
+  border-bottom: var(--blatt-linie);
+}
+
+.skala__zahl {
+  padding: 3mm 0;
+  border-bottom: var(--blatt-linie);
+  font-size: 40pt;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.skala__punkte {
+  flex: 1; /* freies Feld für Klebepunkte */
+}
+
+/* Bodenkarten (A5) */
+.bodenkarte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodenkarte__zahl {
+  font-size: 260pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Ich-kann-Checkliste */
+.checkliste__titel {
+  margin: 0 0 5mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.checkliste {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.checkliste th,
+.checkliste td {
+  border: var(--blatt-linie);
+  padding: 2mm;
+}
+
+.checkliste th {
+  font-weight: 600;
+  text-align: left;
+}
+
+.checkliste th:nth-child(1) {
+  width: 44%;
+}
+
+.checkliste th:nth-child(n + 2):nth-child(-n + 4) {
+  width: 12%;
+  text-align: center;
+}
+
+.checkliste tbody td {
+  height: 29mm;
+}
+
+.checkliste__kreuz {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ankreuzfeld {
+  display: inline-block;
+  width: 7mm;
+  height: 7mm;
+  border: var(--blatt-linie);
+}
+
+/* Smiley-Karten (#23) */
+.smiley-karte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.smiley {
+  width: 36mm;
+  height: 36mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.smiley__auge {
+  fill: #000000;
+  stroke: none;
+}
+
+/* Ampelkarten (#23): 2 × 2 Karten im Format A7 (74 × 105 mm) */
+.raster--a7 {
+  grid-template-columns: 74mm 74mm;
+  grid-template-rows: 105mm 105mm;
+  width: max-content;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ampel-karte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  --ampel-farbe: #000000;
+}
+
+.ampel-karte--rot {
+  --ampel-farbe: #D7261E;
+}
+
+.ampel-karte--gelb {
+  --ampel-farbe: #F5C400;
+}
+
+.ampel-karte--gruen {
+  --ampel-farbe: #2E9E44;
+}
+
+.ampel {
+  width: 26mm;
+  height: 65mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 1.5;
+}
+
+.ampel__licht {
+  fill: var(--ampel-farbe);
+  stroke-width: 3;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.ampel-karte__text {
+  margin: 0;
+  font-size: 20pt;
+  font-weight: 700;
+}
+
+/* Feedback-Hand (#23) */
+.hand__titel {
+  margin: 0;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.hand {
+  display: block;
+  width: 110mm;
+  height: 135mm;
+  margin: 0 auto 4mm;
+  fill: none;
+  stroke: #000000;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hand__umriss {
+  stroke-width: 2;
+}
+
+.hand__symbol {
+  stroke-width: 2;
+}
+
+.hand-feld {
+  margin-bottom: 3mm;
 }
 
 /* Druck: nur die Blätter, je Blatt eine Seite ------------------------------ */

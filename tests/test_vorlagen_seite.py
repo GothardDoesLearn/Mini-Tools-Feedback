@@ -60,9 +60,16 @@ def test_platzhalter_vorlage_zeigt_vorlage_folgt_ohne_blatt(dist: Path):
 
 
 def test_noch_nicht_gebaute_vorlage_zeigt_vorlage_folgt(dist: Path):
-    html = seite(dist, "feedback-hand")
+    vorlagen_dir = Path(__file__).parents[1] / "templates" / "vorlagen"
+    offen = [
+        v.id
+        for v in load_site().druckvorlagen
+        if v.status != "platzhalter" and not (vorlagen_dir / f"{v.id}.html").exists()
+    ]
+    if not offen:
+        pytest.skip("alle Druckvorlagen sind gebaut")
 
-    assert "Vorlage folgt" in html
+    assert "Vorlage folgt" in seite(dist, offen[0])
 
 
 def test_druckvorlage_verlinkt_ihre_methoden(dist: Path):
@@ -88,6 +95,98 @@ def test_jedes_blatt_traegt_fusstext_mit_name_und_domain(dist: Path):
 
     for blatt in blaetter(html):
         assert "Feedback-Tools · example.org" in blatt
+
+
+def test_zielscheibe_einzel_und_plakat_mit_4_ringen_und_6_beschriftungsfeldern(dist: Path):
+    html = seite(dist, "zielscheibe")
+
+    einzel, plakat = blaetter(html)
+    for blatt in (einzel, plakat):
+        assert blatt.count('class="scheibe__ring"') == 4
+        assert blatt.count('class="scheibe__teiler"') == 6
+        assert blatt.count('class="scheibe__feld"') == 6
+    assert "Einzel (A4)" in einzel
+    assert "Plakatversion (A3-tauglich)" in plakat
+
+
+def test_lernrad_ein_blatt_mit_6_bis_8_segmenten_4_stufen_und_hinweis(dist: Path):
+    html = seite(dist, "lernrad")
+
+    (blatt,) = blaetter(html)
+    assert blatt.count('class="scheibe__ring"') == 4
+    segmente = blatt.count('class="scheibe__teiler"')
+    assert 6 <= segmente <= 8
+    assert blatt.count('class="scheibe__feld"') == segmente
+    assert "Wird noch geprüft" in html
+
+
+REFLEXIONS_SATZANFAENGE = (
+    "Am meisten geholfen hat mir …",
+    "Schwierig war …",
+    "Nächstes Mal mache ich …",
+    "Überrascht hat mich …",
+    "Ich bin stolz auf …",
+    "Ich brauche noch …",
+    "Am besten gelernt habe ich durch …",
+    "Das will ich noch wissen …",
+    "Unsere Zusammenarbeit war …",
+    "Mein Ziel war …",
+    "Das nehme ich mit …",
+    "Joker",
+)
+
+
+def test_reflexionskarten_zwoelf_karten_auf_einem_blatt(dist: Path):
+    (blatt,) = blaetter(seite(dist, "reflexionskarten"))
+    blatt = blatt.replace(" ", " ")  # geschütztes Leerzeichen vor „…“
+
+    assert blatt.count('class="reflexionskarte"') == 12
+    for satzanfang in REFLEXIONS_SATZANFAENGE:
+        assert f">{satzanfang}<" in blatt
+
+
+WUERFEL_FRAGEN = (
+    "Was war neu?",
+    "Was war schwer?",
+    "Was hat Spaß gemacht?",
+    "Was willst du noch wissen?",
+    "Wie hast du gearbeitet?",
+    "Joker",
+)
+
+
+def ohne_tags(html: str) -> str:
+    return " ".join(re.sub(r"<[^>]+>", " ", html).split())
+
+
+def test_wuerfelnetz_mit_fragen_und_leerem_netz(dist: Path):
+    beschriftet, leer = blaetter(seite(dist, "wuerfelnetz"))
+
+    for netz in (beschriftet, leer):
+        assert netz.count('class="wuerfel__seite"') == 6
+        assert netz.count('class="wuerfel__lasche"') == 7  # 12 Kanten − 5 Falzkanten im Netz
+    text = ohne_tags(beschriftet)
+    for frage in WUERFEL_FRAGEN:
+        assert frage in text
+        assert frage not in ohne_tags(leer)
+
+
+def test_fragebogen_acht_aussagen_mit_skala_und_zwei_offene_fragen(dist: Path):
+    (blatt,) = blaetter(seite(dist, "fragebogen"))
+
+    assert blatt.count('class="fragebogen__aussage"') == 8
+    for aussage in (
+        "Die Aufgaben waren verständlich",
+        "Ich konnte Fragen stellen",
+        "Das Tempo war passend",
+        "Ich weiß, was ich lernen soll",
+    ):
+        assert f">{aussage}<" in blatt
+    assert blatt.count('class="fragebogen__kreuz"') == 8 * 4
+    for stufe in "1234":
+        assert f'<th scope="col">{stufe}</th>' in blatt
+    for frage in ("Was soll bleiben?", "Was soll sich ändern?"):
+        assert f"{frage}</p>" in blatt
 
 
 def test_wettersymbole_vier_quer_blaetter_und_eine_seite_mini_karten(dist: Path):
@@ -117,8 +216,36 @@ def test_eckenschilder_vier_quer_blaetter_mit_buchstabe_und_leerem_feld(dist: Pa
         assert '<div class="eckenschild__feld"></div>' in blatt
 
 
+def test_skalen_plakat_hat_plakat_quer_und_sechs_bodenkarten_a5(dist: Path):
+    html = seite(dist, "skalen-plakat")
+
+    plakat, *bodenkarten = blaetter(html)
+    assert len(bodenkarten) == 3
+    assert plakat.startswith(' blatt--quer"')
+    assert plakat.count('class="skala__stufe"') == 6
+    assert plakat.count('class="skala__punkte"') == 6
+    for zahl in "123456":
+        assert f'<span class="skala__zahl">{zahl}</span>' in plakat
+    karten = re.findall(r'<span class="bodenkarte__zahl">(\d)</span>', "".join(bodenkarten))
+    assert karten == list("123456")
+    for blatt in bodenkarten:
+        assert blatt.count('class="bodenkarte"') == 2
+
+
 def test_quer_blaetter_drucken_auf_a4_quer(dist: Path):
     css = (dist / "static" / "css" / "druckvorlage.css").read_text(encoding="utf-8")
 
     assert re.search(r"@page\s+quer\s*\{\s*size:\s*A4 landscape;", css)
     assert re.search(r"\.blatt--quer\s*\{[^}]*page:\s*quer;", css)
+    assert len(re.findall(r"@page\s+quer\b", css)) == 1
+
+
+def test_checkliste_ist_tabelle_mit_acht_leeren_ich_kann_zeilen(dist: Path):
+    html = seite(dist, "checkliste")
+
+    (blatt,) = blaetter(html)
+    kopf = re.findall(r'<th scope="col">(.*?)</th>', blatt)
+    assert kopf == ["Ich kann …", "sicher", "teilweise", "noch nicht", "Übung dazu"]
+    tbody = blatt[blatt.index("<tbody>") : blatt.index("</tbody>")]
+    assert tbody.count("<tr>") == 8
+    assert tbody.count('class="ankreuzfeld"') == 8 * 3

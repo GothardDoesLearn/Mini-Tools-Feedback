@@ -17,7 +17,7 @@
 
 {# kategorie_link=false auf der Kategorieseite selbst (Link würde auf dieselbe Seite zeigen). #}
 {% macro karte(k, kategorie_link=true) %}
-<article class="karte" style="--karte-papier: {{ k.kategorie.papier }}; --karte-pin: {{ k.kategorie.pin }}; --karte-farbe: {{ k.kategorie.farbe }}">
+<article class="karte" data-methode="{{ k.id }}"{% for feld, werte in k.filterwerte.items() %} data-filter-{{ feld }}="{{ werte | join(' ') }}"{% endfor %} style="--karte-papier: {{ k.kategorie.papier }}; --karte-pin: {{ k.kategorie.pin }}; --karte-farbe: {{ k.kategorie.farbe }}">
   <div class="karte__kopf">
 {% if kategorie_link %}
     <a class="karte__kategorie karte__kategorie--link" href="{{ k.kategorie.url }}" title="Kategorie {{ k.kategorie.titel }}">{{ k.kategorie.kurzname }}</a>

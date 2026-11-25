@@ -1,0 +1,73 @@
+{#- Reflexionswürfel nach docs/DRUCKVORLAGEN.md: Würfelnetz (Kreuzform) mit Klebelaschen;
+    Seite 1 mit Fragen, Seite 2 leeres Netz. Maße im SVG in mm (Kantenlänge 58 mm, Lasche 8 mm).
+    Schneidelinien gestrichelt, Falzlinien gepunktet. -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% set fragen = [
+  "Was war neu?",
+  "Was war schwer?",
+  "Was hat Spaß gemacht?",
+  "Was willst du noch wissen?",
+  "Wie hast du gearbeitet?",
+  "Joker",
+] %}
+{#- Würfelseiten (x, y) im Netz: oben, links, vorne, rechts, unten, hinten -#}
+{% set seiten = [(58, 0), (0, 58), (58, 58), (116, 58), (58, 116), (58, 174)] %}
+{#- 7 Klebelaschen: je Kantenpaar, das beim Zusammenkleben aufeinandertrifft, genau eine -#}
+{% set laschen = [
+  "58,0 50,8 50,50 58,58",
+  "116,0 124,8 124,50 116,58",
+  "58,116 50,124 50,166 58,174",
+  "116,116 124,124 124,166 116,174",
+  "58,174 50,182 50,224 58,232",
+  "116,174 124,182 124,224 116,232",
+  "58,232 66,240 108,240 116,232",
+] %}
+
+{% macro netz(mit_fragen) %}
+<svg class="wuerfel" viewBox="-1 -1 176 242" role="img" aria-label="Würfelnetz">
+  <g class="wuerfel__schnitt">
+    <line x1="58" y1="0" x2="116" y2="0"/>
+    <polyline points="58,58 0,58 0,116 58,116"/>
+    <polyline points="116,58 174,58 174,116 116,116"/>
+{% for punkte in laschen %}
+    <polyline class="wuerfel__lasche" points="{{ punkte }}"/>
+{% endfor %}
+  </g>
+  <g class="wuerfel__falz">
+    <line x1="58" y1="0" x2="58" y2="232"/>
+    <line x1="116" y1="0" x2="116" y2="232"/>
+{% for y in (58, 116, 174, 232) %}
+    <line x1="58" y1="{{ y }}" x2="116" y2="{{ y }}"/>
+{% endfor %}
+  </g>
+{% for x, y in seiten %}
+  <g class="wuerfel__seite">
+{% if mit_fragen %}
+{% set zeilen = (fragen[loop.index0] | wordwrap(14, wrapstring="\n")).split("\n") %}
+    {#- tspans ohne Leerraum dazwischen, sonst rückt SVG die Folgezeilen ein -#}
+    <text x="{{ x + 29 }}" y="{{ y + 29 - (zeilen | length - 1) * 3 }}" text-anchor="middle" dominant-baseline="middle">
+      {%- for zeile in zeilen -%}
+      <tspan x="{{ x + 29 }}" dy="{{ 0 if loop.first else 6 }}">{{ zeile }}</tspan>
+      {%- endfor -%}
+    </text>
+{% endif %}
+  </g>
+{% endfor %}
+</svg>
+<p class="wuerfel__legende">
+  <span class="wuerfel__muster wuerfel__muster--schnitt"></span> schneiden
+  <span class="wuerfel__muster wuerfel__muster--falz"></span> falten
+  · Laschen ankleben
+</p>
+{% endmacro %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<p class="wuerfel__titel">{{ vorlage.titel }}</p>
+{{ netz(true) }}
+{% endcall %}
+
+{% call blatt(vorlage.titel ~ " – Seite 2: leeres Netz") %}
+<p class="wuerfel__titel">{{ vorlage.titel }}</p>
+{{ netz(false) }}
+{% endcall %}
