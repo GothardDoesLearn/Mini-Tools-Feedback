@@ -1,0 +1,11 @@
+{# Status-Hinweis für Inhalte mit status "annahme" oder "platzhalter" (AGENTS.md: sichtbar kennzeichnen).
+   Nutzung: {% from "_statushinweis.html" import statushinweis %} … {{ statushinweis(status, hinweis) }}
+   Bei status "fertig" wird nichts ausgegeben. #}
+{% macro statushinweis(status, hinweis=none) %}
+{% if status in ("annahme", "platzhalter") %}
+<p class="statushinweis statushinweis--{{ status }}" role="note">
+  <strong>{{ "Platzhalter" if status == "platzhalter" else "Wird noch geprüft" }}:</strong>
+  {{ hinweis or "Der Ablauf wird noch geprüft." }}
+</p>
+{% endif %}
+{% endmacro %}
