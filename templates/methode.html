@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% from "_statushinweis.html" import statushinweis %}
+{% block head %}
+{% if videos %}
+  <script src="/static/js/video.js" defer></script>
+{% endif %}
+{% endblock %}
 {% block content %}
     <article class="methode" style="--kategorie-farbe: {{ kategorie.farbe }}; --kategorie-papier: {{ kategorie.papier }}; --kategorie-pin: {{ kategorie.pin }}">
       <nav class="brotkrumen" aria-label="Brotkrumen">
@@ -47,7 +52,9 @@
 {% endfor %}
           </div>
 {% endif %}
-{# Video-Bereich (#9) kommt hier unter Tipp/Variante. #}
+{% if videos %}
+{% include "_video.html" %}
+{% endif %}
         </div>
         {% include "methode_seitenleiste.html" %}
       </div>

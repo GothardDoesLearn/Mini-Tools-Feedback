@@ -8,6 +8,7 @@ from markupsafe import Markup
 
 from generator.content import Methode, SiteData, Tool
 from generator.karten import kurztext, titel_sortierschluessel
+from generator.video import anzeige
 
 NUTZEN_MAX = 160  # Satz Nutzen im Kopf: Feld `kurz`, sonst 1. Ablaufschritt gekürzt
 
@@ -93,6 +94,7 @@ def kontext(methode: Methode, daten: SiteData) -> dict:
             (m, next(k for k in daten.kategorien if k.id == m.kategorie))
             for m in passt_auch_dazu(methode, daten)
         ],
+        "videos": [anzeige(v) for v in methode.videos],
     }
 
 
