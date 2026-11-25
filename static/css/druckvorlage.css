@@ -161,6 +161,37 @@
   font-size: 9pt;
 }
 
+/* Kreisscheibe (Zielscheibe, Lernrad): viewBox-Einheiten ≈ mm bei voller Breite */
+.scheibe__titel {
+  margin: 0 0 6mm;
+  font-size: 18pt;
+  font-weight: 700;
+}
+
+.scheibe__titel--plakat {
+  font-size: 28pt;
+}
+
+.scheibe {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.scheibe__ring,
+.scheibe__teiler,
+.scheibe__feld {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 0.4;
+}
+
+.scheibe--plakat .scheibe__ring,
+.scheibe--plakat .scheibe__teiler,
+.scheibe--plakat .scheibe__feld {
+  stroke-width: 0.7;
+}
+
 /* Druck: nur die Blätter, je Blatt eine Seite ------------------------------ */
 
 @media print {

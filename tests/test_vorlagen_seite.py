@@ -88,3 +88,26 @@ def test_jedes_blatt_traegt_fusstext_mit_name_und_domain(dist: Path):
 
     for blatt in blaetter(html):
         assert "Feedback-Tools · example.org" in blatt
+
+
+def test_zielscheibe_einzel_und_plakat_mit_4_ringen_und_6_beschriftungsfeldern(dist: Path):
+    html = seite(dist, "zielscheibe")
+
+    einzel, plakat = blaetter(html)
+    for blatt in (einzel, plakat):
+        assert blatt.count('class="scheibe__ring"') == 4
+        assert blatt.count('class="scheibe__teiler"') == 6
+        assert blatt.count('class="scheibe__feld"') == 6
+    assert "Einzel (A4)" in einzel
+    assert "Plakatversion (A3-tauglich)" in plakat
+
+
+def test_lernrad_ein_blatt_mit_6_bis_8_segmenten_4_stufen_und_hinweis(dist: Path):
+    html = seite(dist, "lernrad")
+
+    (blatt,) = blaetter(html)
+    assert blatt.count('class="scheibe__ring"') == 4
+    segmente = blatt.count('class="scheibe__teiler"')
+    assert 6 <= segmente <= 8
+    assert blatt.count('class="scheibe__feld"') == segmente
+    assert "Wird noch geprüft" in html
