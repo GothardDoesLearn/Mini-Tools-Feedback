@@ -11,7 +11,7 @@ from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 from markupsafe import Markup
 
-from generator import paths
+from generator import methodenseite, paths
 from generator.config import SiteConfig, load_config
 from generator.content import SiteData, load_seiten, load_site
 from generator.karten import karten
@@ -110,6 +110,18 @@ def write_vorlagen(env: Environment, output_dir: Path, site: SiteData) -> None:
         )
 
 
+def write_methodenseiten(env: Environment, output_dir: Path, site: SiteData) -> None:
+    """Schreibt /methoden/<id>/ für jede Methode (Issue #7; Kontext: generator/methodenseite.py)."""
+    for methode in site.methoden:
+        write_page(
+            env,
+            output_dir,
+            f"methoden/{methode.id}",
+            "methode.html",
+            **methodenseite.kontext(methode, site),
+        )
+
+
 def write_toolseite(env: Environment, output_dir: Path, inhalte: SiteData) -> None:
     """Toolseite /tools/ aus tools.yaml (Issue #13)."""
     write_page(
@@ -154,6 +166,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
 
     write_kategorieseiten(env, output_dir, site_data)
+    write_methodenseiten(env, output_dir, site_data)
     write_toolseite(env, output_dir, site_data)
     write_page(
         env,
