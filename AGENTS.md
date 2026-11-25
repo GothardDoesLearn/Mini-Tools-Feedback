@@ -30,7 +30,7 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 
 - Inhalte niemals im Code hart kodieren – alles kommt aus `content/`.
 - Texte in `content/` nicht eigenmächtig umformulieren. Neue oder geänderte Texte nur als Entwurf vorschlagen; der Betreiber gibt frei.
-- Methoden und Druckvorlagen mit Status `annahme` oder `platzhalter` sichtbar kennzeichnen (Hinweisbox).
+- Methoden und Druckvorlagen mit Status `annahme` oder `platzhalter` sichtbar kennzeichnen (Statushinweis).
 - Datenschutz (solange Werbung ausgeschaltet ist): keine Tracker, keine Cookies, keine CDNs, keine Google Fonts,
   keine Anfragen an Drittserver. Schriften lokal einbinden. YouTube nur per Zwei-Klick-Einbettung.
 - Werbeplätze nur über die vorbereitete Komponente; nie auf Druckvorlagen oder in der Druckansicht.
