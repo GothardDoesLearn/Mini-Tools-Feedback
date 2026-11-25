@@ -161,6 +161,108 @@
   font-size: 9pt;
 }
 
+/* Smiley-Karten (#23) */
+.smiley-karte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.smiley {
+  width: 36mm;
+  height: 36mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.smiley__auge {
+  fill: #000000;
+  stroke: none;
+}
+
+/* Ampelkarten (#23): 2 × 2 Karten im Format A7 (74 × 105 mm) */
+.raster--a7 {
+  grid-template-columns: 74mm 74mm;
+  grid-template-rows: 105mm 105mm;
+  width: max-content;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ampel-karte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  --ampel-farbe: #000000;
+}
+
+.ampel-karte--rot {
+  --ampel-farbe: #D7261E;
+}
+
+.ampel-karte--gelb {
+  --ampel-farbe: #F5C400;
+}
+
+.ampel-karte--gruen {
+  --ampel-farbe: #2E9E44;
+}
+
+.ampel {
+  width: 26mm;
+  height: 65mm;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 1.5;
+}
+
+.ampel__licht {
+  fill: var(--ampel-farbe);
+  stroke-width: 3;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.ampel-karte__text {
+  margin: 0;
+  font-size: 20pt;
+  font-weight: 700;
+}
+
+/* Feedback-Hand (#23) */
+.hand__titel {
+  margin: 0;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.hand {
+  display: block;
+  width: 110mm;
+  height: 135mm;
+  margin: 0 auto 4mm;
+  fill: none;
+  stroke: #000000;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hand__umriss {
+  stroke-width: 2;
+}
+
+.hand__symbol {
+  stroke-width: 2;
+}
+
+.hand-feld {
+  margin-bottom: 3mm;
+}
+
 /* Druck: nur die Blätter, je Blatt eine Seite ------------------------------ */
 
 @media print {
