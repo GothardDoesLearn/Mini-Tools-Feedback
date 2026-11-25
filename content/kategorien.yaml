@@ -1,5 +1,6 @@
 # Kategorien der Mini-Tools. Farbe = Akzent (nie alleiniger Bedeutungsträger).
 # kurzname, papier, pin: DESIGN.md › Tokens › Kategorien (farbe = Farbpunkt der klaren Ansicht).
+# slug = URL der Kategorieseite (/kategorien/<slug>/): nach der Veröffentlichung nicht mehr ändern.
 - id: A
   slug: handzeichen-karten
   titel: Handzeichen & Karten
