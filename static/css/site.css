@@ -1,0 +1,303 @@
+/*
+ * Feedback-Tools – Basis-Stylesheet.
+ *
+ * Aufbau:
+ *   1. Schriften (lokal, SIL OFL – keine Drittserver)
+ *   2. Tokens: ansichtsunabhängig auf :root, Farben/Schrift je Ansicht über [data-ansicht]
+ *   3. Grundstil, 4. Layout (Kopf, Inhalt, Fuß), 5. Fokus, 6. Druck
+ *
+ * Weitere Ansicht (Pinnwand, Issue #5): eigenen Block [data-ansicht="pinnwand"] mit denselben
+ * Token-Namen ergänzen und in @media screen kapseln – der Druck fällt so automatisch auf die
+ * klare Ansicht (Tokens auf :root) zurück.
+ */
+
+/* 1. Schriften ----------------------------------------------------------- */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/fonts/inter/inter-latin-700-normal.woff2") format("woff2");
+}
+
+/* 2. Tokens -------------------------------------------------------------- */
+
+:root {
+  --breite-max: 1200px;
+  --abstand-seite: 16px;
+  --abstand-s: 8px;
+  --abstand-m: 16px;
+  --abstand-l: 24px;
+  --abstand-xl: 48px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --ziel-min: 44px; /* Mindestgröße für Touch-Ziele */
+  --fokus-breite: 3px;
+  --schrift-groesse: 16px;
+  --zeilenhoehe: 1.55;
+}
+
+/* Klare Ansicht (DESIGN.md › Tokens › Klare Ansicht). Auch Fallback ohne Attribut und im Druck. */
+:root,
+[data-ansicht="klar"] {
+  --farbe-hintergrund: #F6F7F9;
+  --farbe-flaeche: #FFFFFF;
+  --farbe-rahmen: #E3E6EA;
+  --farbe-text: #1B1F24;
+  --farbe-nebentext: #4A525C;
+  --farbe-akzent: #1F5FBF;
+  --farbe-akzent-text: #FFFFFF;
+  --farbe-fokus: #1F5FBF;
+  --schrift-text: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --schrift-titel: var(--schrift-text);
+}
+
+/* 3. Grundstil ----------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--farbe-hintergrund);
+  color: var(--farbe-text);
+  font-family: var(--schrift-text);
+  font-size: var(--schrift-groesse);
+  line-height: var(--zeilenhoehe);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--schrift-titel);
+  line-height: 1.2;
+}
+
+a {
+  color: var(--farbe-akzent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 4. Layout -------------------------------------------------------------- */
+
+.skiplink {
+  position: absolute;
+  left: var(--abstand-m);
+  top: -100px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-m);
+  border-radius: var(--radius-s);
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font-weight: 600;
+}
+
+.skiplink:focus {
+  top: var(--abstand-s);
+}
+
+.kopf {
+  background: var(--farbe-flaeche);
+  border-bottom: 1px solid var(--farbe-rahmen);
+}
+
+.kopf__innen,
+.inhalt,
+.fuss__innen {
+  width: 100%;
+  max-width: var(--breite-max);
+  margin: 0 auto;
+  padding-left: var(--abstand-seite);
+  padding-right: var(--abstand-seite);
+}
+
+.kopf__innen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--abstand-s) var(--abstand-l);
+  min-height: 64px;
+  padding-top: var(--abstand-s);
+  padding-bottom: var(--abstand-s);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--ziel-min);
+  color: var(--farbe-text);
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logo__zeichen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-s);
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font-size: 15px;
+}
+
+.hauptnav {
+  max-width: 100%;
+}
+
+.hauptnav__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--abstand-s);
+  margin: 0 calc(-1 * var(--abstand-s));
+  padding: 0;
+  list-style: none;
+}
+
+.hauptnav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-s);
+  border-radius: var(--radius-s);
+  color: var(--farbe-nebentext);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.hauptnav__link:hover {
+  color: var(--farbe-text);
+  text-decoration: underline;
+}
+
+.hauptnav__link[aria-current="page"] {
+  color: var(--farbe-akzent);
+  font-weight: 600;
+}
+
+.inhalt {
+  flex: 1 0 auto;
+  padding-top: var(--abstand-l);
+  padding-bottom: var(--abstand-xl);
+}
+
+.inhalt:focus {
+  outline: none;
+}
+
+.fuss {
+  background: var(--farbe-flaeche);
+  border-top: 1px solid var(--farbe-rahmen);
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+.fuss__innen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 var(--abstand-l);
+  padding-top: var(--abstand-m);
+  padding-bottom: var(--abstand-m);
+}
+
+.fuss p {
+  margin: 0;
+}
+
+.fuss a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  color: var(--farbe-nebentext);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --abstand-seite: 24px;
+  }
+}
+
+/* 5. Fokus: überall sichtbar --------------------------------------------- */
+
+:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+/* 6. Druck: immer klare Ansicht, ohne Navigation -------------------------- */
+
+@media print {
+  .skiplink,
+  .kopf,
+  .fuss,
+  nav {
+    display: none !important;
+  }
+
+  body {
+    display: block;
+    background: #FFFFFF;
+    color: #000000;
+    font-size: 11pt;
+  }
+
+  .inhalt {
+    max-width: none;
+    padding: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

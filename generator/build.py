@@ -35,7 +35,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
     output_dir.mkdir(parents=True)
 
     env = make_env(config)
-    write_page(env, output_dir, "", "index.html")
+    write_page(env, output_dir, "", "index.html", aktiver_bereich="methoden")
 
     if STATIC_DIR.exists():
         shutil.copytree(STATIC_DIR, output_dir / "static")

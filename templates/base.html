@@ -1,13 +1,43 @@
+{% set hauptnavigation = [
+  ("methoden", "/", "Methoden"),
+  ("vorlagen", "/vorlagen/", "Druckvorlagen"),
+  ("tools", "/tools/", "Digitale Tools"),
+  ("ueber", "/ueber/", "Über"),
+] %}
+{% set aktiver_bereich = aktiver_bereich | default("") %}
 <!doctype html>
-<html lang="de">
+<html lang="de" data-ansicht="klar">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ site.website_name }}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/site.css">
 </head>
 <body>
-  <main>
+  <a class="skiplink" href="#inhalt">Zum Inhalt springen</a>
+  <header class="kopf">
+    <div class="kopf__innen">
+      <a class="logo" href="/">
+        <span class="logo__zeichen" aria-hidden="true">{{ site.website_name.replace("-", " ").split() | map("first") | join | upper }}</span>
+        <span class="logo__name">{{ site.website_name }}</span>
+      </a>
+      <nav class="hauptnav" aria-label="Hauptnavigation">
+        <ul class="hauptnav__liste">
+{% for bereich, href, label in hauptnavigation %}
+          <li><a class="hauptnav__link" href="{{ href }}"{% if bereich == aktiver_bereich %} aria-current="page"{% endif %}>{{ label }}</a></li>
+{% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="inhalt" class="inhalt" tabindex="-1">
 {% block content %}{% endblock %}
   </main>
+  <footer class="fuss">
+    <div class="fuss__innen">
+      <p>{{ site.website_name }} · Inhalte unter CC BY-NC-SA 4.0</p>
+      <p><a href="/ueber/">Impressum und Datenschutz</a></p>
+    </div>
+  </footer>
 </body>
 </html>
