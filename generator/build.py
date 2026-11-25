@@ -5,7 +5,9 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
+from generator import paths
 from generator.config import SiteConfig, load_config
+from generator.content import load_site
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 
 
@@ -36,6 +38,17 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
 
     env = make_env(config)
     write_page(env, output_dir, "", "index.html", aktiver_bereich="methoden")
+
+    site_data = load_site(paths.CONTENT_DIR)
+    write_page(
+        env,
+        output_dir,
+        "vorlagen",
+        "vorlagen.html",
+        aktiver_bereich="vorlagen",
+        druckvorlagen=site_data.druckvorlagen,
+        methoden_titel={m.id: m.titel for m in site_data.methoden},
+    )
 
     if STATIC_DIR.exists():
         shutil.copytree(STATIC_DIR, output_dir / "static")
