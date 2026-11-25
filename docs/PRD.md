@@ -53,8 +53,9 @@ Alle Inhalte liegen fertig in `content/`.
   - Zeitpunkt (`zeitpunkt`)
   - Form (analog / digital)
   - Druckvorlage vorhanden (ja/nein)
-  - optional: max. Dauer (Schieberegler, Minuten) – nutzt `dauer_min`/`dauer_max`; Methoden mit Zeitpunkt
-    `dauerhaft` (0/0) erscheinen immer, da sie keine Unterrichtszeit kosten
+  - optional: max. Dauer (Schieberegler, Minuten) – eine Methode erscheint, wenn `dauer_max` ≤ Reglerwert
+    (sie ist in der eingestellten Zeit sicher fertig); Methoden mit Zeitpunkt `dauerhaft` (0/0) erscheinen
+    immer, da sie keine Unterrichtszeit kosten
 - Volltextsuche über Titel, Aliase und Anleitung.
 - Trefferanzahl anzeigen, "Filter zurücksetzen".
 - Filterzustand in der URL (Query-Parameter), damit Links teilbar sind.
