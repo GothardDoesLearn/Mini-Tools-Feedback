@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_statushinweis.html" import statushinweis %}
+{% from "_werbeplatz.html" import werbeplatz %}
 {% block head %}
 {% if videos %}
   <script src="/static/js/video.js" defer></script>
@@ -55,6 +56,7 @@
 {% if videos %}
 {% include "_video.html" %}
 {% endif %}
+          {{ werbeplatz("methode") | indent(10) }}
         </div>
         {% include "methode_seitenleiste.html" %}
       </div>

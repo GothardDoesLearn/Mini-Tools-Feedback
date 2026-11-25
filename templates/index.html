@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_karte.html" import karte %}
+{% from "_werbeplatz.html" import werbeplatz %}
 {% block head %}
   <script src="/static/js/filter.js" defer></script>
 {% endblock %}
@@ -13,6 +14,9 @@
         <div class="karten">
 {% for k in karten %}
           {{ karte(k) | indent(10) }}
+{% if loop.index is divisibleby(site.werbung_nach_karten) and not loop.last %}
+          {{ werbeplatz("uebersicht") | indent(10) }}
+{% endif %}
 {% endfor %}
         </div>
       </div>

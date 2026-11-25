@@ -1154,6 +1154,20 @@ html:not([data-js]) .filterleiste {
   }
 }
 
+/* 4c. Werbeplätze (Issue #36, ADR 0001) – nur gerendert, wenn werbung_aktiv ------ */
+
+.werbeplatz {
+  min-height: 90px;
+  margin-block: var(--abstand-m);
+  border: 1px dashed var(--farbe-rahmen);
+  border-radius: var(--radius-s);
+}
+
+.werbeplatz--uebersicht {
+  grid-column: 1 / -1;
+  margin-block: 0;
+}
+
 /* 5. Fokus: überall sichtbar --------------------------------------------- */
 
 :focus-visible {
@@ -1841,7 +1855,8 @@ html:not([data-js]) .filterleiste {
   nav,
   .methode__zurueck,
   .methode__seite,
-  .video {
+  .video,
+  .werbeplatz {
     display: none !important;
   }
 
