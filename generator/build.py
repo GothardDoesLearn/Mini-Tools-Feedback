@@ -11,6 +11,9 @@ from generator.config import SiteConfig, load_config
 from generator.content import SiteData, load_site
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 
+# Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
+VORLAGEN_LAYOUT_DIR = "vorlagen"
+
 
 def kurzbeschreibung(text: str, max_laenge: int = 160) -> str:
     """Macht aus Markdown-Text eine einzeilige Meta-Description, gekürzt an einer Wortgrenze."""
@@ -51,6 +54,26 @@ def write_page(env: Environment, output_dir: Path, url_path: str, template: str,
     target.write_text(env.get_template(template).render(**context), encoding="utf-8")
 
 
+def write_vorlagen(env: Environment, output_dir: Path, site: SiteData) -> None:
+    """Schreibt /vorlagen/<id>/ für jede Druckvorlage."""
+    methoden = {m.id: m for m in site.methoden}
+    for vorlage in site.druckvorlagen:
+        layout = f"{VORLAGEN_LAYOUT_DIR}/{vorlage.id}.html"
+        gebaut = vorlage.status != "platzhalter" and (TEMPLATES_DIR / layout).is_file()
+        write_page(
+            env,
+            output_dir,
+            f"vorlagen/{vorlage.id}",
+            "vorlage.html",
+            aktiver_bereich="vorlagen",
+            seitentitel=f"{vorlage.titel} – Druckvorlage",
+            beschreibung=kurzbeschreibung(f"Druckvorlage {vorlage.titel}: {vorlage.inhalt}"),
+            vorlage=vorlage,
+            methoden=[methoden[m] for m in vorlage.methoden],
+            layout=layout if gebaut else None,
+        )
+
+
 def write_toolseite(env: Environment, output_dir: Path, inhalte: SiteData) -> None:
     """Toolseite /tools/ aus tools.yaml (Issue #13)."""
     write_page(
@@ -85,6 +108,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         druckvorlagen=site_data.druckvorlagen,
         methoden_titel={m.id: m.titel for m in site_data.methoden},
     )
+    write_vorlagen(env, output_dir, site_data)
 
     if STATIC_DIR.exists():
         shutil.copytree(STATIC_DIR, output_dir / "static")
