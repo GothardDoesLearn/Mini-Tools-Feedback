@@ -1,43 +1,65 @@
 # Kategorien der Mini-Tools. Farbe = Akzent (nie alleiniger Bedeutungsträger).
+# kurzname, papier, pin: DESIGN.md › Tokens › Kategorien (farbe = Farbpunkt der klaren Ansicht).
 - id: A
   slug: handzeichen-karten
   titel: Handzeichen & Karten
   kurz: Sekunden-Feedback aus dem Platz
   beschreibung: Alle SuS antworten gleichzeitig vom Platz aus; die Lehrkraft sieht das Ergebnis in Sekunden.
   farbe: "#2E7D32"
+  kurzname: Handzeichen
+  papier: "#FFF6C7"
+  pin: "#D62F2F"
 - id: B
   slug: positionieren-im-raum
   titel: Positionieren im Raum
   kurz: Einschätzung mit dem Körper zeigen
   beschreibung: SuS zeigen ihre Einschätzung durch ihren Standort – bringt Bewegung in die Stunde und ist für alle sichtbar.
   farbe: "#1565C0"
+  kurzname: Im Raum
+  papier: "#CDE7EE"
+  pin: "#2B4C9B"
 - id: C
   slug: skalieren-visualisieren
   titel: Skalieren & Visualisieren
   kurz: Einschätzung sichtbar auf Plakat oder Blatt
   beschreibung: Einschätzungen werden auf Plakat oder Blatt festgehalten und bleiben so für die Auswertung sichtbar.
   farbe: "#6A1B9A"
+  kurzname: Skalieren
+  papier: "#E3D9F2"
+  pin: "#E8B21E"
 - id: D
   slug: lernstand-pruefen
   titel: Lernstand prüfen
   kurz: Haben alle das Ziel erreicht?
   beschreibung: Zeigt, ob das Stundenziel erreicht wurde – Grundlage für die Planung der nächsten Stunde.
   farbe: "#C62828"
+  kurzname: Lernstand
+  papier: "#FADBD8"
+  pin: "#2E8B57"
 - id: E
   slug: reflexion-gespraech
   titel: Reflexion & Gesprächsrunden
   kurz: Ausführlichere Rückmeldung, oft mündlich
   beschreibung: Ausführlichere Rückmeldungen zu Unterricht, Lernweg oder Zusammenarbeit – eher am Ende einer Stunde oder Einheit.
   farbe: "#EF6C00"
+  kurzname: Reflexion
+  papier: "#FDE3C8"
+  pin: "#26282C"
 - id: F
   slug: peer-feedback
   titel: Peer-Feedback-Formeln
   kurz: SuS geben sich gegenseitig Feedback
   beschreibung: Feste Satzmuster, mit denen SuS sich gegenseitig wertschätzend Rückmeldung zu Präsentationen, Texten oder Gruppenarbeit geben.
   farbe: "#00838F"
+  kurzname: Peer-Feedback
+  papier: "#CDEEE6"
+  pin: "#F4F4F4"
 - id: G
   slug: klassenklima
   titel: Verhalten & Klassenklima
   kurz: Rückmeldung zu Verhalten und Lautstärke
   beschreibung: Rückmeldung an die Klasse zu Verhalten und Arbeitsatmosphäre – eher Werkzeuge der Klassenführung als Lernfeedback.
   farbe: "#5D4037"
+  kurzname: Klassenklima
+  papier: "#E8E0D8"
+  pin: "#E07B1A"

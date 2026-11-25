@@ -42,8 +42,8 @@ def css(dist: Path) -> str:
     return (dist / "static" / "css" / "site.css").read_text(encoding="utf-8")
 
 
-def test_seite_startet_in_klarer_ansicht_und_bindet_stylesheet_ein(startseite: str, css: str):
-    assert '<html lang="de" data-ansicht="klar">' in startseite
+def test_seite_bindet_stylesheet_ein(startseite: str, css: str):
+    # Startansicht (Pinnwand, gespeicherte Wahl) prüft tests/test_ansicht_umschalter.py.
     assert '<link rel="stylesheet" href="/static/css/site.css">' in startseite
 
 

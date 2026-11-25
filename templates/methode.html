@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% from "_hinweisbox.html" import hinweisbox %}
-{% block title %}{{ methode.titel }} – {{ site.website_name }}{% endblock %}
+{% from "_statushinweis.html" import statushinweis %}
 {% block content %}
-    <article class="methode" style="--kategorie-farbe: {{ kategorie.farbe }}">
+    <article class="methode" style="--kategorie-farbe: {{ kategorie.farbe }}; --kategorie-papier: {{ kategorie.papier }}; --kategorie-pin: {{ kategorie.pin }}">
       <nav class="brotkrumen" aria-label="Brotkrumen">
         <ol class="brotkrumen__liste">
           <li><a href="/">Methoden</a></li>
@@ -18,7 +17,7 @@
 {% if nutzen %}
         <p class="methode__nutzen">{{ nutzen }}</p>
 {% endif %}
-        {{ hinweisbox(methode.status, methode.hinweis) }}
+        {{ statushinweis(methode.status, methode.hinweis) }}
         <dl class="kurzinfos">
 {% for label, wert in kurzinfos %}
           <div class="kurzinfos__eintrag">

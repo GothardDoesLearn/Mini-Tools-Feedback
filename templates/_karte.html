@@ -1,0 +1,40 @@
+{# Methodenkarte (Issue #10). Erwartet ein generator.karten.Karte-Objekt. #}
+{% set status_labels = {"annahme": "wird geprüft", "platzhalter": "Platzhalter"} %}
+
+{% macro icon(name) %}
+<svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+{% if name == "dauer" %}
+  <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{% elif name == "analog" %}
+  <path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/>
+{% elif name == "digital" %}
+  <rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>
+{% elif name == "druckvorlage" %}
+  <path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/>
+{% endif %}
+</svg>
+{%- endmacro %}
+
+{% macro karte(k) %}
+<article class="karte" style="--karte-papier: {{ k.kategorie.papier }}; --karte-pin: {{ k.kategorie.pin }}; --karte-farbe: {{ k.kategorie.farbe }}">
+  <div class="karte__kopf">
+    <span class="karte__kategorie">{{ k.kategorie.kurzname }}</span>
+{% if k.status in status_labels %}
+    <span class="karte__status karte__status--{{ k.status }}">{{ status_labels[k.status] }}</span>
+{% endif %}
+  </div>
+  <h2 class="karte__titel"><a class="karte__link" href="{{ k.url }}">{{ k.titel }}</a></h2>
+{% if k.kurz %}
+  <p class="karte__kurz">{{ k.kurz }}</p>
+{% endif %}
+  <ul class="karte__infos">
+    <li class="karte__info">{{ icon("dauer") }}<span class="karte__info-text">{{ k.dauer }}</span></li>
+{% for form_id, label in k.formen %}
+    <li class="karte__info karte__info--{{ form_id }}">{{ icon(form_id) }}<span class="karte__info-text">{{ label }}</span></li>
+{% endfor %}
+{% if k.druckvorlage %}
+    <li class="karte__info karte__info--druckvorlage">{{ icon("druckvorlage") }}<span class="karte__info-text">{% if k.druckvorlage_optional %}Druckvorlage (optional){% else %}Druckvorlage{% endif %}</span></li>
+{% endif %}
+  </ul>
+</article>
+{%- endmacro %}

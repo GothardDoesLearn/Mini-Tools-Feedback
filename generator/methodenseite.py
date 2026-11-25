@@ -1,37 +1,15 @@
 """Methodenseiten /methoden/<id>/ (PRD 5.3, DESIGN.md › Methodenseite)."""
 
-import html
 import re
 from dataclasses import dataclass
-from pathlib import Path
 
 import markdown
-from jinja2 import Environment
 from markupsafe import Markup
 
 from generator.content import Methode, SiteData
-from generator.render import write_page
+from generator.karten import kurztext
 
-NUTZEN_MAX = 160
-
-
-def nutzen_satz(methode: Methode) -> str:
-    """Ein Satz Nutzen: Feld `kurz`, sonst der erste Ablaufschritt (gekürzt)."""
-    if methode.kurz:
-        return methode.kurz
-    treffer = re.search(r"^\s*1\.\s+(.+)$", methode.body, re.M)
-    if not treffer:
-        return ""
-    text = _als_text(treffer.group(1))
-    if len(text) <= NUTZEN_MAX:
-        return text
-    return text[: NUTZEN_MAX - 1].rsplit(" ", 1)[0] + " …"
-
-
-def _als_text(markdown_text: str) -> str:
-    """Inline-Markdown ohne Auszeichnung als Klartext."""
-    gerendert = markdown.markdown(markdown_text)
-    return html.unescape(re.sub(r"<[^>]+>", "", gerendert)).strip()
+NUTZEN_MAX = 160  # Satz Nutzen im Kopf: Feld `kurz`, sonst 1. Ablaufschritt gekürzt
 
 
 @dataclass
@@ -92,18 +70,17 @@ def kurzinfos(methode: Methode, daten: SiteData) -> list[tuple[str, str]]:
     ]
 
 
-def render(env: Environment, output_dir: Path, daten: SiteData) -> None:
-    kategorien = {k.id: k for k in daten.kategorien}
-    for methode in daten.methoden:
-        write_page(
-            env,
-            output_dir,
-            f"methoden/{methode.id}",
-            "methode.html",
-            aktiver_bereich="methoden",
-            methode=methode,
-            kategorie=kategorien[methode.kategorie],
-            nutzen=nutzen_satz(methode),
-            kurzinfos=kurzinfos(methode, daten),
-            anleitung=anleitung(methode),
-        )
+def kontext(methode: Methode, daten: SiteData) -> dict:
+    """Render-Kontext für templates/methode.html (geschrieben von build.write_methodenseiten)."""
+    kategorie = next(k for k in daten.kategorien if k.id == methode.kategorie)
+    nutzen = kurztext(methode, NUTZEN_MAX)
+    return {
+        "aktiver_bereich": "methoden",
+        "seitentitel": methode.titel,
+        "beschreibung": f"{methode.titel}: {nutzen}" if nutzen else methode.titel,
+        "methode": methode,
+        "kategorie": kategorie,
+        "nutzen": nutzen,
+        "kurzinfos": kurzinfos(methode, daten),
+        "anleitung": anleitung(methode),
+    }

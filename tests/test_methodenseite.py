@@ -6,7 +6,8 @@ from pathlib import Path
 import pytest
 
 from generator.build import build
-from generator.methodenseite import nutzen_satz
+from generator.content import load_site
+from generator.methodenseite import kontext
 
 
 @pytest.fixture(scope="module")
@@ -44,7 +45,7 @@ def test_brotkrumen_fuehren_zur_uebersicht(dist: Path):
 
 
 def hinweisbox(html: str) -> str | None:
-    treffer = re.search(r'<p class="hinweisbox[^"]*" role="note">(.*?)</p>', html, re.S)
+    treffer = re.search(r'<p class="statushinweis[^"]*" role="note">(.*?)</p>', html, re.S)
     return treffer and " ".join(treffer.group(1).split())
 
 
@@ -140,19 +141,9 @@ def test_druckansicht_ohne_navigation_und_seitenleiste(css: str):
         assert selektor in druck, selektor
 
 
-def daumenprobe():
-    from generator.content import load_methoden
-
-    return next(m for m in load_methoden() if m.id == "daumenprobe")
-
-
-def test_nutzen_satz_nimmt_feld_kurz_wenn_gefuellt():
-    methode = daumenprobe().model_copy(update={"kurz": "Ein Satz."})
-    assert nutzen_satz(methode) == "Ein Satz."
-
-
-def test_nutzen_satz_kuerzt_langen_ersten_schritt_an_wortgrenze():
-    body = "## Ablauf\n\n1. " + "Wort " * 60 + "\n2. Zwei"
-    satz = nutzen_satz(daumenprobe().model_copy(update={"body": body}))
-    assert satz.endswith("Wort …")
-    assert len(satz) <= 160
+def test_kopf_nimmt_feld_kurz_wenn_gefuellt():
+    site = load_site()
+    methode = next(m for m in site.methoden if m.id == "daumenprobe")
+    ctx = kontext(methode.model_copy(update={"kurz": "Ein Satz."}), site)
+    assert ctx["nutzen"] == "Ein Satz."
+    assert ctx["seitentitel"] == "Daumenprobe"
