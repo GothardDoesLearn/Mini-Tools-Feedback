@@ -300,6 +300,216 @@ img {
   }
 }
 
+/* 4a. Methodenseite (DESIGN.md › Methodenseite) --------------------------- */
+
+.brotkrumen__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand-s);
+  margin: 0 0 var(--abstand-m);
+  padding: 0;
+  list-style: none;
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+.brotkrumen__liste li + li::before {
+  content: "/";
+  margin-right: var(--abstand-s);
+}
+
+.brotkrumen a {
+  text-decoration: none;
+}
+
+.brotkrumen a:hover {
+  text-decoration: underline;
+}
+
+.methode__zurueck {
+  display: none; /* nur in der Pinnwand; Klar nutzt die Brotkrumen */
+}
+
+.methode__kopf {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--abstand-l);
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.methode__kategorie {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--abstand-s);
+  margin: 0;
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.methode__farbpunkt {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--kategorie-farbe, var(--farbe-nebentext));
+}
+
+.methode__titel {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.methode__nutzen {
+  max-width: 720px;
+  margin: 0;
+  color: var(--farbe-nebentext);
+  font-size: 18px;
+}
+
+.hinweisbox {
+  max-width: 720px;
+  margin: 0;
+  padding: 12px var(--abstand-m);
+  border-radius: var(--radius-s);
+  background: #FFF1D6;
+  color: #7A4B00;
+  font-size: 15px;
+}
+
+.kurzinfos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  margin: 10px 0 0;
+  background: var(--farbe-rahmen);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.kurzinfos__eintrag {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px var(--abstand-m);
+  background: var(--farbe-flaeche);
+}
+
+.kurzinfos dt {
+  color: var(--farbe-nebentext);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kurzinfos dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.methode__spalten {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+  margin-top: 32px;
+}
+
+.methode__haupt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--abstand-l);
+  min-width: 0;
+}
+
+.anleitung__abschnitt {
+  padding: var(--abstand-l);
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.anleitung__abschnitt h2 {
+  margin: 0 0 var(--abstand-m);
+  font-size: 22px;
+}
+
+.anleitung__abschnitt > :last-child {
+  margin-bottom: 0;
+}
+
+.anleitung__abschnitt ul {
+  padding-left: 1.2em;
+}
+
+.anleitung__abschnitt--ablauf ol {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: schritt;
+  font-size: 17px;
+}
+
+.anleitung__abschnitt--ablauf ol > li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  counter-increment: schritt;
+}
+
+.anleitung__abschnitt--ablauf ol > li::before {
+  content: counter(schritt);
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  border-radius: 50%;
+  background: #E8F0FC;
+  color: var(--farbe-akzent);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.anleitung__zettelreihe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand-l);
+}
+
+.anleitung__zettel {
+  flex: 1 1 260px;
+  font-size: 15px;
+}
+
+.anleitung__zettel h2 {
+  margin-bottom: var(--abstand-s);
+  font-size: 17px;
+}
+
+@media (min-width: 960px) {
+  .methode__kopf {
+    padding: 28px 32px 32px;
+  }
+
+  .methode__spalten {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+
+  .anleitung__abschnitt--ablauf {
+    padding: 28px 32px;
+  }
+}
+
 /* 5. Fokus: überall sichtbar --------------------------------------------- */
 
 :focus-visible {
@@ -461,6 +671,202 @@ img {
     padding-left: var(--abstand-m);
     padding-right: var(--abstand-m);
   }
+
+  /* Methodenseite: Zurück-Link statt Brotkrumen, Zettel mit Pins */
+  [data-ansicht="pinnwand"] .brotkrumen {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .methode__zurueck {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--ziel-min);
+    margin-bottom: var(--abstand-l);
+    color: #FFFFFF; /* Weiß auf Filz nur als Large Text (3,36:1) */
+    font-family: var(--schrift-titel);
+    font-size: 28px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  [data-ansicht="pinnwand"] .methode__zurueck:hover {
+    text-decoration: underline;
+  }
+
+  [data-ansicht="pinnwand"] .methode__kopf,
+  [data-ansicht="pinnwand"] .anleitung__abschnitt {
+    position: relative;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+  }
+
+  /* Pin oben mittig (Kopf: groß in Kategoriefarbe) */
+  [data-ansicht="pinnwand"] .methode__kopf::before,
+  [data-ansicht="pinnwand"] .anleitung__abschnitt::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--pin-farbe, #D62F2F);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-ansicht="pinnwand"] .methode__kopf {
+    --pin-farbe: var(--kategorie-farbe);
+    padding: 44px clamp(20px, 4vw, 40px) 32px;
+    transform: rotate(-0.6deg);
+  }
+
+  [data-ansicht="pinnwand"] .methode__kopf::before {
+    top: 14px;
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 20px;
+  }
+
+  [data-ansicht="pinnwand"] .methode__kategorie {
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  [data-ansicht="pinnwand"] .methode__farbpunkt {
+    display: none;
+  }
+
+  [data-ansicht="pinnwand"] .methode__titel {
+    font-size: clamp(48px, 9vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 0;
+  }
+
+  [data-ansicht="pinnwand"] .methode__nutzen {
+    color: var(--farbe-text);
+    font-size: 19px;
+  }
+
+  /* Hinweis als roter Stempel */
+  [data-ansicht="pinnwand"] .hinweisbox {
+    align-self: flex-start;
+    padding: 2px 12px 6px;
+    border: 2px solid #9B1C1C;
+    border-radius: 0;
+    background: transparent;
+    color: #9B1C1C;
+    transform: rotate(-2deg);
+  }
+
+  [data-ansicht="pinnwand"] .hinweisbox strong {
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+  }
+
+  /* Kurzinfos als weiße Schildchen */
+  [data-ansicht="pinnwand"] .kurzinfos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos__eintrag {
+    min-width: 120px;
+    padding: 8px 14px 10px;
+    box-shadow: var(--schatten-schild);
+    transform: rotate(var(--drehung, 0deg));
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos__eintrag:nth-child(5n + 1) {
+    --drehung: -2deg;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos__eintrag:nth-child(5n + 2) {
+    --drehung: 1.5deg;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos__eintrag:nth-child(5n + 3) {
+    --drehung: -1deg;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos__eintrag:nth-child(5n + 4) {
+    --drehung: 2deg;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos__eintrag:nth-child(5n + 5) {
+    --drehung: -1.5deg;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos dt {
+    color: var(--farbe-nebentext);
+    font-weight: 700;
+  }
+
+  [data-ansicht="pinnwand"] .kurzinfos dd {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* „So geht's“-Zettel */
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--ablauf {
+    padding: 32px clamp(20px, 4vw, 36px);
+    transform: rotate(0.4deg);
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--ablauf::before {
+    left: 22px;
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--ablauf h2 {
+    margin-bottom: 20px;
+    color: var(--farbe-akzent);
+    font-size: 46px;
+    line-height: 1;
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--ablauf ol {
+    font-size: 18px;
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--ablauf ol > li::before {
+    flex-basis: 40px;
+    height: 40px;
+    border: 2.5px solid var(--farbe-text);
+    background: transparent;
+    color: var(--farbe-text);
+    font-family: var(--schrift-titel);
+    font-size: 28px;
+  }
+
+  /* Tipp gelb, Variante mint */
+  [data-ansicht="pinnwand"] .anleitung__zettel {
+    padding: 30px 26px 24px;
+    transform: rotate(-1.5deg);
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__zettel h2 {
+    margin-bottom: 10px;
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--tipps {
+    --pin-farbe: #2B4C9B;
+    background: var(--zettel-gelb);
+  }
+
+  [data-ansicht="pinnwand"] .anleitung__abschnitt--varianten {
+    --pin-farbe: #E8B21E;
+    background: #CDEEE6;
+    transform: rotate(1.2deg);
+  }
 }
 
 /* Weniger Bewegung gewünscht: keine Drehungen, keine Hover-Animationen */
@@ -480,8 +886,34 @@ img {
   .skiplink,
   .kopf,
   .fuss,
-  nav {
+  nav,
+  .methode__zurueck,
+  .methode__seite {
     display: none !important;
+  }
+
+  .methode__kopf,
+  .anleitung__abschnitt {
+    padding: 0;
+    border: 0;
+  }
+
+  .methode__spalten {
+    display: block;
+    margin-top: 16pt;
+  }
+
+  .anleitung__abschnitt {
+    margin-bottom: 12pt;
+    break-inside: avoid;
+  }
+
+  .anleitung__abschnitt--ablauf {
+    break-inside: auto;
+  }
+
+  .anleitung__abschnitt li {
+    break-inside: avoid;
   }
 
   body {

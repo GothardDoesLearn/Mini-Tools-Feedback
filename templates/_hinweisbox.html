@@ -1,0 +1,11 @@
+{# Hinweisbox für Inhalte mit status "annahme" oder "platzhalter" (AGENTS.md: sichtbar kennzeichnen).
+   Nutzung: {% from "_hinweisbox.html" import hinweisbox %} … {{ hinweisbox(status, hinweis) }}
+   Bei status "fertig" wird nichts ausgegeben. #}
+{% macro hinweisbox(status, hinweis=none) %}
+{% if status in ("annahme", "platzhalter") %}
+<p class="hinweisbox hinweisbox--{{ status }}" role="note">
+  <strong>{{ "Platzhalter" if status == "platzhalter" else "Wird noch geprüft" }}:</strong>
+  {{ hinweis or "Der Ablauf wird noch geprüft." }}
+</p>
+{% endif %}
+{% endmacro %}
