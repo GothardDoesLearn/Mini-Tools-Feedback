@@ -15,7 +15,7 @@
 {% if layout %}
 {% if vorlage.status == "annahme" %}
 {% set t = status_texte.vorlage.annahme %}
-      <div class="hinweisbox" role="note">
+      <div class="statushinweis" role="note">
         <p><strong>{{ t.titel }}:</strong> {{ t.text }}</p>
       </div>
 {% endif %}
@@ -31,7 +31,7 @@
     </div>
 {% else %}
 {% set t = status_texte.vorlage.platzhalter %}
-    <div class="hinweisbox" role="note">
+    <div class="statushinweis" role="note">
       <p><strong>{{ t.titel }}.</strong> {{ t.text }}</p>
     </div>
 {% endif %}

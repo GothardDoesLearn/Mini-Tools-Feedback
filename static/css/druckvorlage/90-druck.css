@@ -2,7 +2,7 @@
 
 @media print {
   .vorlage-kopf,
-  .hinweisbox,
+  .statushinweis,
   .werbeplatz {
     display: none !important;
   }

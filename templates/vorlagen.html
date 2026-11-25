@@ -8,7 +8,7 @@
       <li class="vorlagen__eintrag" id="vorlage-{{ v.id }}">
         <h2 class="vorlagen__titel"><a href="/vorlagen/{{ v.id }}/">{{ v.titel }}</a></h2>
 {% if v.status in status_texte.vorlage %}
-        <p><span class="status-hinweis">{{ status_texte.vorlage[v.status].marke }}</span></p>
+        <p><span class="status-marke">{{ status_texte.vorlage[v.status].marke }}</span></p>
 {% endif %}
         <p class="vorlagen__methoden">{{ "Zur Methode:" if methoden | length == 1 else "Zu den Methoden:" }}
 {% for m in methoden %}

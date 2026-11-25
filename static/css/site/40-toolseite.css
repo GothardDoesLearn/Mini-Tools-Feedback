@@ -15,7 +15,7 @@
   content: "\2009\2197" / ""; /* Alternativtext leer, wo unterstützt */
 }
 
-.hinweisbox {
+.tools-freigabe {
   padding: var(--abstand-m);
   border: 1px solid var(--farbe-rahmen);
   border-left: 4px solid var(--farbe-akzent);

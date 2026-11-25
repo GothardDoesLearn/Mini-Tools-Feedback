@@ -125,7 +125,7 @@ Frontmatter jeder Datei in `content/methoden/` (Schema mit Pydantic abbilden, Bu
 | `druckvorlage_optional` | boolean | nein | Vorlage hilfreich, aber nicht nötig |
 | `tools` | string[] | nein | IDs aus `tools.yaml` |
 | `status` | enum | ja | `fertig`, `annahme`, `platzhalter` |
-| `hinweis` | string | nein | Text für den Statushinweis |
+| `statushinweis` | string | nein | Text für den Statushinweis |
 | `verwandt` | string[] | nein | IDs verwandter Methoden |
 | `videos` | {titel, url}[] | nein | erklärende Videos (z. B. YouTube); Anzeige nur wenn gefüllt |
 

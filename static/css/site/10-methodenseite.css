@@ -69,7 +69,7 @@
   font-size: 18px;
 }
 
-.statushinweis {
+.methode .statushinweis {
   max-width: 720px;
   margin: 0;
   padding: 12px var(--abstand-m);

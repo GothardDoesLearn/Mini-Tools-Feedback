@@ -11,7 +11,7 @@ dauer_max: 5
 material: "Wimmelbild mit vielen Figuren in unterschiedlichen Situationen"
 druckvorlagen: ["wimmelbild"]
 status: platzhalter
-hinweis: "Platzhalter – Ablauf und Bild werden beim Kollegen erfragt. Bis dahin eine vorläufige Vermutung."
+statushinweis: "Platzhalter – Ablauf und Bild werden beim Kollegen erfragt. Bis dahin eine vorläufige Vermutung."
 verwandt: ["smileys", "wetterbericht"]
 ---
 

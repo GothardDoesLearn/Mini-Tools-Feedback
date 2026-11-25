@@ -79,7 +79,7 @@
   }
 
   /* Hinweis als roter Stempel */
-  [data-ansicht="pinnwand"] .statushinweis {
+  [data-ansicht="pinnwand"] .methode .statushinweis {
     align-self: flex-start;
     padding: 2px 12px 6px;
     border: 2px solid #9B1C1C;
@@ -89,7 +89,7 @@
     transform: rotate(-2deg);
   }
 
-  [data-ansicht="pinnwand"] .statushinweis strong {
+  [data-ansicht="pinnwand"] .methode .statushinweis strong {
     font-family: var(--schrift-titel);
     font-size: 26px;
   }

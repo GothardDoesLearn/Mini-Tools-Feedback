@@ -72,7 +72,7 @@ def test_seite_wird_gebaut_und_ist_im_fuss_verlinkt(dist: Path, url: str):
 @pytest.mark.parametrize("url", ["impressum", "datenschutz"])
 def test_platzhalter_sind_sichtbar_gekennzeichnet(dist: Path, url: str):
     html = seite(dist, url)
-    box = re.search(r'<(div|aside)[^>]*class="hinweisbox[^"]*".*?</\1>', html, re.S)
+    box = re.search(r'<(div|aside)[^>]*class="statushinweis[^"]*".*?</\1>', html, re.S)
     assert box, url
     assert "Platzhalter" in box.group(0)
 
@@ -98,7 +98,7 @@ def test_ueber_seite_markiert_aktiven_menuepunkt(dist: Path):
     assert re.search(r'href="/ueber/"[^>]*aria-current="page"', html)
 
 
-def test_seite_im_status_fertig_hat_keine_hinweisbox(tmp_path: Path, monkeypatch):
+def test_seite_im_status_fertig_hat_keinen_statushinweis(tmp_path: Path, monkeypatch):
     content = tmp_path / "content"
     shutil.copytree(paths.CONTENT_DIR, content)
     for datei in (content / "seiten").glob("*.md"):
@@ -106,4 +106,4 @@ def test_seite_im_status_fertig_hat_keine_hinweisbox(tmp_path: Path, monkeypatch
         datei.write_text(re.sub(r"status: \w+", "status: fertig", text, count=1), "utf-8")
     monkeypatch.setattr(paths, "CONTENT_DIR", content)
     build(output_dir=tmp_path / "dist")
-    assert 'class="hinweisbox' not in seite(tmp_path / "dist", "impressum")
+    assert 'class="statushinweis' not in seite(tmp_path / "dist", "impressum")

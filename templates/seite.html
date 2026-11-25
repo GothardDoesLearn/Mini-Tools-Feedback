@@ -7,8 +7,8 @@
       <h1>{{ seite.titel }}</h1>
 {% if seite.status in status_texte.seite %}
 {% set t = status_texte.seite[seite.status] %}
-      <aside class="hinweisbox hinweisbox--status" aria-label="Hinweis">
-        <p><strong>{{ t.titel }}:</strong> {{ seite.hinweis or t.text }}</p>
+      <aside class="statushinweis" aria-label="Statushinweis">
+        <p><strong>{{ t.titel }}:</strong> {{ seite.statushinweis or t.text }}</p>
       </aside>
 {% endif %}
 {# Textseiten mit der Marke HINWEIS_MARKE im Text (z. B. /ueber/ unter „Kontakt“) bekommen dort die Hinweis-Links. #}

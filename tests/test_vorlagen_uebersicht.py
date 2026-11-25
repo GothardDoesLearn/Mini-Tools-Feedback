@@ -51,11 +51,11 @@ def test_status_annahme_und_platzhalter_sind_sichtbar_gekennzeichnet(uebersicht:
     for v in site.druckvorlagen:
         eintrag = _eintrag(uebersicht, v.id)
         if v.status == "fertig":
-            assert "status-hinweis" not in eintrag
+            assert "status-marke" not in eintrag
         elif v.status == "annahme":
-            assert '<span class="status-hinweis">wird geprüft</span>' in eintrag
+            assert '<span class="status-marke">wird geprüft</span>' in eintrag
         else:
-            assert '<span class="status-hinweis">Vorlage folgt</span>' in eintrag
+            assert '<span class="status-marke">Vorlage folgt</span>' in eintrag
 
 
 def test_navigation_druckvorlagen_ist_aktiv(uebersicht: str):
@@ -63,9 +63,9 @@ def test_navigation_druckvorlagen_ist_aktiv(uebersicht: str):
     assert "<h1>Druckvorlagen</h1>" in uebersicht
 
 
-def test_status_hinweis_hat_badge_stil_aus_design_md(tmp_path: Path):
+def test_status_marke_hat_badge_stil_aus_design_md(tmp_path: Path):
     build(output_dir=tmp_path)
     css = (tmp_path / "static" / "css" / "site.css").read_text(encoding="utf-8")
-    regel = re.search(r"\.status-hinweis\s*\{(.*?)\}", css, re.S).group(1)
+    regel = re.search(r"\.status-marke\s*\{(.*?)\}", css, re.S).group(1)
     assert "#FFF1D6" in regel
     assert "#7A4B00" in regel

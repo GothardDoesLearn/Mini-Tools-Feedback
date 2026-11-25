@@ -11,7 +11,7 @@ dauer_max: 5
 material: "Rad mit Segmenten je Teilkompetenz"
 druckvorlagen: ["lernrad"]
 status: annahme
-hinweis: "Keine feste Definition gefunden. Hier als Selbsteinschätzungsrad beschrieben – wird noch geprüft."
+statushinweis: "Keine feste Definition gefunden. Hier als Selbsteinschätzungsrad beschrieben – wird noch geprüft."
 verwandt: ["checkliste", "zielscheibe"]
 ---
 

@@ -8,7 +8,7 @@
     <h2 id="seitenleiste-druck">{{ "Druckvorlagen" if druckvorlagen | length > 1 else "Druckvorlage" }}</h2>
 {% for vorlage in druckvorlagen %}
     <div class="seitenleiste__vorlage">
-      <p class="seitenleiste__vorlagentitel">{{ vorlage.titel }}{% if vorlage.status in status_texte.vorlage %} <span class="status-hinweis">{{ status_texte.vorlage[vorlage.status].marke }}</span>{% endif %}</p>
+      <p class="seitenleiste__vorlagentitel">{{ vorlage.titel }}{% if vorlage.status in status_texte.vorlage %} <span class="status-marke">{{ status_texte.vorlage[vorlage.status].marke }}</span>{% endif %}</p>
 {% if vorlage.seiten not in ("", "–", "-") %}
       <p class="seitenleiste__klein">A4 · Seiten: {{ vorlage.seiten }}</p>
 {% endif %}

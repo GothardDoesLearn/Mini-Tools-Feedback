@@ -11,7 +11,7 @@ dauer_max: 2
 material: "kein Material"
 druckvorlagen: []
 status: annahme
-hinweis: "Methode aus dem Kollegium. Der Ablauf ist eine Vermutung und wird noch geprüft."
+statushinweis: "Methode aus dem Kollegium. Der Ablauf ist eine Vermutung und wird noch geprüft."
 verwandt: ["aufstellung", "daumenprobe"]
 ---
 
