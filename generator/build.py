@@ -97,7 +97,14 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
     env = make_env(config)
     site_data = load_site(paths.CONTENT_DIR)
     write_page(
-        env, output_dir, "", "index.html", aktiver_bereich="methoden", karten=karten(site_data)
+        env,
+        output_dir,
+        "",
+        "index.html",
+        aktiver_bereich="methoden",
+        karten=karten(site_data),
+        # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#15)
+        filtergruppen=[g for g in site_data.filter if g.werte],
     )
     (output_dir / "404.html").write_text(env.get_template("404.html").render(), encoding="utf-8")
 

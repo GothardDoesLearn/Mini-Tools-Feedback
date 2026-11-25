@@ -1,0 +1,21 @@
+{# Filterleiste der Übersicht (Issue #14). Gruppen und Werte aus filter.yaml; Logik in
+   static/js/filter.js. Ohne JavaScript per CSS ausgeblendet, dann sind alle Karten sichtbar. #}
+<form class="filterleiste" aria-labelledby="filterleiste-titel" data-filterleiste>
+  <div class="filterleiste__kopf">
+    <h2 id="filterleiste-titel" class="filterleiste__titel">Filter</h2>
+    <button class="filterleiste__zuruecksetzen" type="reset">Filter zurücksetzen</button>
+  </div>
+{% for gruppe in filtergruppen %}
+  <fieldset class="filtergruppe">
+    <legend class="filtergruppe__titel">{{ gruppe.titel }}</legend>
+    <div class="filtergruppe__werte">
+{% for wert in gruppe.werte %}
+      <label class="filterwert"{% if wert.erklaerung %} title="{{ wert.erklaerung }}"{% endif %}>
+        <input type="checkbox" name="{{ gruppe.feld }}" value="{{ wert.id }}" class="filterwert__box">
+        <span class="filterwert__text">{{ wert.label }}</span>
+      </label>
+{% endfor %}
+    </div>
+  </fieldset>
+{% endfor %}
+</form>

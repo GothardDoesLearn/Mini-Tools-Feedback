@@ -507,6 +507,107 @@ html:not([data-js]) .ansichtswahl {
   flex-shrink: 0;
 }
 
+/* Filterleiste (Issue #14). Klar: Filterspalte links, Karten rechts. Nur mit JavaScript sichtbar;
+   ohne JavaScript bleiben alle Karten sichtbar. */
+
+html:not([data-js]) .filterleiste {
+  display: none;
+}
+
+.karte[hidden] {
+  display: none;
+}
+
+.filterleiste {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: var(--abstand-l);
+  padding: 20px;
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.filterleiste__kopf {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--abstand-s);
+}
+
+.filterleiste__titel {
+  margin: 0;
+  font-size: 16px;
+}
+
+.filterleiste__zuruecksetzen {
+  min-height: var(--ziel-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--farbe-link);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filtergruppe {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.filtergruppe__titel {
+  margin-bottom: 6px;
+  padding: 0;
+  color: var(--farbe-nebentext);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.filtergruppe__werte {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterwert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--ziel-min);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.filterwert__box {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--farbe-akzent);
+}
+
+.uebersicht__leer {
+  margin: 0 0 var(--abstand-m);
+}
+
+@media (min-width: 900px) {
+  html[data-js] .uebersicht {
+    display: grid;
+    grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  html[data-js] .filterleiste {
+    margin-bottom: 0;
+  }
+}
+
 /* 4b. Toolseite, externe Links, Hinweisbox (Issue #13) ---------------------- */
 
 .nur-screenreader {
@@ -869,6 +970,84 @@ html:not([data-js]) .ansichtswahl {
   [data-ansicht="pinnwand"] .karte__status--annahme::after {
     content: "!";
   }
+
+  /* Filterleiste als weißer Zettel über den Karten, Werte als Knöpfe (#F2F2F2, aktiv Akzent) */
+  html[data-js][data-ansicht="pinnwand"] .uebersicht {
+    display: block;
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    margin-bottom: var(--abstand-l);
+    padding: 18px 20px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste__kopf {
+    flex: 1 1 100%;
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste__titel {
+    font-size: 30px;
+  }
+
+  [data-ansicht="pinnwand"] .filterleiste__zuruecksetzen {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  [data-ansicht="pinnwand"] .filtergruppe__titel {
+    color: var(--farbe-text);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  [data-ansicht="pinnwand"] .filtergruppe__werte {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert {
+    position: relative;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__box {
+    position: absolute;
+    opacity: 0;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__text {
+    display: flex;
+    align-items: center;
+    min-height: var(--ziel-min);
+    padding: 0 14px;
+    background: #F2F2F2;
+    color: var(--farbe-text);
+    font-weight: 600;
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__box:checked + .filterwert__text {
+    background: var(--farbe-akzent);
+    color: var(--farbe-akzent-text);
+  }
+
+  [data-ansicht="pinnwand"] .filterwert__box:focus-visible + .filterwert__text {
+    outline: var(--fokus-breite) solid var(--farbe-fokus);
+    outline-offset: 2px;
+  }
+
+  [data-ansicht="pinnwand"] .uebersicht__leer {
+    color: #FFFFFF;
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+  }
 }
 
 /* Weniger Bewegung gewünscht: keine Drehungen, keine Hover-Animationen */
@@ -888,6 +1067,7 @@ html:not([data-js]) .ansichtswahl {
   .skiplink,
   .kopf,
   .fuss,
+  .filterleiste,
   nav {
     display: none !important;
   }

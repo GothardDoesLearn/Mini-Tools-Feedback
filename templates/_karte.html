@@ -16,7 +16,7 @@
 {%- endmacro %}
 
 {% macro karte(k) %}
-<article class="karte" style="--karte-papier: {{ k.kategorie.papier }}; --karte-pin: {{ k.kategorie.pin }}; --karte-farbe: {{ k.kategorie.farbe }}">
+<article class="karte" data-methode="{{ k.id }}"{% for feld, werte in k.filterwerte.items() %} data-filter-{{ feld }}="{{ werte | join(' ') }}"{% endfor %} style="--karte-papier: {{ k.kategorie.papier }}; --karte-pin: {{ k.kategorie.pin }}; --karte-farbe: {{ k.kategorie.farbe }}">
   <div class="karte__kopf">
     <span class="karte__kategorie">{{ k.kategorie.kurzname }}</span>
 {% if k.status in status_labels %}
