@@ -1,5 +1,6 @@
 {# Rechte Spalte der Methodenseite (Desktop; mobil unter der Anleitung; im Druck ausgeblendet).
-   Kontext aus generator/methodenseite.py: druckvorlagen, ist_digital, digitale_tools, passt_auch_dazu. #}
+   Kontext aus generator/methodenseite.py: druckvorlagen, ist_digital, digitale_tools,
+   tools_hinweis, passt_auch_dazu. #}
 <aside class="methode__seite" aria-label="Material und Weiteres">
   <script src="/static/js/drucken.js" defer></script>
 {% if druckvorlagen %}
@@ -39,7 +40,7 @@
 {% endfor %}
     </ul>
 {% endif %}
-    <p class="seitenleiste__klein">Bitte prüfen Sie, ob das Tool an Ihrer Schule freigegeben ist. <a href="/tools/">Alle digitalen Tools</a></p>
+    <p class="seitenleiste__klein">{{ tools_hinweis }} <a href="/tools/">Alle digitalen Tools</a></p>
   </section>
 {% endif %}
 {% if passt_auch_dazu %}

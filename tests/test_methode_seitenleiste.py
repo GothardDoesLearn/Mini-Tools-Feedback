@@ -101,6 +101,7 @@ def test_digitale_methode_verlinkt_ihre_tools(dist: Path):
     assert 'class="seitenleiste__digital"' in html
     assert 'href="https://www.mentimeter.com" rel="noopener noreferrer">Mentimeter' in html
     assert 'href="https://www.oncoo.de" rel="noopener noreferrer">Oncoo' in html
+    assert load_site().tools_hinweis in html
     assert 'href="/tools/"' in html
 
 

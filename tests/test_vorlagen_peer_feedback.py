@@ -5,7 +5,8 @@ from pathlib import Path
 import pytest
 
 from generator.build import build
-from generator.content import load_site
+from generator.content import ContentError, load_site
+from generator.vorlagen import satzanfaenge
 
 
 @pytest.fixture(scope="module")
@@ -60,6 +61,23 @@ def test_www_karte_vier_karten_und_plakat_mit_satzanfaengen(dist: Path):
         assert karten.count(text) == 4
         assert plakat.count(text) == 1
     assert "plakat" in plakat
+
+
+def test_satzanfaenge_kommen_aus_dem_ablauf_der_methode():
+    www = next(m for m in load_site().methoden if m.id == "www")
+
+    assert satzanfaenge(www) == [
+        ("Wahrnehmung", "Ich habe gesehen/gehört, dass …", "beobachtbar, ohne Wertung"),
+        ("Wirkung", "Das hat auf mich … gewirkt.", "Ich-Botschaft"),
+        ("Wunsch", "Ich wünsche mir / Mein Tipp …", None),
+    ]
+
+
+def test_methode_ohne_satzanfaenge_bricht_ab():
+    daumenprobe = next(m for m in load_site().methoden if m.id == "daumenprobe")
+
+    with pytest.raises(ContentError, match=r"daumenprobe\.md: .*Satzanf"):
+        satzanfaenge(daumenprobe)
 
 
 def test_burger_drei_ebenen_lob_tipp_lob(dist: Path):

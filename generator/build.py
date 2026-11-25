@@ -19,6 +19,7 @@ from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 from generator.startseite import kategorie_auswahl
 from generator.status import STATUS_TEXTE
 from generator.suche import suchindex
+from generator.vorlagen import satzanfaenge
 
 # Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
 VORLAGEN_LAYOUT_DIR = "vorlagen"
@@ -76,6 +77,7 @@ def make_env(config: SiteConfig) -> Environment:
     )
     env.globals["site"] = config
     env.globals["status_texte"] = STATUS_TEXTE
+    env.globals["satzanfaenge"] = satzanfaenge
     env.filters["kurzbeschreibung"] = kurzbeschreibung
     env.filters["markdown"] = markdown_zu_html
     return env
@@ -134,6 +136,7 @@ def write_toolseite(env: Environment, output_dir: Path, inhalte: SiteData) -> No
         "tools.html",
         aktiver_bereich="tools",
         tools=inhalte.tools,
+        tools_hinweis=inhalte.tools_hinweis,
         methoden_titel={m.id: m.titel for m in inhalte.methoden},
     )
 

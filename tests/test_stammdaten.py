@@ -39,6 +39,8 @@ def test_unbekanntes_feld_in_stammdaten_bricht_ab(tmp_path: Path):
 
 
 TOOLS_YAML = """\
+hinweis_freigabe: Testhinweis zur Freigabe.
+tools:
 - id: test-tool
   titel: Testtool
   url: https://example.org
@@ -67,6 +69,13 @@ def content_mit_querverweisen(tmp_path: Path, methode: str = GUELTIGE_METHODE) -
     (content_dir / "tools.yaml").write_text(TOOLS_YAML, encoding="utf-8")
     (content_dir / "druckvorlagen.yaml").write_text(DRUCKVORLAGEN_YAML, encoding="utf-8")
     return content_dir
+
+
+def test_freigabe_hinweis_kommt_aus_tools_yaml(tmp_path: Path):
+    site = load_site(content_mit_querverweisen(tmp_path))
+
+    assert site.tools_hinweis == "Testhinweis zur Freigabe."
+    assert [t.id for t in site.tools] == ["test-tool"]
 
 
 def test_gueltige_querverweise_werden_akzeptiert(tmp_path: Path):

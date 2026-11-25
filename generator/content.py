@@ -111,6 +111,15 @@ class Tool(BaseModel):
     methoden: list[str] = []
 
 
+class ToolsDatei(BaseModel):
+    """content/tools.yaml: allgemeiner Freigabe-Hinweis und die Tools."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    hinweis_freigabe: str = Field(min_length=1)
+    tools: list[Tool]
+
+
 class Druckvorlage(BaseModel):
     """Eine Zeile der Vorlagen-Tabelle aus docs/DRUCKVORLAGEN.md.
 
@@ -153,6 +162,7 @@ class SiteData(BaseModel):
     kategorien: list[Kategorie]
     filter: list[FilterGruppe]
     tools: list[Tool]
+    tools_hinweis: str  # hinweis_freigabe aus tools.yaml
     druckvorlagen: list[Druckvorlage]
     methoden: list[Methode]
 
@@ -210,8 +220,20 @@ def load_filter(content_dir: Path = CONTENT_DIR) -> list[FilterGruppe]:
     return _load_liste(content_dir / "filter.yaml", FilterGruppe)
 
 
+def load_tools_datei(content_dir: Path = CONTENT_DIR) -> ToolsDatei:
+    path = content_dir / "tools.yaml"
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as e:
+        raise ContentError(f"{path.name}: kein gültiges YAML: {e}") from e
+    try:
+        return ToolsDatei.model_validate(data)
+    except ValidationError as e:
+        raise _schemafehler(f"{path.name}:", e) from e
+
+
 def load_tools(content_dir: Path = CONTENT_DIR) -> list[Tool]:
-    return _load_liste(content_dir / "tools.yaml", Tool)
+    return load_tools_datei(content_dir).tools
 
 
 def load_druckvorlagen(content_dir: Path = CONTENT_DIR) -> list[Druckvorlage]:
@@ -301,10 +323,12 @@ def load_site(content_dir: Path = CONTENT_DIR) -> SiteData:
 
     Die kategorie einer Methode prüft schon load_methoden.
     """
+    tools_datei = load_tools_datei(content_dir)
     site = SiteData(
         kategorien=load_kategorien(content_dir),
         filter=load_filter(content_dir),
-        tools=load_tools(content_dir),
+        tools=tools_datei.tools,
+        tools_hinweis=tools_datei.hinweis_freigabe,
         druckvorlagen=load_druckvorlagen(content_dir),
         methoden=load_methoden(content_dir),
     )

@@ -1,4 +1,7 @@
 # Digitale Tools (Kategorie H). Kosten/Funktionen vor Veröffentlichung prüfen.
+# hinweis_freigabe: allgemeiner Hinweis auf der Toolseite und bei digitalen Methoden.
+hinweis_freigabe: Bitte prüfen Sie, ob das Tool an Ihrer Schule freigegeben ist.
+tools:
 - id: oncoo
   titel: Oncoo
   url: https://www.oncoo.de
@@ -35,5 +38,3 @@
   ablauf: Fragebogen aus Vorlagen wählen, SuS antworten anonym per Code, Auswertung als Diagramm.
   sus_geraete: "ja"
   methoden: [fragebogen]
-# Allgemeiner Hinweis für die Toolseite:
-# Vor dem Einsatz klären, welche Tools an der Schule datenschutzrechtlich freigegeben sind.

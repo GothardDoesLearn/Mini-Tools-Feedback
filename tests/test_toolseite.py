@@ -68,6 +68,10 @@ def test_passende_methoden_sind_verlinkt(toolseite: str, tools):
 
 def test_allgemeiner_freigabe_hinweis(toolseite: str):
     assert "Bitte prüfen Sie, ob das Tool an Ihrer Schule freigegeben ist." in toolseite
+    assert (
+        load_site().tools_hinweis
+        == "Bitte prüfen Sie, ob das Tool an Ihrer Schule freigegeben ist."
+    )
 
 
 def test_navigation_digitale_tools_ist_aktiv(toolseite: str):
