@@ -56,7 +56,7 @@ class Methode(BaseModel):
     druckvorlage_optional: bool = False
     tools: list[str] = []
     status: Status
-    hinweis: str | None = None
+    statushinweis: str | None = None
     verwandt: list[str] = []
     videos: list[Video] = []
     body: str
@@ -190,7 +190,7 @@ class Seite(BaseModel):
     id: str = Field(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")
     titel: str
     status: SeitenStatus
-    hinweis: str | None = None
+    statushinweis: str | None = None
     body: str
 
 

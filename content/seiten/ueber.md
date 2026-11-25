@@ -2,7 +2,7 @@
 id: ueber
 titel: Über diese Sammlung
 status: entwurf
-hinweis: Dieser Text ist ein Entwurf und muss vom Betreiber noch freigegeben werden.
+statushinweis: Dieser Text ist ein Entwurf und muss vom Betreiber noch freigegeben werden.
 ---
 ## Herkunft der Sammlung
 

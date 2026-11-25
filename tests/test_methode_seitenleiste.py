@@ -87,7 +87,7 @@ def test_methode_ohne_druckvorlage_hat_keinen_download_bereich(dist: Path):
 def test_platzhalter_vorlage_ist_gekennzeichnet(dist: Path):
     html = seitenleiste(dist, "wimmelbild-zuordnen")
     assert 'href="/vorlagen/wimmelbild/"' in html
-    assert '<span class="status-hinweis">Vorlage folgt</span>' in html
+    assert '<span class="status-marke">Vorlage folgt</span>' in html
     assert "Vorlage drucken" not in html
 
 

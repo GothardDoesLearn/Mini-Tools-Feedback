@@ -10,7 +10,7 @@ from typing import NamedTuple
 class StatusText(NamedTuple):
     marke: str  # kurzes Etikett (Karte, Vorlagenliste, Seitenleiste)
     titel: str  # fett vor dem Hinweistext
-    text: str  # Standardtext, wenn der Inhalt kein eigenes Feld `hinweis` hat
+    text: str  # Standardtext, wenn der Inhalt kein eigenes Feld `statushinweis` hat
 
 
 _PLATZHALTER_TEXT = "Dieser Inhalt fehlt noch und folgt nach Rücksprache."

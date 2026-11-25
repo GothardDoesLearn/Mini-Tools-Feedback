@@ -49,7 +49,7 @@
   outline-offset: 2px;
 }
 
-.hinweisbox {
+.statushinweis {
   margin: var(--abstand-4, 1rem) 0;
   padding: var(--abstand-3, 0.75rem) var(--abstand-4, 1rem);
   border: 1px solid var(--farbe-rahmen);

@@ -1,5 +1,5 @@
-/* Hinweisbox für Textseiten im Status entwurf/platzhalter (Farben wie „wird geprüft“) */
-.hinweisbox.hinweisbox--status {
+/* Statushinweis für Textseiten im Status entwurf/platzhalter (Farben wie „wird geprüft“) */
+.textseite .statushinweis {
   margin: var(--abstand-m) 0;
   padding: var(--abstand-s) var(--abstand-m);
   border: 1px solid #7a4b00;
@@ -9,12 +9,12 @@
   color: #7a4b00;
 }
 
-.hinweisbox--status p {
+.textseite .statushinweis p {
   margin: 0;
 }
 
-/* Hinweis bei Status annahme/platzhalter (DESIGN.md › Klare Ansicht › „wird geprüft“) */
-.status-hinweis {
+/* Statusmarke bei Status annahme/platzhalter (DESIGN.md › Klare Ansicht › „wird geprüft“) */
+.status-marke {
   display: inline-block;
   padding: 2px var(--abstand-s);
   border-radius: var(--radius-s);

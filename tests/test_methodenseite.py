@@ -46,25 +46,25 @@ def test_brotkrumen_fuehren_zur_uebersicht(dist: Path):
     assert '<span aria-current="page">Daumenprobe</span>' in html
 
 
-def hinweisbox(html: str) -> str | None:
+def statushinweis_text(html: str) -> str | None:
     treffer = re.search(r'<p class="statushinweis[^"]*" role="note">(.*?)</p>', html, re.S)
     return treffer and " ".join(treffer.group(1).split())
 
 
-def test_fertige_methode_hat_keine_hinweisbox(dist: Path):
-    assert hinweisbox(seite(dist, "daumenprobe")) is None
+def test_fertige_methode_hat_keine_statushinweis_text(dist: Path):
+    assert statushinweis_text(seite(dist, "daumenprobe")) is None
 
 
-def test_annahme_zeigt_hinweisbox_mit_hinweistext(dist: Path):
-    box = hinweisbox(seite(dist, "fahrstuhlmethode"))
+def test_annahme_zeigt_statushinweis_text_mit_hinweistext(dist: Path):
+    box = statushinweis_text(seite(dist, "fahrstuhlmethode"))
     assert box.startswith(
         "<strong>Wird noch geprüft:</strong> Methode aus dem Kollegium. "
         "Der Ablauf ist eine Vermutung und wird noch geprüft."
     )
 
 
-def test_platzhalter_zeigt_hinweisbox_als_platzhalter(dist: Path):
-    box = hinweisbox(seite(dist, "wimmelbild-zuordnen"))
+def test_platzhalter_zeigt_statushinweis_text_als_platzhalter(dist: Path):
+    box = statushinweis_text(seite(dist, "wimmelbild-zuordnen"))
     assert box.startswith("<strong>Platzhalter:</strong> Platzhalter – Ablauf und Bild")
 
 
@@ -83,7 +83,7 @@ def test_statushinweis_ohne_hinweistext_nutzt_standardtext_je_status(status, erw
     html = env.from_string(
         '{% from "_statushinweis.html" import statushinweis %}{{ statushinweis(s) }}'
     ).render(s=status)
-    assert hinweisbox(html) == erwartet
+    assert statushinweis_text(html) == erwartet
 
 
 def test_kurzinfos_mit_labels_aus_den_stammdaten(dist: Path):

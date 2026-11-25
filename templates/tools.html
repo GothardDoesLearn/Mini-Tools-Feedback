@@ -3,7 +3,7 @@
 {% set beschreibung = "Digitale Tools für schnelles Feedback im Unterricht – mit Zweck, Ablauf und passenden Methoden." %}
 {% block content %}
     <h1>Digitale Tools</h1>
-    <p class="hinweisbox" role="note">{{ tools_hinweis }}</p>
+    <p class="tools-freigabe" role="note">{{ tools_hinweis }}</p>
     <div class="toolliste">
 {% for tool in tools %}
       <article class="toolkarte" id="tool-{{ tool.id }}" aria-labelledby="tool-{{ tool.id }}-titel">

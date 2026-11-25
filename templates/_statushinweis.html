@@ -1,14 +1,14 @@
 {# Status-Hinweis für Methoden mit status "annahme" oder "platzhalter" (AGENTS.md: sichtbar kennzeichnen).
-   Nutzung: {% from "_statushinweis.html" import statushinweis %} … {{ statushinweis(status, hinweis, hinweise) }}
+   Nutzung: {% from "_statushinweis.html" import statushinweis %} … {{ statushinweis(status, text, hinweise) }}
    Texte aus generator/status.py (Global status_texte). Bei status "fertig" wird nichts ausgegeben.
    Mit `hinweise` (content/hinweise.yaml) bei annahme zusätzlich die Bitte um einen Hinweis (PRD §5.3),
    verlinkt auf die Hinweis-Links (#hinweis, templates/_hinweis.html) derselben Seite. #}
-{% macro statushinweis(status, hinweis=none, hinweise=none) %}
+{% macro statushinweis(status, text=none, hinweise=none) %}
 {% if status in status_texte.methode %}
 {% set t = status_texte.methode[status] %}
 <p class="statushinweis statushinweis--{{ status }}" role="note">
   <strong>{{ t.titel }}:</strong>
-  {{ hinweis or t.text }}
+  {{ text or t.text }}
 {% if status == "annahme" and hinweise %}
   {{ hinweise.bitte_annahme }} <a class="statushinweis__link" href="#hinweis">{{ hinweise.link_bitte_annahme }}</a>
 {% endif %}
