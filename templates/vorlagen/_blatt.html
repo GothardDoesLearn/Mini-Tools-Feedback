@@ -4,6 +4,8 @@
 {% set symbole = {
   "haken": '<svg class="symbol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>' | safe,
   "frage": '<svg class="symbol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.2 9.3a2.9 2.9 0 1 1 4 2.7c-.8.4-1.2 1-1.2 1.9v.6"/><circle class="symbol--voll" cx="12" cy="17.3" r=".9"/></svg>' | safe,
+  "stern": '<svg class="symbol symbol--stern" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.3-5.6-3-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>' | safe,
+  "wunsch": '<svg class="symbol" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L15 9"/><path d="M17 2.5l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z"/><path d="M8 4v3M6.5 5.5h3M19.5 13v3M18 14.5h3"/></svg>' | safe,
   "stift": '<svg class="symbol" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2 2 0 0 1 2.8 0l.7.7a2 2 0 0 1 0 2.8L8.5 19z"/><path d="M13.5 7l3.5 3.5"/></svg>' | safe,} %}
 
 {% macro blatt(beschriftung, quer=false) %}
