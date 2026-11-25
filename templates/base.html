@@ -10,12 +10,17 @@
   ("/datenschutz/", "Datenschutz"),
 ] %}
 {% set aktiver_bereich = aktiver_bereich | default("") %}
+{% set seitentitel = seitentitel | default("") %}
+{% set beschreibung = beschreibung | default(site.beschreibung) %}
 <!doctype html>
 <html lang="de" data-ansicht="klar">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}{{ site.website_name }}{% endblock %}</title>
+  <title>{% block title %}{% if seitentitel %}{{ seitentitel }} – {% endif %}{{ site.website_name }}{% endblock %}</title>
+  <meta name="description" content="{{ beschreibung }}">
+{% block meta %}{% endblock %}
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/static/css/site.css">
 </head>
 <body>

@@ -13,6 +13,7 @@ class SiteConfig(BaseModel):
 
     website_name: str
     domain: str
+    beschreibung: str
     werbung_aktiv: bool = False
 
 
