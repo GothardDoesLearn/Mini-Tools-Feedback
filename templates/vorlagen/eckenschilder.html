@@ -1,0 +1,11 @@
+{#- Eckenschilder nach docs/DRUCKVORLAGEN.md: 4 Schilder A4 quer, großer Buchstabe A–D + leeres Feld für Aussage. -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% for buchstabe in "ABCD" %}
+{% call blatt(vorlage.titel ~ " – Seite " ~ loop.index ~ ": " ~ buchstabe, quer=true) %}
+<div class="eckenschild">
+  <p class="eckenschild__buchstabe">{{ buchstabe }}</p>
+  <div class="eckenschild__feld"></div>
+</div>
+{% endcall %}
+{% endfor %}
