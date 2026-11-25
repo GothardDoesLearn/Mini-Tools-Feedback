@@ -9,6 +9,10 @@
       <h1 class="intro__titel">{{ texte.titel }}</h1>
       <p class="intro__text">{{ texte.intro }}</p>
     </section>
+    <div class="startaktionen">
+      {# Wählt per static/js/filter.js aus den aktuell sichtbaren Karten (Issue #17); ohne JS ausgeblendet. #}
+      <button class="zufall-knopf" type="button" data-zufall>Zufällige Methode</button>
+    </div>
     <section class="uebersicht" aria-labelledby="uebersicht-titel">
       <div class="filterspalte">
         {# Kategorie-Auswahl (Issue #11), Filterfunktion folgt; DESIGN.md › Kategorie-Auswahl #}

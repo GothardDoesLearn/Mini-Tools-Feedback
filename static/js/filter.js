@@ -71,12 +71,23 @@
         : karten.length + " Methoden";
     }
     if (keineTreffer) keineTreffer.hidden = anzahl > 0;
+    if (zufallKnopf) zufallKnopf.disabled = anzahl === 0;
   }
 
   function zuruecksetzen() {
     // Die Checkboxen leert der Browser selbst (type="reset"); erst danach neu filtern.
     window.setTimeout(aktualisieren, 0);
   }
+
+  // „Zufällige Methode“ (Issue #17): wählt aus den gerade sichtbaren Karten.
+  var zufallKnopf = document.querySelector("[data-zufall]");
+  function zufaelligeMethodeOeffnen() {
+    var treffer = karten.filter(function (karte) { return !karte.element.hidden; });
+    if (treffer.length === 0) return;
+    var wahl = treffer[Math.floor(Math.random() * treffer.length)];
+    window.location.assign("/methoden/" + wahl.id + "/");
+  }
+  if (zufallKnopf) zufallKnopf.addEventListener("click", zufaelligeMethodeOeffnen);
 
   formular.addEventListener("change", aktualisieren);
   formular.addEventListener("reset", zuruecksetzen);
