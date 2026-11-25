@@ -1,0 +1,29 @@
+{#- Skalen-Plakat nach docs/DRUCKVORLAGEN.md: Seite 1 = waagerechte Skala 1–6 (A4 quer) mit Feldern
+    für Klebepunkte, Seiten 2–4 = Bodenkarten „1“–„6“ im Format A5 (2 pro A4). -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1", quer=true) %}
+<div class="skala">
+  <span class="skala__frage feld__linie"></span>
+  <div class="skala__stufen">
+{% for zahl in range(1, 7) %}
+    <div class="skala__stufe">
+      <span class="skala__zahl">{{ zahl }}</span>
+      <span class="skala__punkte"></span>
+    </div>
+{% endfor %}
+  </div>
+</div>
+{% endcall %}
+
+{% for paar in [[1, 2], [3, 4], [5, 6]] %}
+{% call blatt(vorlage.titel ~ " – Seite " ~ (loop.index + 1)) %}
+<div class="raster raster--1x2">
+{% for zahl in paar %}
+  <div class="bodenkarte">
+    <span class="bodenkarte__zahl">{{ zahl }}</span>
+  </div>
+{% endfor %}
+</div>
+{% endcall %}
+{% endfor %}

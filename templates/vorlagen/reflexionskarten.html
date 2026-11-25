@@ -1,0 +1,31 @@
+{#- Reflexionskarten nach docs/DRUCKVORLAGEN.md: 12 Karten mit Satzanfängen auf einem A4-Blatt (3 × 4). -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+
+{% set satzanfaenge = [
+  "Am meisten geholfen hat mir …",
+  "Schwierig war …",
+  "Nächstes Mal mache ich …",
+  "Überrascht hat mich …",
+  "Ich bin stolz auf …",
+  "Ich brauche noch …",
+  "Am besten gelernt habe ich durch …",
+  "Das will ich noch wissen …",
+  "Unsere Zusammenarbeit war …",
+  "Mein Ziel war …",
+  "Das nehme ich mit …",
+  "Joker",
+] %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<div class="raster raster--3x4">
+{% for satzanfang in satzanfaenge %}
+  <div class="reflexionskarte">
+    {#- geschütztes Leerzeichen: „…“ nie allein in der nächsten Zeile -#}
+    <p class="reflexionskarte__text">{{ satzanfang | replace(" …", " …") }}</p>
+{% for _ in range(5) %}
+    <span class="feld__linie"></span>
+{% endfor %}
+  </div>
+{% endfor %}
+</div>
+{% endcall %}

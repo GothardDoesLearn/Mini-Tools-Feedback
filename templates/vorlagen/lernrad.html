@@ -1,0 +1,9 @@
+{#- Lernrad nach docs/DRUCKVORLAGEN.md (Status annahme, offene Frage #41): Kreis mit 8 Segmenten
+    (Spezifikation: 6–8), von innen nach außen 4 Stufen, je Segment ein Feld für den Themennamen. -#}
+{% from "vorlagen/_blatt.html" import blatt %}
+{% from "vorlagen/_scheibe.html" import scheibe %}
+
+{% call blatt(vorlage.titel ~ " – Seite 1") %}
+<p class="scheibe__titel">{{ vorlage.titel }}</p>
+{{ scheibe(8, 4, radius=52, abstand=76, feld_breite=40, feld_hoehe=12, beschreibung=vorlage.inhalt) }}
+{% endcall %}
