@@ -1,0 +1,23 @@
+/* Eckenschilder */
+.eckenschild {
+  display: grid;
+  grid-template-rows: 1fr 55mm;
+  gap: 5mm;
+  height: 100%;
+}
+
+.eckenschild__buchstabe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 120mm;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.eckenschild__feld {
+  border: var(--blatt-linie);
+  border-width: 0.6mm;
+}
+

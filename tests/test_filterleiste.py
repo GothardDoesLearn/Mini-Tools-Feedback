@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from generator.build import build
+from generator.css import stylesheet
 
 # Stundenende + Analog + Mit Druckvorlage (von Hand aus content/ ermittelt). wimmelbild-zuordnen
 # fehlt, weil seine Druckvorlage den Status „platzhalter“ hat (PRD §9.3).
@@ -91,7 +92,7 @@ def test_filterleiste_hat_gruppen_aus_filter_yaml_mit_checkboxen(startseite: str
 def test_filterleiste_hat_zuruecksetzen_und_ist_ohne_js_ausgeblendet(startseite: str):
     leiste = _filterleiste(startseite)
     assert re.search(r'<button [^>]*type="reset"[^>]*>Filter zurücksetzen</button>', leiste)
-    css = Path("static/css/site.css").read_text(encoding="utf-8")
+    css = stylesheet("site")
     assert re.search(r"html:not\(\[data-js\]\) \.filterleiste\s*\{\s*display:\s*none", css)
     assert re.search(r"\.karte\[hidden\]\s*\{\s*display:\s*none", css)
 

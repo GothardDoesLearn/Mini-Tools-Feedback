@@ -1,0 +1,7 @@
+/* 5. Fokus: überall sichtbar --------------------------------------------- */
+
+:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+

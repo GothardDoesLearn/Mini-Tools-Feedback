@@ -72,7 +72,7 @@ def kurzinfos(methode: Methode, daten: SiteData) -> list[tuple[str, str]]:
 
 
 def kontext(methode: Methode, daten: SiteData) -> dict:
-    """Render-Kontext für templates/methode.html (geschrieben von build.write_methodenseiten)."""
+    """Render-Kontext für templates/methode.html (geschrieben von seiten/methodenseiten.py)."""
     kategorie = daten.kategorie(methode.kategorie)
     nutzen = kurztext(methode, NUTZEN_MAX)
     return {

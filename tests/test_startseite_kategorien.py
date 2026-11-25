@@ -7,6 +7,7 @@ import pytest
 
 from generator.build import build
 from generator.content import ContentError, load_site, load_startseite
+from generator.css import stylesheet
 from generator.startseite import kategorie_auswahl
 
 
@@ -74,7 +75,7 @@ def test_kategorie_auswahl_steht_in_der_filterspalte_vor_den_karten(startseite: 
 
 @pytest.fixture(scope="module")
 def css() -> str:
-    text = Path("static/css/site.css").read_text(encoding="utf-8")
+    text = stylesheet("site")
     return re.sub(r"/\*.*?\*/", "", text, flags=re.S)
 
 

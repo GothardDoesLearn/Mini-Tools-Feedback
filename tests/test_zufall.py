@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from generator.build import build
+from generator.css import stylesheet
 from tests.test_filterleiste import STUNDENENDE_ANALOG_MIT_VORLAGE, _karten_daten
 
 
@@ -27,7 +28,7 @@ def test_startseite_hat_zufallsknopf(startseite: str):
 
 
 def test_zufallsknopf_ist_ohne_js_ausgeblendet():
-    css = Path("static/css/site.css").read_text(encoding="utf-8")
+    css = stylesheet("site")
     assert re.search(r"html:not\(\[data-js\]\) \.zufall-knopf\s*\{\s*display:\s*none", css)
 
 

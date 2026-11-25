@@ -15,10 +15,13 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 - `docs/adr/` – grundlegende Entscheidungen (Datenschutz/Werbung, Lizenz). Nicht stillschweigend davon abweichen.
 - `content/methoden/*.md` – eine Datei pro Methode (YAML-Frontmatter + Markdown-Anleitung). **Einzige Quelle der Inhalte.**
 - `content/kategorien.yaml`, `content/filter.yaml`, `content/tools.yaml` – Stammdaten.
+- `docs/ARCHITEKTUR.md` – Code-Aufbau und Erweiterungspunkte: neue Seite, Filter, Druckvorlage, Seitenkopf. **Vor Änderungen
+  an `generator/`, `templates/` oder `static/` lesen.**
 
 ## Aufgaben und offene Fragen
 
-- Aufgaben sind GitHub Issues (siehe unten „Agent skills“). Immer nur EIN Issue pro Sitzung bearbeiten.
+- Aufgaben sind GitHub Issues (siehe unten „Agent skills“). Ein Issue pro Sitzung, außer der Betreiber ruft ausdrücklich
+  einen Skill für mehrere Tickets auf (z. B. `/implement-spec`).
 - Ungeklärte Punkte nicht selbst entscheiden: als Issue mit Label `needs-triage` anlegen und bis dahin einen Platzhalter verwenden.
 - Abhängigkeiten sind als GitHub-Abhängigkeiten („blocked by“) eingetragen. Nur Issues beginnen, deren Blocker alle geschlossen sind.
 - Am Ende der Sitzung kurz zusammenfassen, was geändert wurde.
@@ -35,9 +38,8 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 - Barrierearm: semantisches HTML, Tastaturbedienung, Kontrast WCAG AA.
 - Git: pro Issue ein Branch. Claude committet selbst, sobald `python build.py` und `pytest` fehlerfrei laufen. **Push und Pull
   Request nur nach ausdrücklichem OK des Betreibers.** Keine Co-Autor-Zeile.
-- Token sparen: nur die Dateien lesen, die das Issue braucht.
 
-## Befehle (gültig nach Issue #1 „Projekt aufsetzen“)
+## Befehle
 
 Technik siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md` (Python-Build, plain CSS, sparsames JavaScript).
 
@@ -46,6 +48,7 @@ Technik siehe `docs/adr/0003-technik-python-build-sparsames-javascript.md` (Pyth
 - `python build.py` – statischer Build nach `dist/`
 - `python build.py --check` – nur Content-Schema und Querverweise prüfen
 - `pytest` – Tests; `ruff check` und `ruff format` – Lint und Formatierung
+- `python tools/druck_pruefen.py <vorlage-id …> | --alle` – Druckvorlagen per Headless-Edge/Chrome als PDF drucken, Seitenzahl/Ausrichtung gegen `druckvorlagen.yaml` prüfen; `--screenshot /pfad/ --breite 375 --ansicht klar --out DIR` für Bildschirmfotos
 
 ## Agent skills
 

@@ -7,6 +7,7 @@ import pytest
 
 from generator.build import build
 from generator.config import load_config
+from generator.css import stylesheet
 
 WERBEPLATZ = re.compile(r'<div class="werbeplatz[^"]*"[^>]*></div>')
 
@@ -90,7 +91,7 @@ def test_nie_auf_druckvorlagen(an: Path):
 
 
 def _css_ohne_kommentare() -> str:
-    text = Path("static/css/site.css").read_text(encoding="utf-8")
+    text = stylesheet("site")
     return re.sub(r"/\*.*?\*/", "", text, flags=re.S)
 
 

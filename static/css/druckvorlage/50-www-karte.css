@@ -1,0 +1,40 @@
+/* WWW-Karte als Plakat (#28) */
+
+.plakat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  text-align: center;
+}
+
+.plakat p {
+  margin: 0;
+}
+
+.plakat__titel {
+  font-size: 72pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.plakat__block {
+  padding-top: 8mm;
+  border-top: var(--blatt-linie);
+}
+
+.plakat__wort {
+  font-size: 40pt;
+  font-weight: 700;
+}
+
+.plakat__satz {
+  margin-top: 3mm !important;
+  font-size: 26pt;
+}
+
+.plakat__hinweis {
+  margin-top: 2mm !important;
+  font-size: 16pt;
+}
+

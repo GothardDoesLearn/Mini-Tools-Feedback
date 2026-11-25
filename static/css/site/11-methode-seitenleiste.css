@@ -1,0 +1,145 @@
+/* Rechte Spalte der Methodenseite (Issue #8): Druckvorlage, Digital, Passt auch dazu */
+.methode__seite {
+  display: flex;
+  flex-direction: column;
+  gap: var(--abstand-l);
+  min-width: 0;
+}
+
+.methode__seite h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.seitenleiste__druck,
+.seitenleiste__digital {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.seitenleiste__vorlage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seitenleiste__vorlagentitel,
+.seitenleiste__klein {
+  margin: 0;
+}
+
+.seitenleiste__vorlagentitel {
+  font-weight: 600;
+}
+
+.seitenleiste__klein {
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+.seitenleiste__digital a,
+.seitenleiste__klein a {
+  color: var(--farbe-link);
+  font-weight: 600;
+}
+
+.seitenleiste__tools,
+.seitenleiste__vorschlaege {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seitenleiste__tools {
+  gap: 6px;
+  font-size: 15px;
+}
+
+.seitenleiste__vorschlaege {
+  gap: 10px;
+}
+
+.methode__seite .knopf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-m);
+  border-radius: var(--radius-s);
+  font: inherit;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.methode__seite .knopf--haupt {
+  border: 0;
+  background: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+  font-weight: 600;
+}
+
+.methode__seite .knopf--neben {
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+  font-weight: 500;
+}
+
+.methode__seite .knopf[hidden] {
+  display: none;
+}
+
+.methode__seite .knopf:focus-visible,
+.vorschlag:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.vorschlag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--ziel-min);
+  padding: 12px 16px;
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  color: var(--farbe-text);
+  text-decoration: none;
+}
+
+.vorschlag:hover .vorschlag__titel {
+  text-decoration: underline;
+}
+
+.vorschlag__titel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vorschlag__punkt {
+  flex: 0 0 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--vorschlag-farbe);
+}
+
+.vorschlag__dauer {
+  flex: none;
+  color: var(--farbe-nebentext);
+  font-size: 13px;
+}
+

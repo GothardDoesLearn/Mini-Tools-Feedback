@@ -1,0 +1,41 @@
+/* Vorlagen-Übersicht /vorlagen/ */
+.vorlagen {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--abstand-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vorlagen__eintrag {
+  padding: var(--abstand-m);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+  background: var(--farbe-flaeche);
+}
+
+.vorlagen__eintrag p {
+  margin: var(--abstand-s) 0 0;
+}
+
+.vorlagen__titel {
+  margin: 0;
+}
+
+.vorlagen__titel a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+}
+
+.vorlagen__methoden {
+  color: var(--farbe-nebentext);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --abstand-seite: 24px;
+  }
+}
+

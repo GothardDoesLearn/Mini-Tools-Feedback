@@ -1,0 +1,92 @@
+@media screen {
+  /* Startseite: Kategorien als Reihe ovaler Papierkärtchen über den Karten (Issue #11) */
+  [data-ansicht="pinnwand"] .intro__text {
+    color: var(--farbe-text); /* auf dem Filz nur Textfarbe (4,53:1) */
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl {
+    margin-bottom: var(--abstand-m);
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  [data-ansicht="pinnwand"] .nur-filz {
+    display: inline;
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__titel {
+    margin: 0;
+    color: #FFFFFF; /* Weiß auf Filz nur als Large Text */
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__liste {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 16px 6px 20px;
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__eintrag {
+    position: relative;
+    flex: 0 0 132px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    height: 84px;
+    padding: 8px 10px 4px;
+    border-radius: 50%;
+    background: var(--kategorie-papier);
+    box-shadow: var(--schatten-schild);
+    text-align: center;
+    transform: rotate(-2deg);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__eintrag:nth-child(3n + 2) {
+    transform: rotate(2.5deg);
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__eintrag:nth-child(3n) {
+    transform: rotate(-0.5deg);
+  }
+
+  /* Pin oben auf dem Oval */
+  [data-ansicht="pinnwand"] .kategorie-auswahl__eintrag::before {
+    position: absolute;
+    top: 7px;
+    left: calc(50% - 6px);
+    width: 11px;
+    height: 11px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background: var(--kategorie-pin);
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__eintrag[aria-pressed="true"] {
+    outline: 3px solid var(--farbe-text);
+    box-shadow: var(--schatten-zettel);
+    font-weight: inherit;
+    transform: translateY(-6px) scale(1.07);
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__name {
+    flex: 0 0 auto;
+    font-family: var(--schrift-titel);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  [data-ansicht="pinnwand"] .kategorie-auswahl__anzahl {
+    color: var(--farbe-nebentext);
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
+

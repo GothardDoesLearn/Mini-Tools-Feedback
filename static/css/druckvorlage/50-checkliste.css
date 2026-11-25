@@ -1,0 +1,49 @@
+/* Ich-kann-Checkliste */
+.checkliste__titel {
+  margin: 0 0 5mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.checkliste {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.checkliste th,
+.checkliste td {
+  border: var(--blatt-linie);
+  padding: 2mm;
+}
+
+.checkliste th {
+  font-weight: 600;
+  text-align: left;
+}
+
+.checkliste th:nth-child(1) {
+  width: 44%;
+}
+
+.checkliste th:nth-child(n + 2):nth-child(-n + 4) {
+  width: 12%;
+  text-align: center;
+}
+
+.checkliste tbody td {
+  height: 29mm;
+}
+
+.checkliste__kreuz {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ankreuzfeld {
+  display: inline-block;
+  width: 7mm;
+  height: 7mm;
+  border: var(--blatt-linie);
+}
+
