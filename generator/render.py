@@ -1,6 +1,7 @@
 """Rendern: Jinja-Umgebung, Markdown-Filter und `write_page` (von allen Seiten genutzt)."""
 
 import re
+from functools import partial
 from pathlib import Path
 from xml.etree.ElementTree import SubElement
 
@@ -11,6 +12,7 @@ from markdown.treeprocessors import Treeprocessor
 from markupsafe import Markup
 
 from generator.config import SiteConfig
+from generator.hinweis import HINWEIS_MARKE, hinweis_links
 from generator.paths import TEMPLATES_DIR
 from generator.status import STATUS_TEXTE
 from generator.vorlagen import satzanfaenge
@@ -66,6 +68,8 @@ def make_env(config: SiteConfig) -> Environment:
     env.globals["site"] = config
     env.globals["status_texte"] = STATUS_TEXTE
     env.globals["satzanfaenge"] = satzanfaenge
+    env.globals["hinweis_links"] = partial(hinweis_links, config)
+    env.globals["HINWEIS_MARKE"] = HINWEIS_MARKE
     env.filters["kurzbeschreibung"] = kurzbeschreibung
     env.filters["markdown"] = markdown_zu_html
     return env

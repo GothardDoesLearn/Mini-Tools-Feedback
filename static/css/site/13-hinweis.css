@@ -1,0 +1,71 @@
+/* Hinweis-Links (PRD §5.8, templates/_hinweis.html): Methoden-, Vorlagen- und Über-Seite */
+.hinweis {
+  max-width: 720px;
+  margin-top: var(--abstand-xl);
+  padding: var(--abstand-l);
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+/* Unter „Kontakt“ auf /ueber/: Teil des Fließtexts, ohne eigenen Kasten */
+.textseite .hinweis {
+  margin-top: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.hinweis__titel {
+  margin: 0 0 var(--abstand-s);
+  font-size: 22px;
+}
+
+.hinweis__text {
+  margin: 0 0 var(--abstand-m);
+}
+
+.hinweis__wege {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--abstand-s) var(--abstand-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hinweis .hinweis__weg {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ziel-min);
+  padding: 0 var(--abstand-m);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-s);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hinweis .hinweis__weg:hover {
+  border-color: var(--farbe-text);
+  text-decoration: underline;
+}
+
+.hinweis__weg:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.hinweis__zusatz {
+  color: var(--farbe-nebentext);
+  font-size: 14px;
+}
+
+/* Bitte um einen Hinweis im Statushinweis (annahme): Farbe des Statushinweises übernehmen */
+.statushinweis__link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+}

@@ -10,6 +10,11 @@ domain: "https://example.org"
 # ENTWURF – vom Betreiber noch freizugeben.
 beschreibung: "Kurze Feedbackmethoden für den Unterricht (1–10 Minuten, analog oder digital) mit Anleitungen und Druckvorlagen für Lehrkräfte."
 
+# Hinweise (PRD §5.8): Ziel der Links „Auf GitHub melden“ und „Per E-Mail schreiben“.
+github_repo: "https://github.com/GothardDoesLearn/Mini-Tools-Feedback"
+# Kontakt-E-Mail-Adresse – noch offen (Issue #58), bis dahin Platzhalter.
+kontakt_email: "kontakt@example.org"
+
 # Werbeplätze einblenden? Standard: aus (siehe docs/adr/ zu Datenschutz/Werbung).
 werbung_aktiv: false
 

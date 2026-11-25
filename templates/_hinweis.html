@@ -1,0 +1,19 @@
+{# Hinweis-Links (PRD §5.8): „Auf GitHub melden“ und „Per E-Mail schreiben“. Im Druck ausgeblendet.
+   Nutzung: {% from "_hinweis.html" import hinweis %}
+            {{ hinweis(hinweis_links(hinweise, "methode", methode.titel, methode.id)) }}
+   `hinweis_links` ist ein Global (generator/hinweis.py); `hinweise` = site.hinweise aus dem Kontext.
+   ueberschrift=false: ohne eigene Überschrift, z. B. unter „Kontakt“ auf /ueber/.
+   Der Statushinweis bei annahme verlinkt auf #hinweis. #}
+{% macro hinweis(links, ueberschrift=true) %}
+{% set t = links.texte %}
+<section class="hinweis" id="hinweis"{% if ueberschrift %} aria-labelledby="hinweis-titel"{% else %} aria-label="{{ t.ueberschrift }}"{% endif %}>
+{% if ueberschrift %}
+  <h2 id="hinweis-titel" class="hinweis__titel">{{ t.ueberschrift }}</h2>
+{% endif %}
+  <p class="hinweis__text">{{ t.einleitung }}</p>
+  <ul class="hinweis__wege">
+    <li><a class="hinweis__weg extern-link" href="{{ links.github }}" rel="noopener noreferrer">{{ t.link_github }}<span class="nur-screenreader"> (externer Link)</span></a>{% if t.link_github_zusatz %} <span class="hinweis__zusatz">({{ t.link_github_zusatz }})</span>{% endif %}</li>
+    <li><a class="hinweis__weg" href="{{ links.mailto }}">{{ t.link_email }}</a></li>
+  </ul>
+</section>
+{% endmacro %}

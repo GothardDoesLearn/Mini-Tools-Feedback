@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError, field_validator
 
 from generator.paths import CONTENT_DIR
 
@@ -144,6 +144,44 @@ class StartseitenTexte(BaseModel):
     intro: str = Field(min_length=1)
 
 
+class HinweisBezug(BaseModel):
+    """Titel (auch E-Mail-Betreff) und Bezug eines Hinweises; Platzhalter {titel} und {id}."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    titel: str = Field(min_length=1)
+    bezug: str = ""
+
+    @field_validator("titel", "bezug")
+    @classmethod
+    def _nur_bekannte_platzhalter(cls, text: str) -> str:
+        try:
+            text.format(titel="", id="")
+        except (KeyError, IndexError, ValueError) as e:
+            raise ValueError(f"erlaubt sind nur die Platzhalter {{titel}} und {{id}}: {e}") from e
+        return text
+
+    def fuellen(self, titel: str = "", id: str = "") -> tuple[str, str]:
+        return self.titel.format(titel=titel, id=id), self.bezug.format(titel=titel, id=id)
+
+
+class HinweisTexte(BaseModel):
+    """Texte der Hinweis-Links aus content/hinweise.yaml (PRD §5.8)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    ueberschrift: str = Field(min_length=1)
+    einleitung: str = Field(min_length=1)
+    link_github: str = Field(min_length=1)
+    link_github_zusatz: str = ""
+    link_email: str = Field(min_length=1)
+    bitte_annahme: str = Field(min_length=1)
+    link_bitte_annahme: str = Field(min_length=1)
+    methode: HinweisBezug
+    vorlage: HinweisBezug
+    allgemein: HinweisBezug
+
+
 class Seite(BaseModel):
     """Eine Textseite aus content/seiten/ (z. B. Über, Impressum, Datenschutz)."""
 
@@ -163,6 +201,7 @@ class SiteData(BaseModel):
     filter: list[FilterGruppe]
     tools: list[Tool]
     tools_hinweis: str  # hinweis_freigabe aus tools.yaml
+    hinweise: HinweisTexte
     druckvorlagen: list[Druckvorlage]
     methoden: list[Methode]
 
@@ -200,16 +239,24 @@ def _load_liste[T: BaseModel](path: Path, modell: type[T]) -> list[T]:
         raise _schemafehler(f"{path.name}:", e) from e
 
 
-def load_startseite(content_dir: Path = CONTENT_DIR) -> StartseitenTexte:
-    path = content_dir / "startseite.yaml"
+def _load_texte[T: BaseModel](path: Path, modell: type[T]) -> T:
+    """Lädt eine YAML-Datei mit einem Objekt (keine Liste) und prüft sie gegen `modell`."""
     try:
         data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     except (OSError, yaml.YAMLError) as e:
         raise ContentError(f"{path.name}: nicht lesbar: {e}") from e
     try:
-        return StartseitenTexte.model_validate(data)
+        return modell.model_validate(data)
     except ValidationError as e:
         raise _schemafehler(f"{path.name}:", e) from e
+
+
+def load_startseite(content_dir: Path = CONTENT_DIR) -> StartseitenTexte:
+    return _load_texte(content_dir / "startseite.yaml", StartseitenTexte)
+
+
+def load_hinweise(content_dir: Path = CONTENT_DIR) -> HinweisTexte:
+    return _load_texte(content_dir / "hinweise.yaml", HinweisTexte)
 
 
 def load_kategorien(content_dir: Path = CONTENT_DIR) -> list[Kategorie]:
@@ -329,6 +376,7 @@ def load_site(content_dir: Path = CONTENT_DIR) -> SiteData:
         filter=load_filter(content_dir),
         tools=tools_datei.tools,
         tools_hinweis=tools_datei.hinweis_freigabe,
+        hinweise=load_hinweise(content_dir),
         druckvorlagen=load_druckvorlagen(content_dir),
         methoden=load_methoden(content_dir),
     )

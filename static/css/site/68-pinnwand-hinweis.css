@@ -1,0 +1,32 @@
+@media screen {
+  /* Hinweis-Links als weißer Zettel mit Pin (Methoden- und Vorlagenseite) */
+  [data-ansicht="pinnwand"] .hinweis {
+    position: relative;
+    padding: 34px clamp(20px, 4vw, 32px) 24px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: var(--schatten-zettel);
+  }
+
+  [data-ansicht="pinnwand"] .hinweis::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #2B4C9B;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-ansicht="pinnwand"] .textseite .hinweis {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  [data-ansicht="pinnwand"] .textseite .hinweis::before {
+    content: none;
+  }
+}

@@ -1,0 +1,23 @@
+# Texte für Hinweise von Lehrkräften an den Betreiber (PRD §5.8, Issue #59).
+# ENTWURF – vom Betreiber freizugeben.
+# In titel/bezug stehen {titel} und {id} für Titel und ID der Methode bzw. Druckvorlage.
+# `titel` ist zugleich Titel des GitHub-Issues und Betreff der E-Mail.
+
+ueberschrift: "Fehler entdeckt oder eine Idee?"
+einleitung: "Schreiben Sie uns einen Hinweis: einen Fehler, eine Ergänzung, eine Rückfrage oder eine neue Methode."
+link_github: "Auf GitHub melden"
+link_github_zusatz: "öffentlich sichtbar, GitHub-Konto nötig"
+link_email: "Per E-Mail schreiben"
+
+# Zusatz im Statushinweis bei Methoden mit Status annahme; Link springt zu den Hinweis-Links.
+bitte_annahme: "Sie kennen diese Methode anders?"
+link_bitte_annahme: "Geben Sie uns einen Hinweis."
+
+methode:
+  titel: "Hinweis zur Methode {titel}"
+  bezug: "Methode: {titel} ({id})"
+vorlage:
+  titel: "Hinweis zur Druckvorlage {titel}"
+  bezug: "Druckvorlage: {titel} ({id})"
+allgemein:
+  titel: "Hinweis zur Website"

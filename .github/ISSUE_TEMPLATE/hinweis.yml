@@ -1,0 +1,31 @@
+# Hinweis von Lehrkräften (PRD §5.8). Die Website verlinkt hierher mit vorausgefülltem Titel und Bezug.
+# ENTWURF – vom Betreiber freizugeben.
+name: Hinweis
+description: Fehler, Ergänzung, Rückfrage oder neue Methode zur Website Feedback-Tools
+labels: ["needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        **Bitte keine Namen oder Daten von Schülerinnen und Schülern angeben.**
+        Dieser Hinweis ist öffentlich sichtbar.
+  - type: dropdown
+    id: art
+    attributes:
+      label: Art des Hinweises
+      options:
+        - Fehler/Korrektur
+        - Ergänzung/Variante
+        - Rückfrage
+        - Neue Methode
+  - type: input
+    id: bezug
+    attributes:
+      label: Bezug
+      description: Methode, Druckvorlage oder Seite, um die es geht.
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Beschreibung
+    validations:
+      required: true

@@ -14,7 +14,8 @@ def test_werbung_ist_standardmaessig_aus():
 def test_website_name_kommt_aus_der_konfiguration(tmp_path: Path):
     config_file = tmp_path / "config.yaml"
     config_file.write_text(
-        'website_name: "Testseite"\ndomain: "https://test.example"\nbeschreibung: "Test"\n',
+        'website_name: "Testseite"\ndomain: "https://test.example"\nbeschreibung: "Test"\n'
+        'github_repo: "https://github.com/x/y"\nkontakt_email: "a@test.example"\n',
         encoding="utf-8",
     )
 

@@ -91,6 +91,7 @@ def kontext(methode: Methode, daten: SiteData) -> dict:
         "ist_digital": ist_digital(methode),
         "digitale_tools": digitale_tools(methode, daten),
         "tools_hinweis": daten.tools_hinweis,
+        "hinweise": daten.hinweise,  # Hinweis-Links (PRD §5.8)
         "passt_auch_dazu": [
             (m, daten.kategorie(m.kategorie)) for m in passt_auch_dazu(methode, daten)
         ],
