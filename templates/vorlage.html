@@ -13,8 +13,9 @@
       </p>
 {% if layout %}
 {% if vorlage.status == "annahme" %}
+{% set t = status_texte.vorlage.annahme %}
       <div class="hinweisbox" role="note">
-        <p><strong>Wird noch geprüft:</strong> Diese Druckvorlage ist nach aktueller Spezifikation gebaut und noch nicht abschließend geprüft.</p>
+        <p><strong>{{ t.titel }}:</strong> {{ t.text }}</p>
       </div>
 {% endif %}
       <p class="vorlage-kopf__aktion">
@@ -28,8 +29,9 @@
 {% include layout %}
     </div>
 {% else %}
+{% set t = status_texte.vorlage.platzhalter %}
     <div class="hinweisbox" role="note">
-      <p><strong>Vorlage folgt.</strong> Diese Druckvorlage ist noch nicht fertig.</p>
+      <p><strong>{{ t.titel }}.</strong> {{ t.text }}</p>
     </div>
 {% endif %}
 {% endblock %}

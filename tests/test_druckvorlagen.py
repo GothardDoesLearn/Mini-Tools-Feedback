@@ -16,7 +16,6 @@ def test_alle_druckvorlagen_werden_mit_schema_geladen():
     hand = site.druckvorlagen[0]
     assert hand.id == "feedback-hand"
     assert hand.titel == "Feedback-Hand"
-    assert hand.methoden == ["5-finger-methode"]
     assert hand.seiten == "1"
     assert hand.status == "fertig"
     ampel = next(v for v in site.druckvorlagen if v.id == "ampelkarten")
@@ -46,17 +45,27 @@ def test_unbekannte_druckvorlagen_id_bricht_mit_klarer_meldung_ab(tmp_path: Path
         load_site(content_mit_querverweisen(tmp_path, methode))
 
 
-def test_unbekannte_methoden_id_in_druckvorlagen_yaml_bricht_ab(tmp_path: Path):
+def test_methoden_einer_druckvorlage_kommen_aus_den_methodendateien():
+    # PRD §9.6: eine neue Methode = eine .md-Datei; druckvorlagen.yaml nennt keine Methoden.
+    site = load_site()
+
+    assert [m.id for m in site.methoden_mit_vorlage("feedback-hand")] == ["5-finger-methode"]
+    # nach Titel sortiert (DIN 5007)
+    assert [m.titel for m in site.methoden_mit_vorlage("wettersymbole")] == [
+        "Klebepunkte",
+        "Wetterbericht",
+    ]
+
+
+def test_druckvorlage_ohne_methode_bricht_ab(tmp_path: Path):
     content_dir = content_mit_querverweisen(tmp_path)
     datei = content_dir / "druckvorlagen.yaml"
     datei.write_text(
-        datei.read_text(encoding="utf-8").replace("[test-methode]", "[gibts-nicht]"),
-        encoding="utf-8",
+        datei.read_text(encoding="utf-8").replace("test-vorlage", "verwaist"), encoding="utf-8"
     )
 
     with pytest.raises(
-        ContentError,
-        match=r"druckvorlagen\.yaml: test-vorlage: methoden 'gibts-nicht' ist unbekannt",
+        ContentError, match=r"druckvorlagen\.yaml: verwaist: keine Methode nennt diese Vorlage"
     ):
         load_site(content_dir)
 

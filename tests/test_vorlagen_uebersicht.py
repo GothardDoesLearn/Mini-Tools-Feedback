@@ -40,7 +40,7 @@ def test_eintrag_verlinkt_zugehoerige_methoden_mit_titel(uebersicht: str, site):
     titel = {m.id: m.titel for m in site.methoden}
     for v in site.druckvorlagen:
         eintrag = _eintrag(uebersicht, v.id)
-        for methoden_id in v.methoden:
+        for methoden_id in (m.id for m in site.methoden_mit_vorlage(v.id)):
             assert f'href="/methoden/{methoden_id}/"' in eintrag
             assert titel[methoden_id] in eintrag
 

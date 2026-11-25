@@ -1,5 +1,4 @@
 {# Methodenkarte (Issue #10). Erwartet ein generator.karten.Karte-Objekt. #}
-{% set status_labels = {"annahme": "wird geprüft", "platzhalter": "Platzhalter"} %}
 
 {% macro icon(name) %}
 <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -24,8 +23,8 @@
 {% else %}
     <span class="karte__kategorie">{{ k.kategorie.kurzname }}</span>
 {% endif %}
-{% if k.status in status_labels %}
-    <span class="karte__status karte__status--{{ k.status }}">{{ status_labels[k.status] }}</span>
+{% if k.status in status_texte.methode %}
+    <span class="karte__status karte__status--{{ k.status }}">{{ status_texte.methode[k.status].marke }}</span>
 {% endif %}
   </div>
   <h2 class="karte__titel"><a class="karte__link" href="{{ k.url }}">{{ k.titel }}</a></h2>

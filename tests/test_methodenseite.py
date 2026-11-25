@@ -5,7 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from generator.build import build
+from generator.build import build, make_env
+from generator.config import load_config
 from generator.content import load_site
 from generator.methodenseite import kontext
 
@@ -65,6 +66,24 @@ def test_annahme_zeigt_hinweisbox_mit_hinweistext(dist: Path):
 def test_platzhalter_zeigt_hinweisbox_als_platzhalter(dist: Path):
     box = hinweisbox(seite(dist, "wimmelbild-zuordnen"))
     assert box.startswith("<strong>Platzhalter:</strong> Platzhalter – Ablauf und Bild")
+
+
+@pytest.mark.parametrize(
+    ("status", "erwartet"),
+    [
+        ("annahme", "<strong>Wird noch geprüft:</strong> Der Ablauf wird noch geprüft."),
+        (
+            "platzhalter",
+            "<strong>Platzhalter:</strong> Dieser Inhalt fehlt noch und folgt nach Rücksprache.",
+        ),
+    ],
+)
+def test_statushinweis_ohne_hinweistext_nutzt_standardtext_je_status(status, erwartet):
+    env = make_env(load_config())
+    html = env.from_string(
+        '{% from "_statushinweis.html" import statushinweis %}{{ statushinweis(s) }}'
+    ).render(s=status)
+    assert hinweisbox(html) == erwartet
 
 
 def test_kurzinfos_mit_labels_aus_den_stammdaten(dist: Path):

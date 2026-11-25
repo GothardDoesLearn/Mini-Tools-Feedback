@@ -44,8 +44,8 @@ def test_digitale_tools_aus_methode_und_tools_yaml(site):
         "mentimeter",
         "oncoo",
     ]
-    # 4-ecken-methode hat kein Feld tools, steht aber bei plickers in tools.yaml.
-    assert [t.id for t in digitale_tools(methode(site, "4-ecken-methode"), site)] == ["plickers"]
+    # 4-ecken-methode ist analog: plickers nennt sie in tools.yaml, zählt aber nicht (PRD §5.3).
+    assert digitale_tools(methode(site, "4-ecken-methode"), site) == []
     assert digitale_tools(methode(site, "daumenprobe"), site) == []
 
 
@@ -112,6 +112,11 @@ def test_digitale_methode_ohne_eigene_tools_verweist_auf_toolseite(dist: Path):
 
 def test_analoge_methode_ohne_tools_hat_keinen_digitalbereich(dist: Path):
     assert "seitenleiste__digital" not in seitenleiste(dist, "daumenprobe")
+
+
+def test_analoge_methode_aus_tools_yaml_hat_keinen_digitalbereich(dist: Path):
+    # PRD §5.3: Tool-Links nur bei digitalen Methoden.
+    assert "seitenleiste__digital" not in seitenleiste(dist, "4-ecken-methode")
 
 
 def test_passt_auch_dazu_verlinkt_hoechstens_drei_methoden(dist: Path):

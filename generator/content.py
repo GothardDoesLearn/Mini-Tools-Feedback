@@ -12,6 +12,19 @@ from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
 
 from generator.paths import CONTENT_DIR
 
+# Bearbeitungsstand einer Methode oder Druckvorlage (PRD §6); Textseiten haben eigene Stufen.
+Status = Literal["fertig", "annahme", "platzhalter"]
+SeitenStatus = Literal["fertig", "entwurf", "platzhalter"]
+PLATZHALTER: Status = "platzhalter"
+
+
+_UMLAUTE = str.maketrans({"ä": "a", "ö": "o", "ü": "u", "ß": "ss"})
+
+
+def titel_sortierschluessel(titel: str) -> str:
+    """Alphabetisch nach DIN 5007-1 (ä wie a usw.), ohne Groß-/Kleinschreibung."""
+    return titel.casefold().translate(_UMLAUTE)
+
 
 class ContentError(Exception):
     """Fehler in einer Datei unter content/ – der Build bricht ab."""
@@ -42,7 +55,7 @@ class Methode(BaseModel):
     druckvorlagen: list[str]
     druckvorlage_optional: bool = False
     tools: list[str] = []
-    status: Literal["fertig", "annahme", "platzhalter"]
+    status: Status
     hinweis: str | None = None
     verwandt: list[str] = []
     videos: list[Video] = []
@@ -99,16 +112,18 @@ class Tool(BaseModel):
 
 
 class Druckvorlage(BaseModel):
-    """Eine Zeile der Vorlagen-Tabelle aus docs/DRUCKVORLAGEN.md."""
+    """Eine Zeile der Vorlagen-Tabelle aus docs/DRUCKVORLAGEN.md.
+
+    Die zugehörigen Methoden stehen nur in deren Feld `druckvorlagen`
+    (SiteData.methoden_mit_vorlage, PRD §9.6)."""
 
     model_config = ConfigDict(extra="forbid")
 
     id: str = Field(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")
     titel: str
-    methoden: list[str] = Field(min_length=1)
     inhalt: str
     seiten: str
-    status: Literal["fertig", "annahme", "platzhalter"]
+    status: Status
 
 
 class StartseitenTexte(BaseModel):
@@ -127,7 +142,7 @@ class Seite(BaseModel):
 
     id: str = Field(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")
     titel: str
-    status: Literal["fertig", "entwurf", "platzhalter"]
+    status: SeitenStatus
     hinweis: str | None = None
     body: str
 
@@ -140,6 +155,17 @@ class SiteData(BaseModel):
     tools: list[Tool]
     druckvorlagen: list[Druckvorlage]
     methoden: list[Methode]
+
+    def kategorie(self, kategorie_id: str) -> Kategorie:
+        """Die Kategorie mit dieser ID (A–G) aus kategorien.yaml."""
+        return next(k for k in self.kategorien if k.id == kategorie_id)
+
+    def methoden_mit_vorlage(self, vorlage_id: str) -> list[Methode]:
+        """Methoden, die diese Druckvorlage in ihrem Feld `druckvorlagen` nennen, nach Titel."""
+        return sorted(
+            (m for m in self.methoden if vorlage_id in m.druckvorlagen),
+            key=lambda m: titel_sortierschluessel(m.titel),
+        )
 
 
 ERLAUBTE_WERTE_FELDER = ("kategorie", "richtung", "zeitpunkt", "form")
@@ -303,6 +329,8 @@ def _pruefe_querverweise(site: SiteData) -> list[str]:
         fehler += _unbekannt(f"{m.id}.md", "druckvorlagen", m.druckvorlagen, vorlagen_ids)
     for t in site.tools:
         fehler += _unbekannt(f"tools.yaml: {t.id}", "methoden", t.methoden, methoden_ids)
+    genutzte_vorlagen = {v for m in site.methoden for v in m.druckvorlagen}
     for v in site.druckvorlagen:
-        fehler += _unbekannt(f"druckvorlagen.yaml: {v.id}", "methoden", v.methoden, methoden_ids)
+        if v.id not in genutzte_vorlagen:
+            fehler.append(f"druckvorlagen.yaml: {v.id}: keine Methode nennt diese Vorlage.")
     return fehler

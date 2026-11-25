@@ -1,11 +1,12 @@
-{# Status-Hinweis für Inhalte mit status "annahme" oder "platzhalter" (AGENTS.md: sichtbar kennzeichnen).
+{# Status-Hinweis für Methoden mit status "annahme" oder "platzhalter" (AGENTS.md: sichtbar kennzeichnen).
    Nutzung: {% from "_statushinweis.html" import statushinweis %} … {{ statushinweis(status, hinweis) }}
-   Bei status "fertig" wird nichts ausgegeben. #}
+   Texte aus generator/status.py (Global status_texte). Bei status "fertig" wird nichts ausgegeben. #}
 {% macro statushinweis(status, hinweis=none) %}
-{% if status in ("annahme", "platzhalter") %}
+{% if status in status_texte.methode %}
+{% set t = status_texte.methode[status] %}
 <p class="statushinweis statushinweis--{{ status }}" role="note">
-  <strong>{{ "Platzhalter" if status == "platzhalter" else "Wird noch geprüft" }}:</strong>
-  {{ hinweis or "Der Ablauf wird noch geprüft." }}
+  <strong>{{ t.titel }}:</strong>
+  {{ hinweis or t.text }}
 </p>
 {% endif %}
 {% endmacro %}

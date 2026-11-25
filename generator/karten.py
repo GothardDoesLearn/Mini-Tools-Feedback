@@ -4,10 +4,16 @@ import math
 import re
 from dataclasses import dataclass, field
 
-from generator.content import Kategorie, Methode, SiteData
+from generator.content import (
+    PLATZHALTER,
+    Kategorie,
+    Methode,
+    SiteData,
+    Status,
+    titel_sortierschluessel,
+)
 
 KURZTEXT_MAX_ZEICHEN = 110
-_UMLAUTE = str.maketrans({"ä": "a", "ö": "o", "ü": "u", "ß": "ss"})
 
 
 @dataclass(frozen=True)
@@ -20,7 +26,7 @@ class Karte:
     formen: list[tuple[str, str]]  # (id, label) aus filter.yaml
     druckvorlage: bool
     druckvorlage_optional: bool
-    status: str
+    status: Status
     # Filterwerte je Feld aus filter.yaml (Issue #14), z. B. {"zeitpunkt": ["stundenende"]}
     filterwerte: dict[str, list[str]] = field(default_factory=dict)
     # Minuten für den Dauer-Filter (Issue #19); `dauerhaft` = 0/0
@@ -30,11 +36,6 @@ class Karte:
     @property
     def url(self) -> str:
         return f"/methoden/{self.id}/"
-
-
-def titel_sortierschluessel(titel: str) -> str:
-    """Alphabetisch nach DIN 5007-1 (ä wie a usw.), ohne Groß-/Kleinschreibung."""
-    return titel.casefold().translate(_UMLAUTE)
 
 
 def kurztext(methode: Methode, max_zeichen: int = KURZTEXT_MAX_ZEICHEN) -> str:
@@ -54,7 +55,7 @@ def hat_druckvorlage(methode: Methode, site: SiteData) -> bool:
     """Mindestens eine Druckvorlage, die nicht im Status `platzhalter` ist (PRD §9.3).
     Gilt für Karten-Icon und Filter gleichermaßen."""
     vorlagen_status = {v.id: v.status for v in site.druckvorlagen}
-    return any(vorlagen_status[v] != "platzhalter" for v in methode.druckvorlagen)
+    return any(vorlagen_status[v] != PLATZHALTER for v in methode.druckvorlagen)
 
 
 def filterwerte(methode: Methode, site: SiteData) -> dict[str, list[str]]:
@@ -84,7 +85,6 @@ def dauer_bereich(site: SiteData) -> tuple[int, int]:
 
 def karten(site: SiteData) -> list[Karte]:
     """Alle Methoden als Karten, nach Kategorie (Reihenfolge in kategorien.yaml), dann Titel."""
-    kategorien = {k.id: k for k in site.kategorien}
     reihenfolge = {k.id: i for i, k in enumerate(site.kategorien)}
     form_labels = {
         w.id: w.label for gruppe in site.filter if gruppe.feld == "form" for w in gruppe.werte
@@ -99,7 +99,7 @@ def karten(site: SiteData) -> list[Karte]:
             titel=m.titel,
             kurz=kurztext(m),
             dauer=m.dauer,
-            kategorie=kategorien[m.kategorie],
+            kategorie=site.kategorie(m.kategorie),
             formen=[(f, form_labels.get(f, f)) for f in m.form],
             druckvorlage=hat_druckvorlage(m, site),
             druckvorlage_optional=m.druckvorlage_optional,

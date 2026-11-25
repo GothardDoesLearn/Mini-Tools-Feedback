@@ -73,7 +73,7 @@ def kurzinfos(methode: Methode, daten: SiteData) -> list[tuple[str, str]]:
 
 def kontext(methode: Methode, daten: SiteData) -> dict:
     """Render-Kontext für templates/methode.html (geschrieben von build.write_methodenseiten)."""
-    kategorie = next(k for k in daten.kategorien if k.id == methode.kategorie)
+    kategorie = daten.kategorie(methode.kategorie)
     nutzen = kurztext(methode, NUTZEN_MAX)
     return {
         "aktiver_bereich": "methoden",
@@ -88,11 +88,10 @@ def kontext(methode: Methode, daten: SiteData) -> dict:
         "druckvorlagen": [
             v for i in methode.druckvorlagen for v in daten.druckvorlagen if v.id == i
         ],
-        "ist_digital": "digital" in methode.form,
+        "ist_digital": ist_digital(methode),
         "digitale_tools": digitale_tools(methode, daten),
         "passt_auch_dazu": [
-            (m, next(k for k in daten.kategorien if k.id == m.kategorie))
-            for m in passt_auch_dazu(methode, daten)
+            (m, daten.kategorie(m.kategorie)) for m in passt_auch_dazu(methode, daten)
         ],
         "videos": [anzeige(v) for v in methode.videos],
     }
@@ -115,8 +114,15 @@ def passt_auch_dazu(methode: Methode, daten: SiteData) -> list[Methode]:
     return vorschlaege[:PASST_AUCH_DAZU_MAX]
 
 
+def ist_digital(methode: Methode) -> bool:
+    return "digital" in methode.form
+
+
 def digitale_tools(methode: Methode, daten: SiteData) -> list[Tool]:
-    """Tools aus dem Feld `tools` der Methode, dazu Tools, die die Methode in tools.yaml nennen."""
+    """Nur bei digitalen Methoden (PRD §5.3): Tools aus dem Feld `tools` der Methode, dazu
+    Tools, die die Methode in tools.yaml nennen."""
+    if not ist_digital(methode):
+        return []
     ids = list(methode.tools)
     ids += [t.id for t in daten.tools if methode.id in t.methoden and t.id not in ids]
     nach_id = {t.id: t for t in daten.tools}

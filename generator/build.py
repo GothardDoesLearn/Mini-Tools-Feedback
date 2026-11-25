@@ -13,10 +13,11 @@ from markupsafe import Markup
 
 from generator import methodenseite, paths
 from generator.config import SiteConfig, load_config
-from generator.content import SiteData, load_seiten, load_site, load_startseite
+from generator.content import PLATZHALTER, SiteData, load_seiten, load_site, load_startseite
 from generator.karten import dauer_bereich, karten
 from generator.paths import DIST_DIR, STATIC_DIR, TEMPLATES_DIR
 from generator.startseite import kategorie_auswahl
+from generator.status import STATUS_TEXTE
 from generator.suche import suchindex
 
 # Layout einer Druckvorlage: templates/vorlagen/<id>.html (fehlt es: Seite „Vorlage folgt“).
@@ -74,6 +75,7 @@ def make_env(config: SiteConfig) -> Environment:
         lstrip_blocks=True,
     )
     env.globals["site"] = config
+    env.globals["status_texte"] = STATUS_TEXTE
     env.filters["kurzbeschreibung"] = kurzbeschreibung
     env.filters["markdown"] = markdown_zu_html
     return env
@@ -94,10 +96,9 @@ def write_page(env: Environment, output_dir: Path, url_path: str, template: str,
 
 def write_vorlagen(env: Environment, output_dir: Path, site: SiteData) -> None:
     """Schreibt /vorlagen/<id>/ für jede Druckvorlage."""
-    methoden = {m.id: m for m in site.methoden}
     for vorlage in site.druckvorlagen:
         layout = f"{VORLAGEN_LAYOUT_DIR}/{vorlage.id}.html"
-        gebaut = vorlage.status != "platzhalter" and (TEMPLATES_DIR / layout).is_file()
+        gebaut = vorlage.status != PLATZHALTER and (TEMPLATES_DIR / layout).is_file()
         write_page(
             env,
             output_dir,
@@ -107,7 +108,7 @@ def write_vorlagen(env: Environment, output_dir: Path, site: SiteData) -> None:
             seitentitel=f"{vorlage.titel} – Druckvorlage",
             beschreibung=kurzbeschreibung(f"Druckvorlage {vorlage.titel}: {vorlage.inhalt}"),
             vorlage=vorlage,
-            methoden=[methoden[m] for m in vorlage.methoden],
+            methoden=site.methoden_mit_vorlage(vorlage.id),
             layout=layout if gebaut else None,
         )
 
@@ -187,8 +188,7 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         "vorlagen",
         "vorlagen.html",
         aktiver_bereich="vorlagen",
-        druckvorlagen=site_data.druckvorlagen,
-        methoden_titel={m.id: m.titel for m in site_data.methoden},
+        druckvorlagen=[(v, site_data.methoden_mit_vorlage(v.id)) for v in site_data.druckvorlagen],
     )
     write_vorlagen(env, output_dir, site_data)
     for seite in load_seiten(paths.CONTENT_DIR):

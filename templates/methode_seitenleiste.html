@@ -7,7 +7,7 @@
     <h2 id="seitenleiste-druck">{{ "Druckvorlagen" if druckvorlagen | length > 1 else "Druckvorlage" }}</h2>
 {% for vorlage in druckvorlagen %}
     <div class="seitenleiste__vorlage">
-      <p class="seitenleiste__vorlagentitel">{{ vorlage.titel }}{% if vorlage.status == "annahme" %} <span class="status-hinweis">wird geprüft</span>{% elif vorlage.status == "platzhalter" %} <span class="status-hinweis">Vorlage folgt</span>{% endif %}</p>
+      <p class="seitenleiste__vorlagentitel">{{ vorlage.titel }}{% if vorlage.status in status_texte.vorlage %} <span class="status-hinweis">{{ status_texte.vorlage[vorlage.status].marke }}</span>{% endif %}</p>
 {% if vorlage.seiten not in ("", "–", "-") %}
       <p class="seitenleiste__klein">A4 · Seiten: {{ vorlage.seiten }}</p>
 {% endif %}
@@ -29,7 +29,7 @@
     <button type="button" class="knopf knopf--neben" data-drucken hidden>Anleitung drucken</button>
   </div>
 {% endif %}
-{% if ist_digital or digitale_tools %}
+{% if ist_digital %}
   <section class="seitenleiste__digital" aria-labelledby="seitenleiste-digital">
     <h2 id="seitenleiste-digital">Digital</h2>
 {% if digitale_tools %}

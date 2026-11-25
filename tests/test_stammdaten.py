@@ -51,7 +51,6 @@ TOOLS_YAML = """\
 DRUCKVORLAGEN_YAML = """\
 - id: test-vorlage
   titel: Testvorlage
-  methoden: [test-methode]
   inhalt: Testinhalt
   seiten: "1"
   status: fertig
@@ -59,7 +58,11 @@ DRUCKVORLAGEN_YAML = """\
 
 
 def content_mit_querverweisen(tmp_path: Path, methode: str = GUELTIGE_METHODE) -> Path:
-    """Eine Methode plus tools.yaml/druckvorlagen.yaml, die nur auf diese Methode zeigen."""
+    """Eine Methode plus tools.yaml/druckvorlagen.yaml, die nur auf diese Methode zeigen.
+
+    Ohne eigene Druckvorlagen nutzt die Methode `test-vorlage` (jede Vorlage braucht eine Methode).
+    """
+    methode = methode.replace("druckvorlagen: []", 'druckvorlagen: ["test-vorlage"]')
     content_dir = content_mit_methode(tmp_path, "test-methode.md", methode)
     (content_dir / "tools.yaml").write_text(TOOLS_YAML, encoding="utf-8")
     (content_dir / "druckvorlagen.yaml").write_text(DRUCKVORLAGEN_YAML, encoding="utf-8")
