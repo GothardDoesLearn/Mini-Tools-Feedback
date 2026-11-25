@@ -46,15 +46,20 @@ def kurztext(methode: Methode, max_zeichen: int = KURZTEXT_MAX_ZEICHEN) -> str:
     return text[:max_zeichen].rsplit(" ", 1)[0].rstrip(" ,;:–-") + " …"
 
 
+def hat_druckvorlage(methode: Methode, site: SiteData) -> bool:
+    """Mindestens eine Druckvorlage, die nicht im Status `platzhalter` ist (PRD §9.3).
+    Gilt für Karten-Icon und Filter gleichermaßen."""
+    vorlagen_status = {v.id: v.status for v in site.druckvorlagen}
+    return any(vorlagen_status[v] != "platzhalter" for v in methode.druckvorlagen)
+
+
 def filterwerte(methode: Methode, site: SiteData) -> dict[str, list[str]]:
     """Werte je Filtergruppe (Reihenfolge wie filter.yaml). `druckvorlage` ist abgeleitet:
     "ja", wenn mindestens eine Druckvorlage nicht im Status `platzhalter` ist (PRD §9.3)."""
-    vorlagen_status = {v.id: v.status for v in site.druckvorlagen}
     werte = {}
     for gruppe in site.filter:
         if gruppe.feld == "druckvorlage":
-            echt = any(vorlagen_status[v] != "platzhalter" for v in methode.druckvorlagen)
-            werte["druckvorlage"] = ["ja" if echt else "nein"]
+            werte["druckvorlage"] = ["ja" if hat_druckvorlage(methode, site) else "nein"]
         else:
             wert = getattr(methode, gruppe.feld)
             werte[gruppe.feld] = list(wert) if isinstance(wert, list) else [wert]
@@ -80,7 +85,7 @@ def karten(site: SiteData) -> list[Karte]:
             dauer=m.dauer,
             kategorie=kategorien[m.kategorie],
             formen=[(f, form_labels.get(f, f)) for f in m.form],
-            druckvorlage=bool(m.druckvorlagen),
+            druckvorlage=hat_druckvorlage(m, site),
             druckvorlage_optional=m.druckvorlage_optional,
             status=m.status,
             filterwerte=filterwerte(m, site),
