@@ -75,7 +75,9 @@ Alle Inhalte liegen fertig in `content/`.
 - Beschreibung der Kategorie + alle Methoden darin.
 
 ### 5.5 Digitale Tools `/tools/`
-- Tabelle/Karten aus `tools.yaml` mit Link, Zweck, Ablauf, Gerätebedarf, Datenschutzhinweis.
+- Tabelle/Karten aus `tools.yaml` mit Link, Zweck, Ablauf, Gerätebedarf und optionalem Hinweis (Feld `hinweis`,
+  z. B. ein Nutzungstipp). Keine Datenschutzangaben je Tool: Sie veralten schnell, und über die Zulässigkeit
+  entscheidet die Schule – darauf verweist der allgemeine Hinweis.
 - Allgemeiner Hinweis: „Bitte prüfen Sie, ob das Tool an Ihrer Schule freigegeben ist.“
 
 ### 5.6 Druckvorlagen `/vorlagen/` und `/vorlagen/<id>/`

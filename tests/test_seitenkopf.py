@@ -1,4 +1,4 @@
-"""Issue #35: eigene 404, Seitentitel und Description je Seite, Favicon-Platzhalter."""
+"""Issue #35: eigene 404, Seitentitel und Description je Seite, Favicon."""
 
 import re
 from pathlib import Path
