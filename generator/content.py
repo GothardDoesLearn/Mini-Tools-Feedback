@@ -91,12 +91,26 @@ class Tool(BaseModel):
     methoden: list[str] = []
 
 
+class Druckvorlage(BaseModel):
+    """Eine Zeile der Vorlagen-Tabelle aus docs/DRUCKVORLAGEN.md."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")
+    titel: str
+    methoden: list[str] = Field(min_length=1)
+    inhalt: str
+    seiten: str
+    status: Literal["fertig", "annahme", "platzhalter"]
+
+
 class SiteData(BaseModel):
     """Alle Inhalte aus content/, geprüft inklusive Querverweisen."""
 
     kategorien: list[Kategorie]
     filter: list[FilterGruppe]
     tools: list[Tool]
+    druckvorlagen: list[Druckvorlage]
     methoden: list[Methode]
 
 
@@ -132,6 +146,10 @@ def load_filter(content_dir: Path = CONTENT_DIR) -> list[FilterGruppe]:
 
 def load_tools(content_dir: Path = CONTENT_DIR) -> list[Tool]:
     return _load_liste(content_dir / "tools.yaml", Tool)
+
+
+def load_druckvorlagen(content_dir: Path = CONTENT_DIR) -> list[Druckvorlage]:
+    return _load_liste(content_dir / "druckvorlagen.yaml", Druckvorlage)
 
 
 def erlaubte_werte(content_dir: Path = CONTENT_DIR) -> dict[str, list[str]]:
@@ -198,13 +216,13 @@ def load_methoden(content_dir: Path = CONTENT_DIR) -> list[Methode]:
 def load_site(content_dir: Path = CONTENT_DIR) -> SiteData:
     """Lädt alle Inhalte und prüft die Querverweise; bei Fehlern ContentError.
 
-    Die kategorie einer Methode prüft schon load_methoden; die druckvorlagen-IDs werden
-    geprüft, sobald es die Druckvorlagen-Datei gibt.
+    Die kategorie einer Methode prüft schon load_methoden.
     """
     site = SiteData(
         kategorien=load_kategorien(content_dir),
         filter=load_filter(content_dir),
         tools=load_tools(content_dir),
+        druckvorlagen=load_druckvorlagen(content_dir),
         methoden=load_methoden(content_dir),
     )
     fehler = _pruefe_querverweise(site)
@@ -220,10 +238,14 @@ def _unbekannt(datei: str, feld: str, ids: list[str], bekannt: set[str]) -> list
 def _pruefe_querverweise(site: SiteData) -> list[str]:
     tool_ids = {t.id for t in site.tools}
     methoden_ids = {m.id for m in site.methoden}
+    vorlagen_ids = {v.id for v in site.druckvorlagen}
     fehler = []
     for m in site.methoden:
         fehler += _unbekannt(f"{m.id}.md", "tools", m.tools, tool_ids)
         fehler += _unbekannt(f"{m.id}.md", "verwandt", m.verwandt, methoden_ids)
+        fehler += _unbekannt(f"{m.id}.md", "druckvorlagen", m.druckvorlagen, vorlagen_ids)
     for t in site.tools:
         fehler += _unbekannt(f"tools.yaml: {t.id}", "methoden", t.methoden, methoden_ids)
+    for v in site.druckvorlagen:
+        fehler += _unbekannt(f"druckvorlagen.yaml: {v.id}", "methoden", v.methoden, methoden_ids)
     return fehler
