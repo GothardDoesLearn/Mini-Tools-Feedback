@@ -58,6 +58,9 @@ class Kategorie(BaseModel):
     kurz: str
     beschreibung: str
     farbe: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
+    kurzname: str
+    papier: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
+    pin: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
 
 
 class FilterWert(BaseModel):

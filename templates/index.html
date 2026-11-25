@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% from "_karte.html" import karte %}
 {% block content %}
     <h1>{{ site.website_name }}</h1>
+    <section class="uebersicht" aria-labelledby="uebersicht-titel">
+      <p id="uebersicht-titel" class="uebersicht__anzahl">{{ karten | length }} Methoden</p>
+      <div class="karten">
+{% for k in karten %}
+        {{ karte(k) | indent(8) }}
+{% endfor %}
+      </div>
+    </section>
 {% endblock %}
