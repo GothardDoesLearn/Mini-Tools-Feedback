@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "_karte.html" import karte %}
+{% block content %}
+    <p class="zurueck"><a href="/">Alle Methoden</a></p>
+    <h1>{{ kategorie.titel }}</h1>
+    <p class="kategorie__beschreibung">{{ kategorie.beschreibung }}</p>
+    <section class="uebersicht" aria-labelledby="uebersicht-titel">
+      <p id="uebersicht-titel" class="uebersicht__anzahl">{{ karten | length }} {{ "Methode" if karten | length == 1 else "Methoden" }}</p>
+      <div class="karten">
+{% for k in karten %}
+        {{ karte(k, kategorie_link=false) | indent(8) }}
+{% endfor %}
+      </div>
+    </section>
+{% endblock %}
