@@ -30,8 +30,54 @@
         var wert = element.getAttribute("data-filter-" + feld);
         werte[feld] = wert ? wert.split(" ") : [];
       });
-      return { element: element, id: element.getAttribute("data-methode"), werte: werte };
+      var kategorie = element.getAttribute("data-filter-kategorie");
+      return {
+        element: element,
+        id: element.getAttribute("data-methode"),
+        werte: werte,
+        kategorien: kategorie ? kategorie.split(" ") : []
+      };
     });
+
+  // Kategorie-Auswahl (Issue #15): Buttons mit data-kategorie und aria-pressed, Mehrfachauswahl.
+  // „Alle“ (data-kategorie="") ist gedrückt, wenn keine Kategorie gewählt ist, und hebt die
+  // Auswahl auf.
+  var kategorieKnoepfe = Array.prototype.slice.call(document.querySelectorAll("[data-kategorie]"));
+
+  function istGedrueckt(knopf) {
+    return knopf.getAttribute("aria-pressed") === "true";
+  }
+
+  function kategorienAnzeigen(gewaehlt) {
+    kategorieKnoepfe.forEach(function (knopf) {
+      var id = knopf.getAttribute("data-kategorie");
+      var gedrueckt = id === "" ? gewaehlt.length === 0 : gewaehlt.indexOf(id) !== -1;
+      knopf.setAttribute("aria-pressed", gedrueckt ? "true" : "false");
+    });
+  }
+
+  function gewaehlteKategorien() {
+    return kategorieKnoepfe
+      .filter(function (knopf) { return knopf.getAttribute("data-kategorie") !== ""; })
+      .filter(istGedrueckt)
+      .map(function (knopf) { return knopf.getAttribute("data-kategorie"); });
+  }
+
+  kategorieKnoepfe.forEach(function (knopf) {
+    knopf.addEventListener("click", function () {
+      var id = knopf.getAttribute("data-kategorie");
+      var gewaehlt = gewaehlteKategorien();
+      if (id === "") {
+        gewaehlt = [];
+      } else if (gewaehlt.indexOf(id) !== -1) {
+        gewaehlt.splice(gewaehlt.indexOf(id), 1);
+      } else {
+        gewaehlt.push(id);
+      }
+      kategorienAnzeigen(gewaehlt);
+      aktualisieren();
+    });
+  });
 
   // Gewählte Werte je Filtergruppe: { feld: [werte] }; Gruppen ohne Haken fehlen.
   function zustandLesen() {
@@ -39,7 +85,7 @@
     boxen.forEach(function (box) {
       if (box.checked) (auswahl[box.name] = auswahl[box.name] || []).push(box.value);
     });
-    return { auswahl: auswahl };
+    return { auswahl: auswahl, kategorien: gewaehlteKategorien() };
   }
 
   // ODER innerhalb einer Gruppe, UND zwischen Gruppen.
@@ -51,10 +97,17 @@
     });
   }
 
-  var PRUEFUNGEN = [passtZuFiltergruppen];
+  // ODER zwischen den gewählten Kategorien; keine Auswahl = alle.
+  function passtZuKategorien(karte, zustand) {
+    return zustand.kategorien.length === 0 || zustand.kategorien.some(function (id) {
+      return karte.kategorien.indexOf(id) !== -1;
+    });
+  }
+
+  var PRUEFUNGEN = [passtZuFiltergruppen, passtZuKategorien];
 
   function istGefiltert(zustand) {
-    return Object.keys(zustand.auswahl).length > 0;
+    return Object.keys(zustand.auswahl).length > 0 || zustand.kategorien.length > 0;
   }
 
   function aktualisieren() {
@@ -75,6 +128,7 @@
 
   function zuruecksetzen() {
     // Die Checkboxen leert der Browser selbst (type="reset"); erst danach neu filtern.
+    kategorienAnzeigen([]);
     window.setTimeout(aktualisieren, 0);
   }
 
