@@ -71,8 +71,11 @@ Alle Inhalte liegen fertig in `content/`.
 - „Passt auch dazu“: zuerst Methoden aus dem Feld `verwandt`, aufgefüllt mit Methoden der gleichen Kategorie, max. 3.
 - Druckansicht der Anleitung selbst (Druck-CSS, ohne Navigation).
 
-### 5.4 Kategorieseite `/kategorien/<id>/`
+### 5.4 Kategorieseite `/kategorien/<slug>/`
 - Beschreibung der Kategorie + alle Methoden darin.
+- URL aus dem Feld `slug` in `kategorien.yaml` (z. B. `/kategorien/handzeichen-karten/`); der Filter-Parameter
+  der Startseite nutzt dagegen die kurze `id` (`/?kategorie=A,D`). Slugs nach der Veröffentlichung nicht mehr
+  ändern, sonst werden geteilte Links ungültig.
 
 ### 5.5 Digitale Tools `/tools/`
 - Tabelle/Karten aus `tools.yaml` mit Link, Zweck, Ablauf, Gerätebedarf, Datenschutzhinweis.
