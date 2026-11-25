@@ -616,6 +616,86 @@ html:not([data-js]) .ansichtswahl {
   font-size: 17px;
 }
 
+/* Video-Bereich (Issue #9): eigene Vorschau (kein Bild von YouTube), erst der Klick lädt den
+   Player (static/js/video.js). Ohne JavaScript bleibt nur der Link „Auf YouTube ansehen“. */
+
+.video {
+  padding: var(--abstand-l);
+  background: var(--farbe-flaeche);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: var(--radius-m);
+}
+
+.video h2 {
+  margin: 0 0 var(--abstand-m);
+  font-size: 22px;
+}
+
+.video__eintrag {
+  margin: 0;
+}
+
+.video__eintrag + .video__eintrag {
+  margin-top: var(--abstand-l);
+}
+
+.video__vorschau,
+.video__player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius-s);
+}
+
+.video__vorschau {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--abstand-s);
+  padding: var(--abstand-m);
+  background: #1F2A37;
+  color: #FFFFFF;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.video__play {
+  color: #C4302B;
+}
+
+.video__vorschau:hover .video__play,
+.video__vorschau:focus-visible .video__play {
+  color: #E0453F;
+}
+
+.video__vorschau:focus-visible {
+  outline: var(--fokus-breite) solid var(--farbe-fokus);
+  outline-offset: 2px;
+}
+
+.video__vorschau .video__titel {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.video__datenhinweis {
+  font-size: 14px;
+}
+
+.video__unterzeile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand-s) var(--abstand-m);
+  margin-top: var(--abstand-s);
+}
+
+html:not([data-js]) .video__vorschau {
+  display: none;
+}
+
 @media (min-width: 960px) {
   .methode__kopf {
     padding: 28px 32px 32px;
@@ -1351,7 +1431,8 @@ html:not([data-js]) .ansichtswahl {
   .fuss,
   nav,
   .methode__zurueck,
-  .methode__seite {
+  .methode__seite,
+  .video {
     display: none !important;
   }
 
