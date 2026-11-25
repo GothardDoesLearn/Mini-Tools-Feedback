@@ -87,7 +87,9 @@
     boxen.forEach(function (box) {
       if (box.checked) (auswahl[box.name] = auswahl[box.name] || []).push(box.value);
     });
-    return { auswahl: auswahl, kategorien: gewaehlteKategorien() };
+    var zustand = { auswahl: auswahl, kategorien: gewaehlteKategorien() };
+    zustand.suche = suchbegriff();
+    return zustand;
   }
 
   // ODER innerhalb einer Gruppe, UND zwischen Gruppen.
@@ -109,7 +111,8 @@
   var PRUEFUNGEN = [passtZuFiltergruppen, passtZuKategorien];
 
   function istGefiltert(zustand) {
-    return Object.keys(zustand.auswahl).length > 0 || zustand.kategorien.length > 0;
+    return Object.keys(zustand.auswahl).length > 0 || zustand.kategorien.length > 0
+      || zustand.suche !== "";
   }
 
   function aktualisieren() {
@@ -138,7 +141,53 @@
   function zuruecksetzen() {
     // Die Checkboxen leert der Browser selbst (type="reset"); erst danach neu filtern.
     kategorienAnzeigen([]);
+    if (suchfeld) suchfeld.value = "";
     window.setTimeout(bedient, 0);
+  }
+
+  // Volltextsuche (Issue #18) über Titel, Aliase und Anleitung. Den Index erzeugt der Build als
+  // JSON (<script data-suchindex>). Groß-/Kleinschreibung und Akzente zählen nicht; bei mehreren
+  // Wörtern muss jedes vorkommen. Ohne Suchfeld oder Index bleibt die Suche wirkungslos.
+  var suchfeld = document.querySelector("[data-suche]");
+  var suchtexte = {};
+
+  function normalisieren(text) {
+    return String(text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function suchbegriff() {
+    return suchfeld ? suchfeld.value.trim() : "";
+  }
+
+  (function suchindexLaden() {
+    var quelle = document.querySelector("[data-suchindex]");
+    if (!quelle) return;
+    try {
+      JSON.parse(quelle.textContent).forEach(function (eintrag) {
+        suchtexte[eintrag.id] = normalisieren(
+          [eintrag.titel].concat(eintrag.aliase, [eintrag.text]).join(" | "));
+      });
+    } catch (fehler) {
+      suchtexte = {};
+    }
+  })();
+
+  function passtZurSuche(karte, zustand) {
+    if (zustand.suche === "") return true;
+    var text = suchtexte[karte.id] || "";
+    return normalisieren(zustand.suche).split(/\s+/).every(function (wort) {
+      return text.indexOf(wort) !== -1;
+    });
+  }
+
+  PRUEFUNGEN.push(passtZurSuche);
+
+  if (suchfeld) {
+    // Beim Tippen keinen Verlaufseintrag pro Taste erzeugen, nur die URL ersetzen (#16).
+    suchfeld.addEventListener("input", function () {
+      aktualisieren();
+      urlSchreiben("ersetzen");
+    });
   }
 
   // „Zufällige Methode“ (Issue #17): wählt aus den gerade sichtbaren Karten.
@@ -251,6 +300,10 @@
     aktualisieren();
     urlSchreiben("ersetzen");
   }
+
+  urlParameter("suche", function (z) { return z.suche ? [z.suche] : []; }, function (werte) {
+    if (suchfeld) suchfeld.value = werte.join(",");
+  });
 
   // Start
   formular.addEventListener("change", bedient);
