@@ -161,6 +161,126 @@
   font-size: 9pt;
 }
 
+/* A4 quer (benannte Druckseite) */
+@page quer {
+  size: A4 landscape;
+  margin: 12mm;
+}
+
+.blatt--quer {
+  page: quer;
+  width: 297mm;
+  height: 210mm;
+}
+
+/* Raster 1 Spalte × 2 Zeilen (z. B. 2 × A5 auf A4 hoch) */
+.raster--1x2 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Skalen-Plakat */
+.skala {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.skala__frage {
+  height: 14mm;
+  margin-bottom: 8mm;
+}
+
+.skala__stufen {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-left: var(--blatt-linie);
+}
+
+.skala__stufe {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--blatt-linie);
+  border-right: var(--blatt-linie);
+  border-bottom: var(--blatt-linie);
+}
+
+.skala__zahl {
+  padding: 3mm 0;
+  border-bottom: var(--blatt-linie);
+  font-size: 40pt;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.skala__punkte {
+  flex: 1; /* freies Feld für Klebepunkte */
+}
+
+/* Bodenkarten (A5) */
+.bodenkarte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodenkarte__zahl {
+  font-size: 260pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Ich-kann-Checkliste */
+.checkliste__titel {
+  margin: 0 0 5mm;
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.checkliste {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.checkliste th,
+.checkliste td {
+  border: var(--blatt-linie);
+  padding: 2mm;
+}
+
+.checkliste th {
+  font-weight: 600;
+  text-align: left;
+}
+
+.checkliste th:nth-child(1) {
+  width: 44%;
+}
+
+.checkliste th:nth-child(n + 2):nth-child(-n + 4) {
+  width: 12%;
+  text-align: center;
+}
+
+.checkliste tbody td {
+  height: 29mm;
+}
+
+.checkliste__kreuz {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ankreuzfeld {
+  display: inline-block;
+  width: 7mm;
+  height: 7mm;
+  border: var(--blatt-linie);
+}
+
 /* Druck: nur die Blätter, je Blatt eine Seite ------------------------------ */
 
 @media print {
@@ -182,6 +302,11 @@
     box-shadow: none;
     overflow: hidden;
     break-after: page;
+  }
+
+  .blatt--quer {
+    width: 273mm; /* 297mm − 2 × 12mm Rand */
+    height: 185mm; /* 210mm − 2 × 12mm Rand, 1mm Reserve */
   }
 
   .blatt:last-child {
