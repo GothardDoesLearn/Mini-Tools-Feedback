@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 {% from "_karte.html" import karte %}
+{% block head %}
+  <script src="/static/js/filter.js" defer></script>
+{% endblock %}
 {% block content %}
     <h1>{{ site.website_name }}</h1>
     <section class="uebersicht" aria-labelledby="uebersicht-titel">
-      <p id="uebersicht-titel" class="uebersicht__anzahl">{{ karten | length }} Methoden</p>
-      <div class="karten">
+{% include "_filterleiste.html" %}
+      <div class="uebersicht__ergebnis">
+        <p id="uebersicht-titel" class="uebersicht__anzahl" aria-live="polite" data-trefferzahl>{{ karten | length }} Methoden</p>
+        <p class="uebersicht__leer" data-keine-treffer hidden>Keine Methode passt zu diesen Filtern.</p>
+        <div class="karten">
 {% for k in karten %}
-        {{ karte(k) | indent(8) }}
+          {{ karte(k) | indent(10) }}
 {% endfor %}
+        </div>
       </div>
     </section>
 {% endblock %}

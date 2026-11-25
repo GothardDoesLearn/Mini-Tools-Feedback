@@ -117,8 +117,36 @@ def test_eckenschilder_vier_quer_blaetter_mit_buchstabe_und_leerem_feld(dist: Pa
         assert '<div class="eckenschild__feld"></div>' in blatt
 
 
+def test_skalen_plakat_hat_plakat_quer_und_sechs_bodenkarten_a5(dist: Path):
+    html = seite(dist, "skalen-plakat")
+
+    plakat, *bodenkarten = blaetter(html)
+    assert len(bodenkarten) == 3
+    assert plakat.startswith(' blatt--quer"')
+    assert plakat.count('class="skala__stufe"') == 6
+    assert plakat.count('class="skala__punkte"') == 6
+    for zahl in "123456":
+        assert f'<span class="skala__zahl">{zahl}</span>' in plakat
+    karten = re.findall(r'<span class="bodenkarte__zahl">(\d)</span>', "".join(bodenkarten))
+    assert karten == list("123456")
+    for blatt in bodenkarten:
+        assert blatt.count('class="bodenkarte"') == 2
+
+
 def test_quer_blaetter_drucken_auf_a4_quer(dist: Path):
     css = (dist / "static" / "css" / "druckvorlage.css").read_text(encoding="utf-8")
 
     assert re.search(r"@page\s+quer\s*\{\s*size:\s*A4 landscape;", css)
     assert re.search(r"\.blatt--quer\s*\{[^}]*page:\s*quer;", css)
+    assert len(re.findall(r"@page\s+quer\b", css)) == 1
+
+
+def test_checkliste_ist_tabelle_mit_acht_leeren_ich_kann_zeilen(dist: Path):
+    html = seite(dist, "checkliste")
+
+    (blatt,) = blaetter(html)
+    kopf = re.findall(r'<th scope="col">(.*?)</th>', blatt)
+    assert kopf == ["Ich kann …", "sicher", "teilweise", "noch nicht", "Übung dazu"]
+    tbody = blatt[blatt.index("<tbody>") : blatt.index("</tbody>")]
+    assert tbody.count("<tr>") == 8
+    assert tbody.count('class="ankreuzfeld"') == 8 * 3
