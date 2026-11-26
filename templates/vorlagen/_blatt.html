@@ -13,7 +13,7 @@
   <div class="blatt__inhalt">
 {{ caller() }}
   </div>
-  <p class="blatt__fuss">{{ site.website_name }} · {{ site.domain_anzeige }}</p>
+  <p class="blatt__fuss">{{ site.website_name }}{% if site.domain_anzeige %} · {{ site.domain_anzeige }}{% endif %}</p>
 </section>
 {% endmacro %}
 

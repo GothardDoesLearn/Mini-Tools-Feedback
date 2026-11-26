@@ -34,7 +34,8 @@ Alle Inhalte liegen fertig in `content/`.
 - Druckvorlagen als eigene HTML-Seiten mit Druck-CSS (A4, `@page`) → "Drucken / als PDF speichern" im Browser.
   Kein PDF-Build-Schritt. (Optional später: PDFs per Playwright beim Build erzeugen – siehe Offene Fragen.)
 - Hosting: beliebiger statischer Webserver; betrieben auf dem eigenen Server des Betreibers.
-- Name und Domain der Website stehen als Platzhalter in einer Konfigurationsdatei, Name „Feedback-Tools“ (entschieden), Domain noch offen.
+- Name und Domain der Website stehen in einer Konfigurationsdatei: Name „Feedback-Tools“, Domain
+  `feedback-tools.handrik.top` (beides entschieden). Die Domain ist optional (leer = nicht im Fußtext der Druckvorlagen).
 - Werbeplätze sind als Komponenten im Layout vorbereitet und per Konfiguration ausgeschaltet (Standard: aus).
 
 ## 5. Seiten

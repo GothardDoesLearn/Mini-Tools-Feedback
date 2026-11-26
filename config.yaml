@@ -3,8 +3,9 @@
 # Name der Website (entschieden).
 website_name: "Feedback-Tools"
 
-# Domain der Website – noch offen (Issue #43), bis dahin Platzhalter.
-domain: "https://example.org"
+# Domain der Website (Issue #43), nur Schema und Host, ohne Pfad. Optional: leer lassen (domain: "")
+# oder Zeile löschen, dann steht im Fußtext der Druckvorlagen nur der Website-Name.
+domain: "https://feedback-tools.handrik.top"
 
 # Standard-Description (Meta-Description) für Seiten ohne eigene Beschreibung, z. B. die Startseite.
 beschreibung: "Kurze Feedbackmethoden für den Unterricht (1–10 Minuten, analog oder digital) mit Anleitungen und Druckvorlagen für Lehrkräfte."
