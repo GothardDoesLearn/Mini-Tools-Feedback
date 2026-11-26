@@ -87,6 +87,11 @@ Aufbau (beide Ansichten gleich, siehe `methodenseite-referenz.dc.html`, Beispiel
 - Karte: weiß, 1 px Rahmen, Radius 12 px, Hover-Schatten; Farbpunkt + Kategorie, Titel 19 px
 - Hinweis „wird geprüft“: Badge #FFF1D6 / Text #7A4B00
 
+## Sprache und Anrede
+
+- Texte an Lehrkräfte siezen („Sie“).
+- Texte auf Druckvorlagen, die sich an SuS richten, duzen („du“).
+
 ## Schriften
 
 Caveat, Nunito und Inter lokal als WOFF2 einbinden (keine Google-Fonts-Server, DSGVO). Lizenz: SIL Open Font License.
