@@ -26,8 +26,8 @@ def build(output_dir: Path = DIST_DIR, config: SiteConfig | None = None) -> None
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True)
 
-    env = make_env(config)
     site_data = load_site(paths.CONTENT_DIR)
+    env = make_env(config, site_data.texte)
     for schreibe_seite in alle_seiten():
         schreibe_seite(env, output_dir, site_data)
 

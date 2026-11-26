@@ -11,10 +11,11 @@ from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 from markupsafe import Markup
 
+from generator import paths
 from generator.config import SiteConfig
+from generator.content import Texte, load_texte
 from generator.hinweis import HINWEIS_MARKE, hinweis_links
 from generator.paths import TEMPLATES_DIR
-from generator.status import STATUS_TEXTE
 from generator.vorlagen import satzanfaenge
 
 
@@ -57,7 +58,9 @@ def markdown_zu_html(text: str) -> Markup:
     return Markup(markdown.markdown(text, extensions=[_ExterneLinksExtension()]))
 
 
-def make_env(config: SiteConfig) -> Environment:
+def make_env(config: SiteConfig, texte: Texte | None = None) -> Environment:
+    """Jinja-Umgebung; `texte` (content/texte.yaml) ohne Angabe aus paths.CONTENT_DIR."""
+    texte = texte or load_texte(paths.CONTENT_DIR)
     env = Environment(
         loader=FileSystemLoader(TEMPLATES_DIR),
         autoescape=select_autoescape(),
@@ -66,7 +69,8 @@ def make_env(config: SiteConfig) -> Environment:
         lstrip_blocks=True,
     )
     env.globals["site"] = config
-    env.globals["status_texte"] = STATUS_TEXTE
+    env.globals["texte"] = texte
+    env.globals["status_texte"] = texte.status
     env.globals["satzanfaenge"] = satzanfaenge
     env.globals["hinweis_links"] = partial(hinweis_links, config)
     env.globals["HINWEIS_MARKE"] = HINWEIS_MARKE

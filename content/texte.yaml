@@ -1,0 +1,58 @@
+# Redaktionelle Texte der Website, gruppiert nach Ort (Issue #76).
+# Oberflächentexte direkt am Bedienelement (Filter, Buttons, Suchfeld) stehen weiter im Template (AGENTS.md).
+# Platzhalter in {geschweiften Klammern} füllt der Build. Ein unbekannter Platzhalter bricht den Build ab.
+
+# Statushinweise (AGENTS.md: annahme/platzhalter sichtbar kennzeichnen). Je Art und Status:
+# marke = kurzes Etikett (Karte, Vorlagenliste, Seitenleiste), titel = fett vor dem Text,
+# text = Standardtext, wenn der Inhalt kein eigenes Feld `statushinweis` hat. Status fertig: kein Eintrag.
+status:
+  methode:
+    annahme:
+      marke: wird geprüft
+      titel: Wird noch geprüft
+      text: Der Ablauf wird noch geprüft.
+    platzhalter:
+      marke: Platzhalter
+      titel: Platzhalter
+      text: Dieser Inhalt fehlt noch und folgt nach Rücksprache.
+  vorlage:
+    annahme:
+      marke: wird geprüft
+      titel: Wird noch geprüft
+      text: Diese Druckvorlage beruht auf einer Annahme und wird noch geprüft.
+    platzhalter:
+      marke: Vorlage folgt
+      titel: Vorlage folgt
+      text: Diese Druckvorlage ist noch nicht fertig.
+  seite:
+    platzhalter:
+      marke: Platzhalter
+      titel: Platzhalter
+      text: Dieser Inhalt fehlt noch und folgt nach Rücksprache.
+    entwurf:
+      marke: Entwurf
+      titel: Entwurf
+      text: Dieser Text ist ein Entwurf und noch nicht freigegeben.
+
+# Meta-Beschreibungen (Suchmaschinen) für Seiten ohne Beschreibung aus den Inhalten.
+# vorlagen: {anzahl} = Zahl der Druckvorlagen.
+meta:
+  tools: Digitale Tools für schnelles Feedback im Unterricht – mit Zweck, Ablauf und passenden Methoden.
+  vorlagen: Alle {anzahl} Druckvorlagen zu den Feedbackmethoden – zum Ausdrucken für den Unterricht.
+  seite_404: Diese Seite gibt es nicht (mehr). Weiter zur Übersicht aller Feedbackmethoden.
+
+# Fehlerseite /404.html
+seite_404:
+  titel: Seite nicht gefunden
+  text: Diese Seite gibt es nicht oder nicht mehr. Vielleicht hilft die Übersicht weiter.
+  link: Zur Übersicht aller Methoden
+
+# Fußzeile jeder Seite. {website_name} = Name aus config.yaml.
+fusszeile:
+  text: "{website_name} · Inhalte unter CC BY-NC-SA 4.0"
+
+# Videos auf Methodenseiten (Zwei-Klick-Einbettung, ADR 0001).
+video:
+  datenhinweis: Beim Abspielen werden Daten an YouTube übertragen.
+  link_youtube: Auf YouTube ansehen
+  link_andere: Video ansehen
