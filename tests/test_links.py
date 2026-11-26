@@ -16,6 +16,9 @@ from generator.build import build
 
 ATTRIBUT = re.compile(r"""\b(?:href|src)\s*=\s*["']([^"']*)["']""", re.IGNORECASE)
 CSS_URL = re.compile(r"""url\(\s*["']?([^"')]+)["']?\s*\)""")
+# Inhalt eingebetteter Skripte ist kein Markup (`link.href = "/static/fonts/" + …` ist kein Link);
+# das öffnende Tag bleibt, damit `<script src=…>` weiter geprüft wird.
+SKRIPT_INHALT = re.compile(r"(<script\b[^>]*>).*?</script>", re.IGNORECASE | re.DOTALL)
 ID = re.compile(r"""\bid\s*=\s*["']([^"']+)["']""")
 
 
@@ -44,7 +47,11 @@ def tote_links(dist: Path) -> list[str]:
     dateien = [*dist.rglob("*.html"), *dist.rglob("*.css")]
     for quelle in sorted(dateien):
         text = quelle.read_text(encoding="utf-8")
-        muster = CSS_URL if quelle.suffix == ".css" else ATTRIBUT
+        if quelle.suffix == ".css":
+            muster = CSS_URL
+        else:
+            muster = ATTRIBUT
+            text = SKRIPT_INHALT.sub(r"\1</script>", text)
         for roh in muster.findall(text):
             ziel = html.unescape(roh)
             if not ziel or not ist_intern(ziel) or ziel.startswith("data:"):
