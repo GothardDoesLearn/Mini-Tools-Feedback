@@ -83,7 +83,7 @@ Alle Inhalte liegen fertig in `content/`.
 - Einzelseite = druckfertiges A4-Layout nach `docs/DRUCKVORLAGEN.md` + Button "Drucken".
 
 ### 5.7 Über / Impressum `/ueber/`
-- Herkunft der Sammlung, Kontakt, Hinweis zu Annahmen, Lizenzhinweis (Inhalte CC BY-NC-SA 4.0).
+- Kontakt, Hinweis zu Annahmen, Lizenzhinweis (Inhalte CC BY-NC-SA 4.0).
 - Impressum (Pflicht für öffentlich angebotene Websites) und Datenschutzerklärung – zunächst Platzhalter.
 - Kontakt: Hinweis-Link (siehe 5.8) ohne Bezug auf eine bestimmte Methode.
 

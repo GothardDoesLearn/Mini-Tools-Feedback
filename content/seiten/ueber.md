@@ -1,18 +1,12 @@
 ---
 id: ueber
 titel: Über diese Sammlung
-status: entwurf
-statushinweis: Dieser Text ist ein Entwurf und muss vom Betreiber noch freigegeben werden.
+status: fertig
 ---
-## Herkunft der Sammlung
-
-Die Methoden stammen aus einer Fortbildung bzw. einer Sammlung des Kollegiums (Pinnwände „Mini Tools“).
-Dopplungen wurden zusammengeführt.
-
 ## Hinweis zu Annahmen
 
 Einige Methoden und Druckvorlagen sind als „wird geprüft“ gekennzeichnet. Ihr Ablauf ist eine begründete
-Vermutung und wird noch beim Kollegium geprüft. Bei Platzhaltern fehlt der Inhalt noch und folgt nach
+Vermutung und wird noch geprüft. Bei Platzhaltern fehlt der Inhalt noch und folgt nach
 Rücksprache.
 
 ## Kontakt

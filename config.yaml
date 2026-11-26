@@ -7,7 +7,6 @@ website_name: "Feedback-Tools"
 domain: "https://example.org"
 
 # Standard-Description (Meta-Description) für Seiten ohne eigene Beschreibung, z. B. die Startseite.
-# ENTWURF – vom Betreiber noch freizugeben.
 beschreibung: "Kurze Feedbackmethoden für den Unterricht (1–10 Minuten, analog oder digital) mit Anleitungen und Druckvorlagen für Lehrkräfte."
 
 # Hinweise (PRD §5.8): Ziel der Links „Auf GitHub melden“ und „Per E-Mail schreiben“.

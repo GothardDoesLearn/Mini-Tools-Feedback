@@ -24,8 +24,7 @@ STATUS_TEXTE: dict[str, dict[str, StatusText]] = {
         "annahme": StatusText(
             "wird geprüft",
             "Wird noch geprüft",
-            "Diese Druckvorlage ist nach aktueller Spezifikation gebaut und noch nicht "
-            "abschließend geprüft.",
+            "Diese Druckvorlage beruht auf einer Annahme und wird noch geprüft.",
         ),
         "platzhalter": StatusText(
             "Vorlage folgt", "Vorlage folgt", "Diese Druckvorlage ist noch nicht fertig."
