@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set seitentitel = "Druckvorlagen" %}
-{% set beschreibung = "Alle " ~ druckvorlagen | length ~ " Druckvorlagen zu den Feedbackmethoden – zum Ausdrucken für den Unterricht." %}
+{% set beschreibung = texte.meta.vorlagen.format(anzahl=druckvorlagen | length) %}
 {% block content %}
     <h1>Druckvorlagen</h1>
     <ul class="vorlagen">

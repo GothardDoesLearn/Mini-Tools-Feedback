@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% set seitentitel = "Seite nicht gefunden" %}
-{% set beschreibung = "Diese Seite gibt es nicht (mehr). Weiter zur Übersicht aller Feedbackmethoden." %}
+{% set seitentitel = texte.seite_404.titel %}
+{% set beschreibung = texte.meta.seite_404 %}
 {% block meta %}
   <meta name="robots" content="noindex">
 {% endblock %}
 {% block content %}
-    <h1>Seite nicht gefunden</h1>
-    <p>Diese Seite gibt es nicht oder nicht mehr. Vielleicht hilft die Übersicht weiter.</p>
-    <p><a href="/">Zur Übersicht aller Methoden</a></p>
+    <h1>{{ texte.seite_404.titel }}</h1>
+    <p>{{ texte.seite_404.text }}</p>
+    <p><a href="/">{{ texte.seite_404.link }}</a></p>
 {% endblock %}

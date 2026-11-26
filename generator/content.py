@@ -4,11 +4,21 @@ Erlaubte Werte für kategorie, richtung, zeitpunkt und form kommen aus den
 Stammdaten (kategorien.yaml, filter.yaml), nicht aus dem Code.
 """
 
+from functools import partial
 from pathlib import Path
-from typing import Literal
+from string import Formatter
+from typing import Annotated, Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError, field_validator
+from pydantic import (
+    AfterValidator,
+    BaseModel,
+    ConfigDict,
+    Field,
+    TypeAdapter,
+    ValidationError,
+    field_validator,
+)
 
 from generator.paths import CONTENT_DIR
 
@@ -182,6 +192,111 @@ class HinweisTexte(BaseModel):
     allgemein: HinweisBezug
 
 
+def _nur_platzhalter(erlaubt: frozenset[str], text: str) -> str:
+    try:
+        namen = {name for _, name, _, _ in Formatter().parse(text) if name is not None}
+    except ValueError as e:
+        raise ValueError(f"geschweifte Klammern nur für Platzhalter: {e}") from e
+    unbekannt = namen - erlaubt
+    if unbekannt:
+        bekannt = ", ".join(f"{{{n}}}" for n in sorted(erlaubt)) or "keine"
+        raise ValueError(
+            f"unbekannter Platzhalter {', '.join(f'{{{n}}}' for n in sorted(unbekannt))}"
+            f" (erlaubt: {bekannt})"
+        )
+    return text
+
+
+def Text(*platzhalter: str):  # noqa: N802 (liest sich im Schema wie ein Typ)
+    """Pflichttext aus content/texte.yaml; `platzhalter` sind die erlaubten {Namen}."""
+    return Annotated[
+        str, Field(min_length=1), AfterValidator(partial(_nur_platzhalter, frozenset(platzhalter)))
+    ]
+
+
+class StatusText(BaseModel):
+    """Statushinweis: Etikett (Karte, Listen), Titel (fett) und Standardtext."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    marke: Text()
+    titel: Text()
+    text: Text()
+
+
+def _alle_status(texte: dict[str, StatusText], pflicht: tuple[str, ...]) -> dict[str, StatusText]:
+    fehlt = [s for s in pflicht if s not in texte]
+    if fehlt:
+        raise ValueError(f"Statustexte fehlen für: {', '.join(fehlt)}")
+    return texte
+
+
+# Jeder Status außer fertig muss sichtbar gekennzeichnet werden (AGENTS.md), daher Pflicht.
+_INHALT_STATUS = ("annahme", "platzhalter")
+_SEITEN_STATUS = ("entwurf", "platzhalter")
+InhaltStatusTexte = Annotated[
+    dict[Literal["annahme", "platzhalter"], StatusText],
+    AfterValidator(partial(_alle_status, pflicht=_INHALT_STATUS)),
+]
+SeitenStatusTexte = Annotated[
+    dict[Literal["entwurf", "platzhalter"], StatusText],
+    AfterValidator(partial(_alle_status, pflicht=_SEITEN_STATUS)),
+]
+
+
+class StatusTexte(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    methode: InhaltStatusTexte
+    vorlage: InhaltStatusTexte
+    seite: SeitenStatusTexte
+
+
+class MetaTexte(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    tools: Text()
+    vorlagen: Text("anzahl")
+    seite_404: Text()
+
+
+class Fehlerseitentexte(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    titel: Text()
+    text: Text()
+    link: Text()
+
+
+class FusszeilenTexte(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    text: Text("website_name")
+
+
+class VideoTexte(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    datenhinweis: Text()
+    link_youtube: Text()
+    link_andere: Text()
+
+
+class Texte(BaseModel):
+    """Redaktionelle Texte aus content/texte.yaml (Issue #76); in Templates als Global `texte`.
+
+    Platzhalter füllt das Template mit `.format(...)`; erlaubt sind nur die im Schema genannten.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    status: StatusTexte
+    meta: MetaTexte
+    seite_404: Fehlerseitentexte
+    fusszeile: FusszeilenTexte
+    video: VideoTexte
+
+
 class Seite(BaseModel):
     """Eine Textseite aus content/seiten/ (z. B. Über, Impressum, Datenschutz)."""
 
@@ -202,6 +317,7 @@ class SiteData(BaseModel):
     tools: list[Tool]
     tools_hinweis: str  # hinweis_freigabe aus tools.yaml
     hinweise: HinweisTexte
+    texte: Texte
     druckvorlagen: list[Druckvorlage]
     methoden: list[Methode]
 
@@ -257,6 +373,10 @@ def load_startseite(content_dir: Path = CONTENT_DIR) -> StartseitenTexte:
 
 def load_hinweise(content_dir: Path = CONTENT_DIR) -> HinweisTexte:
     return _load_texte(content_dir / "hinweise.yaml", HinweisTexte)
+
+
+def load_texte(content_dir: Path = CONTENT_DIR) -> Texte:
+    return _load_texte(content_dir / "texte.yaml", Texte)
 
 
 def load_kategorien(content_dir: Path = CONTENT_DIR) -> list[Kategorie]:
@@ -377,6 +497,7 @@ def load_site(content_dir: Path = CONTENT_DIR) -> SiteData:
         tools=tools_datei.tools,
         tools_hinweis=tools_datei.hinweis_freigabe,
         hinweise=load_hinweise(content_dir),
+        texte=load_texte(content_dir),
         druckvorlagen=load_druckvorlagen(content_dir),
         methoden=load_methoden(content_dir),
     )

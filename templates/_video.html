@@ -6,14 +6,14 @@
               <button class="video__vorschau" type="button" data-video-einbettung="{{ video.einbettung }}" data-video-titel="{{ video.titel }}">
                 <span class="video__play" aria-hidden="true"><svg viewBox="0 0 64 64" width="64" height="64" focusable="false"><circle cx="32" cy="32" r="30" fill="currentColor"/><path d="M26 20 46 32 26 44Z" fill="#fff"/></svg></span>
                 <span class="video__titel">{{ video.titel }}<span class="nur-screenreader"> – Video abspielen</span></span>
-                <span class="video__datenhinweis">Beim Abspielen werden Daten an YouTube übertragen.</span>
+                <span class="video__datenhinweis">{{ texte.video.datenhinweis }}</span>
               </button>
 {% endif %}
               <figcaption class="video__unterzeile">
 {% if not video.einbettung %}
                 <span class="video__titel">{{ video.titel }}</span>
 {% endif %}
-                <a class="extern-link" href="{{ video.url }}" rel="noopener noreferrer">{{ "Auf YouTube ansehen" if video.youtube else "Video ansehen" }}<span class="nur-screenreader"> (externer Link{% if video.einbettung %}: {{ video.titel }}{% endif %})</span></a>
+                <a class="extern-link" href="{{ video.url }}" rel="noopener noreferrer">{{ texte.video.link_youtube if video.youtube else texte.video.link_andere }}<span class="nur-screenreader"> (externer Link{% if video.einbettung %}: {{ video.titel }}{% endif %})</span></a>
               </figcaption>
             </figure>
 {% endfor %}

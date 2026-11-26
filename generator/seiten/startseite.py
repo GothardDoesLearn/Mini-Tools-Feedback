@@ -17,7 +17,7 @@ def startseite(env, output_dir, site: SiteData) -> None:
         "",
         "index.html",
         aktiver_bereich="methoden",
-        texte=load_startseite(paths.CONTENT_DIR),
+        startseite_texte=load_startseite(paths.CONTENT_DIR),
         kategorien=kategorie_auswahl(site),
         karten=karten(site),
         # Gruppen mit eigenen Werten; Kategorie (quelle: kategorien.yaml) hat eigene Auswahl (#11)

@@ -28,7 +28,10 @@ Begriffe wie in `GLOSSARY.md` verwenden (Methode, Tool, Druckvorlage, Werbeplatz
 
 ## Regeln
 
-- Inhalte niemals im Code hart kodieren – alles kommt aus `content/`.
+- Inhalte niemals im Code hart kodieren – alles kommt aus `content/`. Redaktionelle Texte der Oberfläche (Statushinweise,
+  Meta-Beschreibungen, Fußzeile …) stehen in `content/texte.yaml`. Ausnahmen: Oberflächentexte direkt am Bedienelement
+  (Filter, Buttons, Suchfeld), Beschriftungen auf Druckvorlagen (Quelle `docs/DRUCKVORLAGEN.md`), Design-Tokens
+  (Quelle `docs/DESIGN.md`).
 - Texte in `content/` nicht eigenmächtig umformulieren. Neue oder geänderte Texte nur als Entwurf vorschlagen; der Betreiber gibt frei.
 - Methoden und Druckvorlagen mit Status `annahme` oder `platzhalter` sichtbar kennzeichnen (Statushinweis).
 - Datenschutz (solange Werbung ausgeschaltet ist): keine Tracker, keine Cookies, keine CDNs, keine Google Fonts,

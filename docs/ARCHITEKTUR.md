@@ -19,7 +19,7 @@ build.py (nur Kommandozeile)
   endet mit Code 1; `--check` prüft nur Schema und Querverweise.
 - Erlaubte Werte (Kategorien, Filterwerte) kommen aus `kategorien.yaml`/`filter.yaml`, nie aus dem Code. Nur der
   Bearbeitungsstand ist fest: Typ `Status` und Konstante `PLATZHALTER` in `generator/content.py`.
-- Hilfen auf `SiteData`: `kategorie(id)`, `methoden_mit_vorlage(id)`, `tools_hinweis`. Die Zuordnung Methode →
+- Hilfen auf `SiteData`: `kategorie(id)`, `methoden_mit_vorlage(id)`, `tools_hinweis`, `texte`. Die Zuordnung Methode →
   Druckvorlage steht nur im Feld `druckvorlagen` der Methode.
 
 ## Neue Seite
@@ -41,8 +41,13 @@ gemeinsame Liste gibt es nicht. Die Reihenfolge ist alphabetisch nach Datei und 
 - Jinja2 mit `StrictUndefined`: Ein fehlender Kontextwert bricht den Build ab.
 - Wiederverwendbare Teile: `_karte.html` (Methodenkarte), `_statushinweis.html`, `_werbeplatz.html`,
   `_video.html`, `_filterleiste.html`.
-- Texte zum Bearbeitungsstand (annahme, platzhalter, entwurf) nur aus `generator/status.py`, im Template als
-  `status_texte[art][status]`.
+- Redaktionelle Texte (Statushinweise, Meta-Beschreibungen ohne Inhaltsquelle, 404-Seite, Fußzeile, Video-Hinweis)
+  nur aus `content/texte.yaml`, im Template als Global `texte` (Statushinweise kurz: `status_texte[art][status]`).
+  Der Name `texte` ist damit vergeben; Seiten geben eigene Texte unter anderem Namen mit (z. B. `startseite_texte`).
+- Neuer redaktioneller Text: Feld im passenden Modell unter `Texte` in `generator/content.py` als `Text()` anlegen,
+  Wert in `content/texte.yaml`. Platzhalter nur mit `Text("name")` erlauben und im Template per
+  `.format(name=…)` füllen; einen unbekannten Platzhalter meldet `--check` als Fehler. Oberflächentexte am Bedienelement bleiben im
+  Template (AGENTS.md).
 - „Hat die Methode eine Druckvorlage?“ nur über `hat_druckvorlage` (`generator/karten.py`): Vorlagen mit Status
   `platzhalter` zählen nicht (PRD §9.3).
 - Werbeplätze nur über `werbeplatz("<position>")`. Ohne `werbung_aktiv` rendert das Makro nichts. Nie auf
