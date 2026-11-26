@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from generator.build import build
+from generator.config import load_config
 from generator.content import load_site
 
 
@@ -92,9 +93,10 @@ def test_druck_css_a4_ohne_bedienelemente_und_werbung(dist: Path):
 
 def test_jedes_blatt_traegt_fusstext_mit_name_und_domain(dist: Path):
     html = seite(dist, "exit-ticket")
+    config = load_config()
 
     for blatt in blaetter(html):
-        assert "Feedback-Tools · example.org" in blatt
+        assert f"{config.website_name} · {config.domain_anzeige}</p>" in blatt
 
 
 def test_zielscheibe_einzel_und_plakat_mit_4_ringen_und_6_beschriftungsfeldern(dist: Path):

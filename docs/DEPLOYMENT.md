@@ -14,12 +14,14 @@ kopiert. Ein Server-Backend, eine Datenbank oder PHP braucht es nicht.
 
 ## 1. Vorher: Konfiguration prüfen
 
-In `config.yaml` stehen noch Platzhalter, die vor dem ersten öffentlichen Upload ersetzt sein sollten:
+In `config.yaml` steht noch ein Platzhalter, der vor dem ersten öffentlichen Upload ersetzt sein sollte:
 
 | Feld | Stand | Issue |
 |---|---|---|
-| `domain` | `https://example.org` | #43 |
 | `kontakt_email` | `kontakt@example.org` | #58 |
+
+`domain` ist optional und steht auf `https://feedback-tools.handrik.top` (#43). Sie erscheint im Fußtext jeder
+Druckvorlage; leer gelassen steht dort nur der Website-Name.
 
 Außerdem fehlen Impressum und Datenschutzerklärung noch (#44). Ohne sie sollte die Website nicht öffentlich erreichbar
 sein. Das Skript warnt, solange `config.yaml` noch `example.org` enthält.

@@ -12,7 +12,9 @@ class SiteConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     website_name: str
-    domain: str
+    # Optional: leer = keine Domain im Fußtext der Druckvorlagen. Nur Schema + Host, kein Pfad,
+    # weil die Website im Wurzelverzeichnis liegen muss (docs/DEPLOYMENT.md).
+    domain: str = Field(default="", pattern=r"^(https?://[^/\s]+/?)?$")
     beschreibung: str
     # Hinweise (PRD §5.8): Repository für „Auf GitHub melden“, Adresse für „Per E-Mail schreiben“
     github_repo: str
@@ -23,7 +25,7 @@ class SiteConfig(BaseModel):
 
     @property
     def domain_anzeige(self) -> str:
-        """Domain ohne Schema und Schrägstrich, z. B. für den Fußtext der Druckvorlagen."""
+        """Domain ohne Schema und Schrägstrich (Fußtext der Druckvorlagen); leer ohne Domain."""
         return self.domain.split("://", 1)[-1].rstrip("/")
 
 
