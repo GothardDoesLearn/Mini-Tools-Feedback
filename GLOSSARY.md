@@ -36,7 +36,7 @@ Eine Mitteilung einer Lehrkraft an den Betreiber zu einer Methode, einer Druckvo
 _Vermeiden_: Feedback, Rückmeldung, Kommentar (diese meinen das Feedback der SuS)
 
 **Statushinweis**:
-Die sichtbare Kennzeichnung einer Methode oder Druckvorlage im Status Annahme oder Platzhalter. Kein Hinweis im obigen Sinn.
+Die sichtbare Kennzeichnung einer Methode, Druckvorlage oder Seite, die nicht fertig ist (Status Annahme, Platzhalter oder Entwurf). Kein Hinweis im obigen Sinn.
 _Vermeiden_: Hinweisbox
 
 ## Status
@@ -49,6 +49,10 @@ Der Ablauf ist eine begründete Vermutung und wird noch beim Kollegium geprüft.
 
 **Platzhalter**:
 Der Inhalt fehlt noch und folgt nach Rücksprache. Eine Druckvorlage im Status Platzhalter zählt nicht als vorhanden.
+
+**Entwurf**:
+Ein Text, den ein Agent geschrieben oder gewählt hat und den der Betreiber noch nicht freigegeben hat. Bei Seiten (z. B. Über) wird er auf der Website sichtbar gekennzeichnet.
+_Vermeiden_: Vorschlag, vorläufig
 
 ## Personen
 

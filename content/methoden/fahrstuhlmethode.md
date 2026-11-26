@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "ca. 2 Min"
 dauer_min: 2
 dauer_max: 2
+kurz: "Zeigt mit Hocke, Stand oder erhobenen Armen, wie gut die Klasse etwas verstanden hat."
 material: "kein Material"
 druckvorlagen: []
 status: annahme

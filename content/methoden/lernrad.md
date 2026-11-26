@@ -8,6 +8,7 @@ form: ["analog"]
 dauer: "ca. 5 Min"
 dauer_min: 5
 dauer_max: 5
+kurz: "Lässt SuS am Ende einer Einheit sichtbar machen, welche Themen sie schon können und wo sie noch üben müssen."
 material: "Rad mit Segmenten je Teilkompetenz"
 druckvorlagen: ["lernrad"]
 status: annahme
